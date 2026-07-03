@@ -2,6 +2,7 @@
 
 <html lang="en">
 <head>
+<script>document.documentElement.className+=" js-anim";</script>
 <meta charset="utf-8"/>
 <meta content="width=device-width,initial-scale=1.0" name="viewport"/>
 <title>Barcelona Montessori School — Holistic Montessori Education, Sarrià Barcelona</title>
@@ -551,9 +552,9 @@ footer{background:#1D2757;padding:72px 0 36px}
   .nl{padding:13px 14px;font-size:15px}
 }
 /* ─── FULL TEAM & BIO CARDS ──────────────────────── */
-.tm-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
-.tm{background:var(--white);border-radius:var(--r-l);box-shadow:var(--sh);padding:24px 18px;text-align:center}
-.tm-ph{width:100%;max-width:180px;height:180px;border-radius:var(--r-l);overflow:hidden;margin:0 auto 14px;border:1px solid var(--cream-dd);background:var(--cream-d)}
+.tm-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.tm{background:var(--white);border-radius:var(--r-l);box-shadow:var(--sh);padding:24px 20px;text-align:center}
+.tm-ph{width:100%;max-width:240px;height:240px;border-radius:var(--r-l);overflow:hidden;margin:0 auto 16px;border:1px solid var(--cream-dd);background:var(--cream-d)}
 .tm-ph img{width:100%;height:100%;object-fit:cover}
 .bio-more{margin-top:10px;font-family:var(--font-b)}
 .bio-more summary{font-family:var(--font-h);font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--teal);cursor:pointer;list-style:none;display:inline-block}
@@ -562,7 +563,7 @@ footer{background:#1D2757;padding:72px 0 36px}
 .bio-more[open] summary::after{content:' \2212'}
 .bio-more p{font-size:13px;color:var(--muted);line-height:1.7;text-align:left;margin-top:10px}
 .team-group{font-family:var(--font-h);font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--green);margin:48px 0 18px;text-align:center}
-@media(max-width:1020px){.tm-grid{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:1020px){.tm-grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:780px){.tm-grid{grid-template-columns:1fr 1fr}}
 @media(max-width:480px){.tm-grid{grid-template-columns:1fr}}
 /* ─── TESTIMONIAL WALL (masonry) ─────────────────── */
@@ -624,6 +625,49 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--teal);outline-offse
 @media(prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
   *,*::before,*::after{transition:none!important;animation:none!important}
+}
+
+/* ─── SCROLL REVEAL & ENTRANCE MOTION ───────────────
+   All hiding is scoped to .js-anim (added by a head script
+   before first paint), so no-JS users see everything, and
+   there is no flash of hidden content. Fully disabled under
+   prefers-reduced-motion. */
+.js-anim .reveal{
+  opacity:0;
+  transform:translateY(22px);
+  transition:opacity .6s cubic-bezier(.4,.1,.2,1), transform .6s cubic-bezier(.4,.1,.2,1);
+  will-change:opacity, transform;
+}
+.js-anim .reveal.in{opacity:1;transform:none}
+
+/* Hero entrance: children fade-up on load, staggered */
+.js-anim .hero-inner > div > .hero-pill,
+.js-anim .hero-inner > div > .h1,
+.js-anim .hero-inner > div > .hero-lead,
+.js-anim .hero-inner > div > .hero-ctas,
+.js-anim .hero-inner > div > .hero-stats,
+.js-anim .hero-photos{
+  opacity:0;
+  transform:translateY(18px);
+  transition:opacity .7s cubic-bezier(.4,.1,.2,1), transform .7s cubic-bezier(.4,.1,.2,1);
+}
+.js-anim .hero.ready .hero-inner > div > .hero-pill{transition-delay:.05s}
+.js-anim .hero.ready .hero-inner > div > .h1{transition-delay:.14s}
+.js-anim .hero.ready .hero-inner > div > .hero-lead{transition-delay:.24s}
+.js-anim .hero.ready .hero-inner > div > .hero-ctas{transition-delay:.34s}
+.js-anim .hero.ready .hero-inner > div > .hero-stats{transition-delay:.44s}
+.js-anim .hero.ready .hero-photos{transition-delay:.30s}
+.js-anim .hero.ready .hero-inner > div > .hero-pill,
+.js-anim .hero.ready .hero-inner > div > .h1,
+.js-anim .hero.ready .hero-inner > div > .hero-lead,
+.js-anim .hero.ready .hero-inner > div > .hero-ctas,
+.js-anim .hero.ready .hero-inner > div > .hero-stats,
+.js-anim .hero.ready .hero-photos{opacity:1;transform:none}
+
+@media(prefers-reduced-motion:reduce){
+  .js-anim .reveal,
+  .js-anim .hero-inner > div > *,
+  .js-anim .hero-photos{opacity:1!important;transform:none!important;transition:none!important}
 }
 
 
@@ -829,7 +873,7 @@ img,video,iframe{max-width:100%}
 
 
 /* ─── TEAM TWO-SIDED CARDS ───────────────────────── */
-.team-flip--mini{width:100%;max-width:180px;height:180px;margin:0 auto 14px}
+.team-flip--mini{width:100%;max-width:240px;height:auto;aspect-ratio:1/1;margin:0 auto 14px}
 .team-back--profile{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:18px 16px;text-align:center;background:linear-gradient(135deg,var(--p-cyan),var(--p-lav));color:var(--navy)}
 .team-back-owl{width:34px;height:42px;color:rgba(42,57,121,.18);margin-bottom:6px}
 .team-back-initial{width:44px;height:44px;border-radius:14px;background:rgba(255,255,255,.78);border:1px solid rgba(42,57,121,.14);display:flex;align-items:center;justify-content:center;font-family:var(--font-h);font-size:22px;font-weight:800;color:var(--navy);margin-bottom:8px}
@@ -1218,19 +1262,19 @@ img,video,iframe{max-width:100%}
 <span class="tag tag--light">Our Values</span>
 <h3 class="h3" style="color:var(--white);margin:12px 0 24px;font-family:var(--font-h);letter-spacing:-.01em">Five principles that guide everything we do.</h3>
 <div class="values-grid">
-<div class="val">
+<div class="val reveal">
 <h5>Respect</h5>
 <p>As a means for a peaceful world — for oneself, others, and the environment we share.</p>
 </div>
-<div class="val">
+<div class="val reveal">
 <h5>Curious, Life-Long Learning</h5>
 <p>Practical and emotional skills that promote educational and social independence at every stage.</p>
 </div>
-<div class="val">
+<div class="val reveal">
 <h5>Child-Centered Approach</h5>
 <p>Children at the centre of every decision, supporting every student's holistic development.</p>
 </div>
-<div class="val">
+<div class="val reveal">
 <h5>Responsibility</h5>
 <p>For oneself, for others, and for the wider world.</p>
 </div>
@@ -1246,7 +1290,7 @@ img,video,iframe{max-width:100%}
 <!-- ─── PROGRAMMES ────────────────────────────────── -->
 <section class="sec" id="programmes">
 <div class="wrap">
-<div class="sec-head">
+<div class="sec-head reveal">
 <span class="tag">Our Programmes</span>
 <h2 class="h2">A complete Montessori journey,<br/>from birth to 18 — and beyond.</h2>
 <div class="rule"></div>
@@ -1254,7 +1298,7 @@ img,video,iframe{max-width:100%}
 </div>
 <div class="prog-grid">
 <!-- Nido — navy -->
-<div class="prog-card prog-nido" id="nido">
+<div class="prog-card prog-nido reveal" id="nido">
 <div class="prog-bg">
 <svg aria-hidden="true" class="prog-owl" overflow="visible" viewbox="27.4 23.4 72.2 97.3"><use href="#bms-owl" xlink:href="#bms-owl"></use></svg>
 <div class="prog-age">Up to 12 months</div>
@@ -1264,7 +1308,7 @@ img,video,iframe{max-width:100%}
 <a class="prog-link" href="#nido-detail">Discover Nido</a>
 </div>
 <!-- Infant Community — teal -->
-<div class="prog-card prog-ic" id="infant-community">
+<div class="prog-card prog-ic reveal" id="infant-community">
 <div class="prog-bg">
 <svg aria-hidden="true" class="prog-owl" overflow="visible" viewbox="27.4 23.4 72.2 97.3"><use href="#bms-owl" xlink:href="#bms-owl"></use></svg>
 <div class="prog-age">18 months – 3 years</div>
@@ -1274,7 +1318,7 @@ img,video,iframe{max-width:100%}
 <a class="prog-link" href="#infant-community-detail">Discover Infant Community</a>
 </div>
 <!-- Children's House — teal lighter -->
-<div class="prog-card prog-ch" id="childrens-house">
+<div class="prog-card prog-ch reveal" id="childrens-house">
 <div class="prog-bg">
 <svg aria-hidden="true" class="prog-owl" overflow="visible" viewbox="27.4 23.4 72.2 97.3"><use href="#bms-owl" xlink:href="#bms-owl"></use></svg>
 <div class="prog-age">3 – 6 years</div>
@@ -1284,7 +1328,7 @@ img,video,iframe{max-width:100%}
 <a class="prog-link" href="#childrens-house-detail">Discover Children's House</a>
 </div>
 <!-- Primary — peach -->
-<div class="prog-card prog-pri" id="primary">
+<div class="prog-card prog-pri reveal" id="primary">
 <div class="prog-bg">
 <svg aria-hidden="true" class="prog-owl" overflow="visible" viewbox="27.4 23.4 72.2 97.3"><use href="#bms-owl" xlink:href="#bms-owl"></use></svg>
 <div class="prog-age">6 – 12 years</div>
@@ -1294,7 +1338,7 @@ img,video,iframe{max-width:100%}
 <a class="prog-link" href="#primary-detail">Discover Primary</a>
 </div>
 <!-- Secondary — coral -->
-<div class="prog-card prog-sec" id="secondary">
+<div class="prog-card prog-sec reveal" id="secondary">
 <div class="prog-bg">
 <svg aria-hidden="true" class="prog-owl" overflow="visible" viewbox="27.4 23.4 72.2 97.3"><use href="#bms-owl" xlink:href="#bms-owl"></use></svg>
 <div class="prog-age">12 – 18 years</div>
@@ -1309,7 +1353,7 @@ img,video,iframe{max-width:100%}
 <!-- ─── PROGRAMME DETAILS (footer targets, sourced from current BMS site) ─── -->
 <section class="sec sec--tint" id="programme-details">
 <div class="wrap">
-<div class="sec-head c">
+<div class="sec-head c reveal">
 <span class="tag">Programme Pathways</span>
 <h2 class="h2">What each stage offers.</h2>
 <div class="rule"></div>
@@ -1399,17 +1443,17 @@ img,video,iframe{max-width:100%}
 </div>
 </div>
 <div class="g3" style="margin-top:28px">
-<div class="why-item" style="border:1px solid var(--cream-dd);border-radius:var(--r-l);background:var(--white)">
+<div class="why-item reveal" style="border:1px solid var(--cream-dd);border-radius:var(--r-l);background:var(--white)">
 <div class="why-num">01</div>
 <h4>For adolescent guides</h4>
 <p>Adult learners work towards an AMS Secondary I–II credential for Montessori work with students aged 12–18.</p>
 </div>
-<div class="why-item" style="border:1px solid var(--cream-dd);border-radius:var(--r-l);background:var(--white)">
+<div class="why-item reveal" style="border:1px solid var(--cream-dd);border-radius:var(--r-l);background:var(--white)">
 <div class="why-num">02</div>
 <h4>Low-residency format</h4>
 <p>Online study is paired with in-person sessions in Barcelona, making the programme more accessible to working educators.</p>
 </div>
-<div class="why-item" style="border:1px solid var(--cream-dd);border-radius:var(--r-l);background:var(--white)">
+<div class="why-item reveal" style="border:1px solid var(--cream-dd);border-radius:var(--r-l);background:var(--white)">
 <div class="why-num">03</div>
 <h4>Hosted at Pomaret</h4>
 <p>The training centre is based at Carrer Pomaret 25, connecting adult learning with the school’s adolescent programme and campus life.</p>
@@ -1432,34 +1476,34 @@ img,video,iframe{max-width:100%}
 <!-- ─── CURRICULUM & ENRICHMENT ───────────────────── -->
 <section class="sec" id="curriculum">
 <div class="wrap">
-<div class="sec-head">
+<div class="sec-head reveal">
 <span class="tag">Curriculum &amp; Enrichment</span>
 <h2 class="h2">Montessori depth,<br/>recognised standards.</h2>
 <div class="rule"></div>
 <p class="body body--lg">Our curriculum is developmental rather than age-driven — and fully integrated with the frameworks families need for continuity and recognition anywhere in the world.</p>
 </div>
 <div class="g3">
-<div class="why-item" style="border:1px solid var(--cream-dd);border-radius:var(--r-l)">
+<div class="why-item reveal" style="border:1px solid var(--cream-dd);border-radius:var(--r-l)">
 <h4>The Montessori curriculum</h4>
 <p>Each environment follows the full Montessori scope and sequence for its plane of development — from sensorial and practical life in the Children's House to Cosmic Education in Primary and land, enterprise and community work in the Adolescent Community.</p>
 </div>
-<div class="why-item" style="border:1px solid var(--cream-dd);border-radius:var(--r-l)">
+<div class="why-item reveal" style="border:1px solid var(--cream-dd);border-radius:var(--r-l)">
 <h4>Integrated frameworks</h4>
 <p>The Montessori curriculum is mapped to the Early Years Foundation Stage and the English National Curriculum, and delivers Catalan and Spanish language and literature as required for full homologation — so learning records are recognised by British, Spanish and Catalan authorities alike.</p>
 </div>
-<div class="why-item" style="border:1px solid var(--cream-dd);border-radius:var(--r-l)">
+<div class="why-item reveal" style="border:1px solid var(--cream-dd);border-radius:var(--r-l)">
 <h4>Assessment that supports growth</h4>
 <p>Progress is evidenced through observation, portfolios, projects and reflective dialogue — mastery over marks — with selective, age-appropriate formal assessment as students move towards externally recognised qualifications.</p>
 </div>
-<div class="why-item" style="border:1px solid var(--cream-dd);border-radius:var(--r-l)">
+<div class="why-item reveal" style="border:1px solid var(--cream-dd);border-radius:var(--r-l)">
 <h4>Specialist enrichment</h4>
 <p>Dedicated specialists in Catalan, Spanish, Art, Music, PE and Special Educational Needs work across Early Years, Primary and Secondary — alongside a rich programme of extracurricular activities and the summer camp.</p>
 </div>
-<div class="why-item" style="border:1px solid var(--cream-dd);border-radius:var(--r-l)">
+<div class="why-item reveal" style="border:1px solid var(--cream-dd);border-radius:var(--r-l)">
 <h4>Community projects</h4>
 <p>Learning connects to the real world through long-running community partnerships — including Fundació Ánima, VHIO and the Race Against Hunger — and through student-led initiatives such as Montessori Model United Nations.</p>
 </div>
-<div class="why-item" style="border:1px solid var(--cream-dd);border-radius:var(--r-l)">
+<div class="why-item reveal" style="border:1px solid var(--cream-dd);border-radius:var(--r-l)">
 <h4>Support for every learner</h4>
 <p>Diverse learners are supported through differentiation, accommodations and Individual International Learning Plans, with a Special Educational Needs framework built on early identification and collaborative review with families.</p>
 </div>
@@ -1469,7 +1513,7 @@ img,video,iframe{max-width:100%}
 <!-- ─── LIFE AT BMS — alternating photo+text ─────── -->
 <section class="sec sec--tint" id="life">
 <div class="wrap">
-<div class="sec-head">
+<div class="sec-head reveal">
 <span class="tag">Life at BMS</span>
 <h2 class="h2">A school that feels<br/>like home.</h2>
 <div class="rule"></div>
@@ -1547,39 +1591,39 @@ img,video,iframe{max-width:100%}
 <!-- ─── WHY BMS ────────────────────────────────────── -->
 <section class="sec" id="about">
 <div class="wrap">
-<div class="sec-head c">
+<div class="sec-head c reveal">
 <span class="tag">Why Barcelona Montessori</span>
 <h2 class="h2">Built differently, by design.</h2>
 <div class="rule"></div>
 <p class="body">BMS is not an adapted conventional school. Every element — from the environment to the staff ratios — is built from Montessori principles from the ground up.</p>
 </div>
 <div class="why-items" style="border:1px solid var(--cream-dd);border-radius:var(--r-xl);overflow:hidden">
-<div class="why-item">
+<div class="why-item reveal">
 <div class="why-num">01</div>
 <h4>Pioneer in Barcelona</h4>
 <p>Founded in 2015 as the first Montessori centre active in Barcelona since 1924. Ten years of accumulated expertise and community trust that no newer school can replicate.</p>
 </div>
-<div class="why-item">
+<div class="why-item reveal">
 <div class="why-num">02</div>
 <h4>Neuroscience-validated</h4>
 <p>Montessori's core principles — self-directed learning, mixed-age classes, intrinsic motivation — are now confirmed by leading brain development research. We teach the science and follow it.</p>
 </div>
-<div class="why-item">
+<div class="why-item reveal">
 <div class="why-num">03</div>
 <h4>Truly international</h4>
 <p>40+ nationalities in one community. English as the shared language; Spanish and Catalan absorbed daily. Children grow up genuinely multilingual and culturally fluent.</p>
 </div>
-<div class="why-item" style="border-bottom:none">
+<div class="why-item reveal" style="border-bottom:none">
 <div class="why-num">04</div>
 <h4>Independently inspected</h4>
 <p>"Outstanding independent learning skills… highly motivated, hardworking and resilient" — NABSS 2025 inspection. Both full reports available to read without sign-up.</p>
 </div>
-<div class="why-item" style="border-bottom:none">
+<div class="why-item reveal" style="border-bottom:none">
 <div class="why-num">05</div>
 <h4>Exceptional outdoor space</h4>
 <p>6,000 m² of heritage Masia garden in central Sarrià. A farm, nature, and daily outdoor life are not extras — they are curriculum, especially for the Secondary programme.</p>
 </div>
-<div class="why-item" style="border-bottom:none">
+<div class="why-item reveal" style="border-bottom:none">
 <div class="why-num">06</div>
 <h4>AMI-trained guides</h4>
 <p>Every classroom led by AMI or AMS-certified Montessori guides, supported by subject specialists. Our team spans 20+ countries and holds 30+ Montessori diplomas.</p>
@@ -1590,7 +1634,7 @@ img,video,iframe{max-width:100%}
 <!-- ─── TEAM ───────────────────────────────────────── -->
 <section class="sec sec--tint" id="team">
 <div class="wrap">
-<div class="sec-head">
+<div class="sec-head reveal">
 <span class="tag">Our Team</span>
 <h2 class="h2">Led by experts.<br/>Driven by purpose.</h2>
 <div class="rule"></div>
@@ -1598,7 +1642,7 @@ img,video,iframe{max-width:100%}
 </div>
 <p style="font-family:var(--font-h);font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--green);margin-bottom:18px">Executive Committee</p>
 <div class="team-grid team-grid--exec">
-<div class="team-card">
+<div class="team-card reveal">
 <div aria-label="Tim — as a toddler, flips to a recent photo" class="team-flip" role="img" tabindex="0">
 <div class="team-flip-inner">
 <div class="team-face team-front">
@@ -1615,7 +1659,7 @@ img,video,iframe{max-width:100%}
 <div class="team-role">Director of Operations, Development &amp; Admissions</div>
 <div class="team-bio">Founder of Nido Montessori Barcelona (2015). AMI 12–18 Adolescent diploma. Leads operations, development and admissions, including the Mas Pomaret project.</div><details class="bio-more"><summary>Read Tim’s story</summary><p>Timothée studied History of Art and Literature in France before becoming a French teacher while living in London. This is when he decided that he wanted to work with children. After moving to Spain he learned about Montessori method and practice and went to France to enrol in a teaching assistant’s course near Lyon. After working for several years as a teaching assistant in pre-schools and seeing how little diversity there is in educational method for this age group, he decided in 2014 to create Nido, the first Montessori centre in Barcelona since 1924. In 2020 Nido grew and led to open Barcelona Montessori School, this time with the help of an amazing team and families. In 2021 Tim has started the 12 to 18 years old AMI diploma course which will give him a good understanding on how to create the adolescent program in the new campus.</p></details>
 </div>
-<div class="team-card">
+<div class="team-card reveal">
 <div aria-label="Julianna — as a toddler, flips to a recent photo" class="team-flip" role="img" tabindex="0">
 <div class="team-flip-inner">
 <div class="team-face team-front">
@@ -1632,7 +1676,7 @@ img,video,iframe{max-width:100%}
 <div class="team-role">Head of School</div>
 <div class="team-bio">MFA English Philology (Jagiellonian University). Montessori Lower and Upper Elementary diplomas (NAMC). Montessori School Leadership diploma (CGMS). 14+ years as a guide.</div><details class="bio-more"><summary>Read Julianna’s story</summary><p>Julianna entered the world of Montessori in 2009 unexpectedly. She immediately fell in love with the method and has embraced her world in this philosophy for 14 years now. She holds a Master of Fine Arts in English Philology from the Jagiellonian University in Krakow. She also has a postgraduate degree in Psychological and Pedagogical Counselling and Support. She obtained a Montessori Lower and Upper Elementary diploma from the North American Montessori Center and has worked as a Guide for both levels over the past 14 years. In addition, she recently finished her School Leadership Montessori diploma from CGMS. Julianna is originally from Hungary and Poland, however, she spent the majority of her childhood in London. She has lived in a number of countries, including Italy and Cyprus. She loves to travel and to learn about new cultures. Julianna’s true vocation is being a guide and inspiring others to see the beauty and magic of the Montessori philosophy. She loves children and helping them grow into their own individuals. She deeply loves the Montessori approach and can’t imagine her life any other way. In her free time she enjoys taking long walks in nature, enjoying the sea and relaxing through yoga. She also completed a Yoga Teacher Training Course in Thailand.</p></details>
 </div>
-<div class="team-card">
+<div class="team-card reveal">
 <div aria-label="Nuria Quintero — as a toddler, flips to a recent photo" class="team-flip" role="img" tabindex="0">
 <div class="team-flip-inner">
 <div class="team-face team-front">
@@ -1649,7 +1693,7 @@ img,video,iframe{max-width:100%}
 <div class="team-role">Director of Finance</div>
 <div class="team-bio">20+ years corporate finance and international management across industrial, technology, and fintech sectors. Data-driven financial planning for BMS's long-term sustainability.</div><details class="bio-more"><summary>Read Núria’s story</summary><p>Nuria is a Finance Director with over 20 years of experience in corporate finance and international management. Her profile blends methodical rigor and efficiency with a deeply human perspective on education. Having led teams across the industrial, tech, and fintech sectors, Nuria brings a unique strategic capability to Barcelona Montessori School: the ability to use data to make thoughtful, consistent decisions that ensure the long-term sustainability of the project. Her connection to the Montessori philosophy stems from the balance between structure and freedom. For her, the school is a “living organisation” where financial planning and resources serve a greater purpose: the holistic development of the child. Her calm and empathetic leadership ensures that every organisational decision is rooted in respect and transparency, always placing the community's well-being at the heart of her work.</p></details>
 </div>
-<div class="team-card">
+<div class="team-card reveal">
 <div aria-label="Abi Hatto — as a toddler, flips to a recent photo" class="team-flip" role="img" tabindex="0">
 <div class="team-flip-inner">
 <div class="team-face team-front">
@@ -1669,7 +1713,7 @@ img,video,iframe{max-width:100%}
 </div>
 <p style="font-family:var(--font-h);font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--green);margin-bottom:18px">Senior Leadership Team <span style="font-weight:500;text-transform:none;letter-spacing:.02em;color:var(--muted)">— led by the Head of School</span></p>
 <div class="team-grid team-grid--slt">
-<div class="team-card">
+<div class="team-card reveal">
 <div aria-label="Nuria Serrano — as a toddler, flips to a recent photo" class="team-flip" role="img" tabindex="0">
 <div class="team-flip-inner">
 <div class="team-face team-front">
@@ -1686,7 +1730,7 @@ img,video,iframe{max-width:100%}
 <div class="team-role">Head of Early Years</div>
 <div class="team-bio">European Master's in Montessori 0–6 (UVic + Montessori Institute San Diego). AMI referee within UVic's Montessori Master's. With BMS since 2019.</div><details class="bio-more"><summary>Read Núria’s story</summary><p>Nuria was born and raised in Barcelona. As the youngest child of her family, she learnt wonderful things from her older siblings, such as how to pick blackberries, make a jasmine necklace, swim or ride a bicycle. Nuria started her career in Public Administration. In 2007 her life changed when she got the opportunity to move to San Diego, California (USA). There, she had the opportunity to work as a Spanish language teacher for kids from ages 1 to 12 years old. Working with children revealed as her true passion, and she decided to get formal training in the education field. She obtained an official European Master’s Degree in Montessori Education (0-6 years-old) by the University of Vic (UVic) and The Montessori Institute of San Diego. She worked for 3 years as an English Toddler Guide and Infant Community Supervisor at Kinderhouse Montessori School of San Diego. After a long stay in the USA, life brought her back to her hometown, where she joined the team of teachers at Nido Montessori Barcelona in 2019, and later Barcelona Montessori School in 2020. She has collaborated as well as an Associate Teacher and AMI referee within the UVic’s Montessori Master’s degree program. She has a child happily enrolled in the BMS Primary program.</p></details>
 </div>
-<div class="team-card">
+<div class="team-card reveal">
 <div aria-label="Paulina Peña — as a toddler, flips to a recent photo" class="team-flip" role="img" tabindex="0">
 <div class="team-flip-inner">
 <div class="team-face team-front">
@@ -1706,7 +1750,7 @@ img,video,iframe{max-width:100%}
 </div>
 <p style="font-family:var(--font-h);font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--green);margin-bottom:18px;text-align:center">School Administration</p>
 <div class="team-grid" style="grid-template-columns:1fr;max-width:320px;margin:0 auto">
-<div class="team-card">
+<div class="team-card reveal">
 <div aria-label="Judit Tomás — as a toddler, flips to a recent photo" class="team-flip" role="img" tabindex="0">
 <div class="team-flip-inner">
 <div class="team-face team-front">
@@ -2514,7 +2558,7 @@ img,video,iframe{max-width:100%}
 <!-- ─── PARENTS AS PARTNERS IN EDUCATION ───────────── -->
 <section class="sec" id="parents">
 <div class="wrap">
-<div class="sec-head">
+<div class="sec-head reveal">
 <span class="tag">For Our Families</span>
 <h2 class="h2">Parents as partners<br/>in education.</h2>
 <div class="rule"></div>
@@ -2527,49 +2571,49 @@ img,video,iframe{max-width:100%}
 <h3 class="h3" style="color:var(--white);margin:8px 0 14px">A year of learning together.</h3>
 <p style="font-family:var(--font-b);font-size:15px;color:rgba(255,255,255,.75);line-height:1.8;max-width:680px;margin-bottom:26px">Every year, the school hosts a programme of events for parents — some to learn about Montessori in depth, some to see your child's environment from the inside, and some simply to be together as a community. Typical events include:</p>
 <div class="pj-grid">
-<div class="val"><h5>Welcome Coffee Mornings</h5><p>Meet other families and the team at the start of the year — with a special welcome for newly arrived families.</p></div>
-<div class="val"><h5>Montessori Parent Education Evenings</h5><p>Talks and workshops on child development, independence at home, and the why behind what you see in the classroom.</p></div>
-<div class="val"><h5>Classroom Observation Mornings</h5><p>Sit quietly in your child's environment and watch a working morning unfold — many parents call it the moment Montessori "clicked".</p></div>
-<div class="val"><h5>Parent–Guide Conferences</h5><p>Individual conversations about your child's development, twice a year and whenever you need one.</p></div>
-<div class="val"><h5>Community Celebrations</h5><p>Seasonal festivals, International Day, performances and exhibitions — the whole community, together.</p></div>
-<div class="val"><h5>FAB Club Gatherings</h5><p>Family picnics, outings and initiatives organised by parents, for everyone.</p></div>
+<div class="val reveal"><h5>Welcome Coffee Mornings</h5><p>Meet other families and the team at the start of the year — with a special welcome for newly arrived families.</p></div>
+<div class="val reveal"><h5>Montessori Parent Education Evenings</h5><p>Talks and workshops on child development, independence at home, and the why behind what you see in the classroom.</p></div>
+<div class="val reveal"><h5>Classroom Observation Mornings</h5><p>Sit quietly in your child's environment and watch a working morning unfold — many parents call it the moment Montessori "clicked".</p></div>
+<div class="val reveal"><h5>Parent–Guide Conferences</h5><p>Individual conversations about your child's development, twice a year and whenever you need one.</p></div>
+<div class="val reveal"><h5>Community Celebrations</h5><p>Seasonal festivals, International Day, performances and exhibitions — the whole community, together.</p></div>
+<div class="val reveal"><h5>FAB Club Gatherings</h5><p>Family picnics, outings and initiatives organised by parents, for everyone.</p></div>
 </div>
 <p style="font-family:var(--font-h);font-size:12px;color:rgba(255,255,255,.5);margin-top:22px">The full 2026–27 parent events calendar is published at the start of the school year — see the school calendar below for confirmed dates.</p>
 </div>
 <div class="g3">
-<a class="why-item" href="#school-calendar" style="display:block;border:1px solid var(--cream-dd);border-radius:var(--r-l);border-top:4px solid var(--teal);background:var(--white);overflow:hidden;padding:0">
+<a class="why-item reveal" href="#school-calendar" style="display:block;border:1px solid var(--cream-dd);border-radius:var(--r-l);border-top:4px solid var(--teal);background:var(--white);overflow:hidden;padding:0">
 <img alt="School calendar and key dates" src="images/school-calendar-and-key-dates.webp" style="height:130px;width:100%;object-fit:cover"/>
 <div style="padding:24px 26px"><h4 style="color:var(--navy)">School Calendar →</h4>
 <p>Term dates, holidays, celebrations, parent events and key dates for the academic year.</p></div>
 </a>
-<a class="why-item" href="#bus-routes" style="display:block;border:1px solid var(--cream-dd);border-radius:var(--r-l);border-top:4px solid var(--p-sky);background:var(--white);overflow:hidden;padding:0">
+<a class="why-item reveal" href="#bus-routes" style="display:block;border:1px solid var(--cream-dd);border-radius:var(--r-l);border-top:4px solid var(--p-sky);background:var(--white);overflow:hidden;padding:0">
 <img alt="BMS school bus service" src="images/bms-school-bus-service.webp" style="height:130px;width:100%;object-fit:cover"/>
 <div style="padding:24px 26px"><h4 style="color:var(--navy)">Bus Routes →</h4>
 <p>Morning and afternoon routes, stops and timings for the school bus service.</p></div>
 </a>
-<a class="why-item" href="#policies-procedures" style="display:block;border:1px solid var(--cream-dd);border-radius:var(--r-l);border-top:4px solid var(--navy);background:var(--white);overflow:hidden;padding:0">
+<a class="why-item reveal" href="#policies-procedures" style="display:block;border:1px solid var(--cream-dd);border-radius:var(--r-l);border-top:4px solid var(--navy);background:var(--white);overflow:hidden;padding:0">
 <img alt="School policies and procedures" src="images/school-policies-and-procedures.webp" style="height:130px;width:100%;object-fit:cover"/>
 <div style="padding:24px 26px"><h4 style="color:var(--navy)">Policies &amp; Procedures →</h4>
 <p>The school handbook: safeguarding, health, payments, re-enrolment and all policies.</p></div>
 </a>
-<a class="why-item" href="#uniform" style="display:block;border:1px solid var(--cream-dd);border-radius:var(--r-l);border-top:4px solid var(--p-mint);background:var(--white);overflow:hidden;padding:0">
+<a class="why-item reveal" href="#uniform" style="display:block;border:1px solid var(--cream-dd);border-radius:var(--r-l);border-top:4px solid var(--p-mint);background:var(--white);overflow:hidden;padding:0">
 <img alt="Barcelona Montessori School uniform T-shirt" src="images/barcelona-montessori-school-uniform-t-shirt.webp" style="height:130px;width:100%;object-fit:cover"/>
 <div style="padding:24px 26px"><h4 style="color:var(--navy)">Uniform →</h4>
 <p>What children wear at BMS, where to order it, and guidance by programme.</p></div>
 </a>
-<a class="why-item" href="#lunch-menu" style="display:block;border:1px solid var(--cream-dd);border-radius:var(--r-l);border-top:4px solid var(--p-lime);background:var(--white);overflow:hidden;padding:0">
+<a class="why-item reveal" href="#lunch-menu" style="display:block;border:1px solid var(--cream-dd);border-radius:var(--r-l);border-top:4px solid var(--p-lime);background:var(--white);overflow:hidden;padding:0">
 <img alt="Fresh school lunch ingredients" src="images/fresh-school-lunch-ingredients.webp" style="height:130px;width:100%;object-fit:cover"/>
 <div style="padding:24px 26px"><h4 style="color:var(--navy)">Lunch Menu →</h4>
 <p>Menus prepared by the school kitchen team, with Ametller Origen.</p></div>
 </a>
-<a class="why-item" href="#enrichment-activities" style="display:block;border:1px solid var(--cream-dd);border-radius:var(--r-l);border-top:4px solid var(--peach);background:var(--white);overflow:hidden;padding:0">
+<a class="why-item reveal" href="#enrichment-activities" style="display:block;border:1px solid var(--cream-dd);border-radius:var(--r-l);border-top:4px solid var(--peach);background:var(--white);overflow:hidden;padding:0">
 <img alt="Skateboarding enrichment activity" src="images/skateboarding-enrichment-activity.webp" style="height:130px;width:100%;object-fit:cover"/>
 <div style="padding:24px 26px"><h4 style="color:var(--navy)">Enrichment Activities →</h4>
 <p>Extracurricular activities: sign-up and this term's offering.</p></div>
 </a>
 </div>
 <div class="g2" style="margin-top:44px;gap:28px;align-items:stretch">
-<div class="why-item" id="school-calendar" style="border:1px solid var(--cream-dd);border-radius:var(--r-l);background:var(--white);border-top:4px solid var(--teal)">
+<div class="why-item reveal" id="school-calendar" style="border:1px solid var(--cream-dd);border-radius:var(--r-l);background:var(--white);border-top:4px solid var(--teal)">
 <div class="why-num">PARENT RESOURCE</div>
 <h4>School Calendar</h4>
 <p>The current BMS calendar page publishes the yearly school calendar documents for families, including the 2025–2026 calendar and the draft 2026–2027 calendar. Parent events and conferences are managed separately through the school’s event listings.</p>
@@ -2581,7 +2625,7 @@ img,video,iframe{max-width:100%}
 </ul>
 <div style="display:flex;gap:10px;flex-wrap:wrap"><a class="btn btn-outline" href="#school-calendar" rel="noopener" target="_blank">Read calendar information →</a><a class="btn btn-outline" href="https://drive.google.com/file/d/1M8qPk7B3R-JBGDmvsmMG7p_nuZyJ0koJ/view?usp=sharing" rel="noopener" target="_blank">2025–26 PDF →</a></div>
 </div>
-<div class="why-item" id="bus-routes" style="border:1px solid var(--cream-dd);border-radius:var(--r-l);background:var(--white);border-top:4px solid var(--p-sky)">
+<div class="why-item reveal" id="bus-routes" style="border:1px solid var(--cream-dd);border-radius:var(--r-l);background:var(--white);border-top:4px solid var(--p-sky)">
 <div class="why-num">PARENT RESOURCE</div>
 <h4>Bus Routes</h4>
 <p>The current parent resources page links families to the school bus folder for the live route documents. This is the safest place to keep the latest morning and afternoon routes, stops and timings, as these may change during the year.</p>
@@ -2593,7 +2637,7 @@ img,video,iframe{max-width:100%}
 </ul>
 <a class="btn btn-outline" href="https://drive.google.com/drive/folders/1wD0PvhyuoD9InKQiAuoKde3LCRNyH-WX?usp=sharing" rel="noopener" target="_blank">Open bus route folder →</a>
 </div>
-<div class="why-item" id="policies-procedures" style="border:1px solid var(--cream-dd);border-radius:var(--r-l);background:var(--white);border-top:4px solid var(--navy)">
+<div class="why-item reveal" id="policies-procedures" style="border:1px solid var(--cream-dd);border-radius:var(--r-l);background:var(--white);border-top:4px solid var(--navy)">
 <div class="why-num">PARENT RESOURCE</div>
 <h4>Policies &amp; Procedures</h4>
 <p>The current parent resources page links to the published online policies and procedures folder. Use this section as the parent-facing gateway to the school handbook and statutory documents.</p>
@@ -2605,7 +2649,7 @@ img,video,iframe{max-width:100%}
 </ul>
 <a class="btn btn-outline" href="#school-policies-handbook">Read policies on this page →</a>
 </div>
-<div class="why-item" id="uniform" style="border:1px solid var(--cream-dd);border-radius:var(--r-l);background:var(--white);border-top:4px solid var(--p-mint)">
+<div class="why-item reveal" id="uniform" style="border:1px solid var(--cream-dd);border-radius:var(--r-l);background:var(--white);border-top:4px solid var(--p-mint)">
 <div class="why-num">PARENT RESOURCE</div>
 <h4>Uniform</h4>
 <p>BMS uniforms are ordered through Gotiteta’s dedicated BMS uniform page. The current collection includes everyday clothing and accessories with the BMS identity.</p>
@@ -2617,7 +2661,7 @@ img,video,iframe{max-width:100%}
 </ul>
 <a class="btn btn-outline" href="https://www.gotiteta.com/pages/bms-uniforms" rel="noopener" target="_blank">Order uniform →</a>
 </div>
-<div class="why-item" id="lunch-menu" style="border:1px solid var(--cream-dd);border-radius:var(--r-l);background:var(--white);border-top:4px solid var(--p-lime)">
+<div class="why-item reveal" id="lunch-menu" style="border:1px solid var(--cream-dd);border-radius:var(--r-l);background:var(--white);border-top:4px solid var(--p-lime)">
 <div class="why-num">PARENT RESOURCE</div>
 <h4>Lunch Menu</h4>
 <p>The current parent resources page links to the lunch menu folder. Menus should be kept there so families always see the most up-to-date version. The school also lists Ametller Origen among its partners.</p>
@@ -2629,7 +2673,7 @@ img,video,iframe{max-width:100%}
 </ul>
 <a class="btn btn-outline" href="https://drive.google.com/drive/folders/1r4fqV7e0XIlaKVQA3wjpryQVRSD5japs?usp=drive_link" rel="noopener" target="_blank">Open lunch menu folder →</a>
 </div>
-<div class="why-item" id="enrichment-activities" style="border:1px solid var(--cream-dd);border-radius:var(--r-l);background:var(--white);border-top:4px solid var(--peach)">
+<div class="why-item reveal" id="enrichment-activities" style="border:1px solid var(--cream-dd);border-radius:var(--r-l);background:var(--white);border-top:4px solid var(--peach)">
 <div class="why-num">PARENT RESOURCE</div>
 <h4>Enrichment Activities</h4>
 <p>The current enrichment page separates activities by age and campus. Children aged 3–6 at Pomaret can choose from Little Kickers, Dance Initiation and Craft Club. Children aged 6–12 at Esperança can choose from Little Kickers, Craft Club, Pottery, Top Chef, Robotics, Musical Theatre, Skatia and Chess Club.</p>
@@ -2649,14 +2693,42 @@ img,video,iframe{max-width:100%}
 </div>
 <a class="btn btn-primary" href="https://www.mymontessorijournal.com" rel="noopener" target="_blank">Log in →</a>
 </div>
-<div class="g2" style="margin-top:44px;gap:28px;align-items:stretch">
-<div class="why-item" style="border:1px solid var(--cream-dd);border-radius:var(--r-l)">
-<h4>FAB Club — Families Association of BMS</h4>
-<p>An independent organisation open to all families wishing to strengthen, support and enrich the school community — events and initiatives run by parents, for everyone.</p>
+<div style="margin-top:52px;text-align:center;max-width:640px;margin-left:auto;margin-right:auto">
+<span class="tag">Parent Involvement</span>
+<h3 class="h3">Three ways families shape school life.</h3>
+<p class="body" style="margin-top:10px">Community at BMS is built by parents, for everyone. Three connected initiatives make it easy to take part — whatever your time, language or interests.</p>
 </div>
-<div class="why-item" style="border:1px solid var(--cream-dd);border-radius:var(--r-l)">
+<div class="g3" style="margin-top:34px;gap:28px;align-items:stretch">
+<div class="why-item reveal" style="border:1px solid var(--cream-dd);border-radius:var(--r-l);border-top:4px solid var(--teal)">
+<div class="why-num">FAB CLUB</div>
+<h4>Families Association of BMS</h4>
+<p>A non-profit, secular and apolitical association run by parents to build a warm, connected school community. The FAB Club organises social events, projects and activities, provides volunteers for school events, and fundraises so that every student can join school trips regardless of financial circumstances. It is committed to equality, diversity and accessibility, with democratic and transparent governance.</p>
+<ul style="font-family:var(--font-b);font-size:14px;color:var(--muted);line-height:1.8;margin:14px 0 4px;padding-left:18px;list-style:disc">
+<li>Informal meetings: 3rd Tuesday of the month, 9:15–10:30 in the school canteen</li>
+<li>Initiatives include penpal projects, Community Week, monthly "park &amp; cake", parent education events and weekend family activities</li>
+<li>Open to all families — a welcoming way to meet like-minded parents across classes</li>
+</ul>
+<p style="font-size:13px;color:var(--muted);margin-top:12px"><em>Note: the FAB Club is not a representative body in discussions with the school — that role belongs to the Parent Representatives.</em></p>
+</div>
+<div class="why-item reveal" style="border:1px solid var(--cream-dd);border-radius:var(--r-l);border-top:4px solid var(--green)">
+<div class="why-num">AMBASSADORS</div>
 <h4>Family Ambassador Programme</h4>
-<p>Experienced BMS families who welcome newly arrived families — especially those relocating internationally — through their first months at the school and in Barcelona.</p>
+<p>Current families welcome newly arrived families — especially those relocating internationally — through their first months at the school and in Barcelona. Families are matched by the age of their children, languages spoken at home, and shared interests.</p>
+<ul style="font-family:var(--font-b);font-size:14px;color:var(--muted);line-height:1.8;margin:14px 0 4px;padding-left:18px;list-style:disc">
+<li>New families are automatically offered an ambassador contact when they join</li>
+<li>A friendly way to meet new families and build community spirit</li>
+<li>Current families are warmly invited to sign up</li>
+</ul>
+</div>
+<div class="why-item reveal" style="border:1px solid var(--cream-dd);border-radius:var(--r-l);border-top:4px solid var(--peach)">
+<div class="why-num">PARENT REPS</div>
+<h4>Parent Representative Scheme</h4>
+<p>Each class has a designated Parent Representative who liaises directly with the school on behalf of parents — the formal channel for parent suggestions and ideas. Developed in consultation with teaching staff and the FAB Club, the scheme has an agreed job description and a transparent application and voting procedure.</p>
+<ul style="font-family:var(--font-b);font-size:14px;color:var(--muted);line-height:1.8;margin:14px 0 4px;padding-left:18px;list-style:disc">
+<li>One representative per class, liaising directly with the school</li>
+<li>Clear job description and democratic voting procedure</li>
+<li>The school's formal route for parent feedback and initiatives</li>
+</ul>
 </div>
 </div>
 </div>
@@ -2664,14 +2736,14 @@ img,video,iframe{max-width:100%}
 <!-- ─── TESTIMONIALS — full parent testimonials from barcelonamontessorischool.com/testimonials, July 2026 ─── -->
 <section class="sec sec--tint" id="testimonials">
 <div class="wrap">
-<div class="sec-head c">
+<div class="sec-head c reveal">
 <span class="tag">Parent Testimonials</span>
 <h2 class="h2">Hear from our community.</h2>
 <div class="rule"></div>
 <p class="body">In their own words — the families of BMS.</p>
 </div>
 <div class="test-grid">
-<div class="test">
+<div class="test reveal">
 <div class="test-mark">"</div>
 <div class="test-text">Our daughter absolutely loves BMS. She walks in and out each day with a big smile, which says it all. The support during her transition from another country was incredible. She felt welcomed from day one and picked up English in just a couple of months at age 3. We truly feel that parent feedback is heard and acted on quickly. The staff are caring, responsive, and deeply committed to the children’s growth. We’ve seen our daughter thrive - becoming more independent, curious, proud of her work, and a kind friend. There’s a strong sense of partnership between the school and families. Feeling so supported and heard as a parent is something really special. We’re so grateful to be part of this community.</div>
 <div class="test-author">
@@ -2679,7 +2751,7 @@ img,video,iframe{max-width:100%}
 <div><div class="test-name">Ivana</div><div class="test-role">BMS Parent</div></div>
 </div>
 </div>
-<div class="test">
+<div class="test reveal">
 <div class="test-mark">"</div>
 <div class="test-text">Our son is in his fourth year at BMS and we are genuinely very happy with the experience. He is delighted to go into school every day (we’re lucky if we get a goodbye from him!). His guides are, and always have been, experienced and knowledgeable and yet understand perfectly what it is to be an energetic child! As parents we have seen the school grow and develop enormously in the time we’ve been here. The owners of the school are involved, approachable and down-to-earth. Our questions have always been dealt with quickly and well. We feel fortunate that our child is experiencing education in this positive and purposeful environment, where the child is an important part of the community rather than simply a receptacle of knowledge and facts. There are multiple opportunities to observe our child’s class, be shown around the classroom and attend parenting talks and sessions about aspects of the Montessori method each year, and because of these events we feel like a part of the community too, which is important as parents.</div>
 <div class="test-author">
@@ -2687,7 +2759,7 @@ img,video,iframe{max-width:100%}
 <div><div class="test-name">Julia Barker</div><div class="test-role">BMS Parent</div></div>
 </div>
 </div>
-<div class="test">
+<div class="test reveal">
 <div class="test-mark">"</div>
 <div class="test-text">We wanted to let you know that we have made the difficult decision to move back to Germany. It has not been an easy choice for us, as we truly love both the school and Barcelona. The years we've spent here have been incredibly enriching, and it is hard to say goodbye – though we hope this might not be a farewell forever. We are very happy to share that the children have been accepted into the European School in our town. Thanks to the excellent English level they have developed during their time with you, they will be able to join the English section instead of the usual mother-tongue (German) section. This is quite exceptional, as the standard practice in European Schools is to provide instruction in the child's native language. In fact, a teacher at the new school even told me that, academically, our son is well ahead of the German children who will be starting Primary this autumn – a true testament to your school and the Montessori approach. We are incredibly grateful for the wonderful time we had with you and for everything the children have learned and experienced. With warmest regards and many thanks again.</div>
 <div class="test-author">
@@ -2697,7 +2769,7 @@ img,video,iframe{max-width:100%}
 </div>
 </div>
 <div class="test-wall">
-<div class="test">
+<div class="test reveal">
 <div class="test-mark">"</div>
 <div class="test-text">My experience at Barcelona Montessori School with my children has been extraordinary. For the past six years, both we and our children have felt deeply supported by every member of the team, from the management to the teachers. This school has not only provided an exceptional educational environment, but has also cultivated a community where support and collaboration are essential. In my numerous classroom observations, the innate curiosity and enthusiasm the children show for learning and working stood out. Each one progresses at their own pace, exploring their individual interests, always under the watchful and encouraging eye of the guides. This personalised approach has allowed my children to feel empowered and motivated to take on new challenges. The atmosphere at Barcelona Montessori School is distinguished by its serenity, respect and fairness. Here, there is no need for grades, positive or negative evaluations; the focus is on the integrity of the child. Teachers work tirelessly to foster responsibility, independence and self-confidence, providing each student with the essential tools for their holistic development. I especially appreciate the school's commitment to balancing emotional development with the acquisition of fundamental knowledge and skills. Barcelona Montessori School has proven to be a place where each child's individuality is valued, while ensuring a solid foundation for their future success. In summary, I am grateful for the quality education and enriching environment that Barcelona Montessori School has provided for my children. I highly recommend this institution to parents who are looking for a unique educational experience focused on the holistic development of their children.</div>
 <div class="test-author">
@@ -2705,7 +2777,7 @@ img,video,iframe{max-width:100%}
 <div><div class="test-name">Lidia</div><div class="test-role">Mother of Sofia, Matteo and Olivia</div></div>
 </div>
 </div>
-<div class="test">
+<div class="test reveal">
 <div class="test-mark">"</div>
 <div class="test-text">Our kids could only experience BMS for one year and we miss BMS a lot and we wish we could have had more time with the school. We really do think BMS is unparalleled. We really appreciated how the school involved parents, all the learning opportunities and especially how serious BMS take Montessori and how serious they take each and every child, their individual development and also their families. Our children really thrived during their time at BMS in all aspects of life. Academically, personally, in the fields of art, friendship, communication etc.</div>
 <div class="test-author">
@@ -2713,7 +2785,7 @@ img,video,iframe{max-width:100%}
 <div><div class="test-name">Eva Stuebner</div><div class="test-role">BMS Parent</div></div>
 </div>
 </div>
-<div class="test">
+<div class="test reveal">
 <div class="test-mark">"</div>
 <div class="test-text">I couldn’t think of a better school for my kids. We wanted a school with a nurturing environment for our children to thrive in, and it was important for us to find a Montessori school. Both my 2yo and 5yo daughters enjoy going to school every morning. BMS was (and still is) our first and only choice!</div>
 <div class="test-author">
@@ -2721,7 +2793,7 @@ img,video,iframe{max-width:100%}
 <div><div class="test-name">Lou Cabrolie</div><div class="test-role">BMS Parent</div></div>
 </div>
 </div>
-<div class="test">
+<div class="test reveal">
 <div class="test-mark">"</div>
 <div class="test-text">I want to thank the entire BMS team and especially Tim and Abi in person for the incredible humanity and support showed to us and our children in this difficult time. Our two girls, ages five and ten, joined easily into the great prepared montessori space and found new friends! Muchísimas gracias!!</div>
 <div class="test-author">
@@ -2729,7 +2801,7 @@ img,video,iframe{max-width:100%}
 <div><div class="test-name">Alexey Lositsky</div><div class="test-role">BMS Parent</div></div>
 </div>
 </div>
-<div class="test">
+<div class="test reveal">
 <div class="test-mark">"</div>
 <div class="test-text">This is a school with an exceptional teaching methodology, a strong community of families, professionals, and children. There is a beautiful garden where the children play in the afternoons, which is the best part of the day. The guides are very friendly and always find a way to help the children reach their goals. The Montessori method is an ideal model for learning through play and the freedom the child feels to do things independently and without fear.</div>
 <div class="test-author">
@@ -2737,7 +2809,7 @@ img,video,iframe{max-width:100%}
 <div><div class="test-name">Maddi Bartolome</div><div class="test-role">BMS Parent</div></div>
 </div>
 </div>
-<div class="test">
+<div class="test reveal">
 <div class="test-mark">"</div>
 <div class="test-text">It's amazing to be part of this community. I always felt like I had a second chance to learn after starting over from scratch with my two girls. This is the best place to be for your children to learn and grow, and it’s a beautiful space to be in. The staff is incredible and always makes you feel welcome. The variety of activities available for the children is amazing.</div>
 <div class="test-author">
@@ -2745,7 +2817,7 @@ img,video,iframe{max-width:100%}
 <div><div class="test-name">Eustaquio De La Torre</div><div class="test-role">BMS Parent</div></div>
 </div>
 </div>
-<div class="test">
+<div class="test reveal">
 <div class="test-mark">"</div>
 <div class="test-text">An excellent school—the guides (as Montessori teachers are called), the leadership team, and the rest of the staff make children's learning happen in a natural, spontaneous, curious, and enjoyable way. The facilities and classrooms are also very well cared for and thoughtfully designed to invite children to discover and explore their environment. We are very happy with our experience at Barcelona Montessori School, where our eldest daughter is enrolled, and soon our little one will be joining too. Thank you, Abi, Tim, and the whole team for making it possible!</div>
 <div class="test-author">
@@ -2753,7 +2825,7 @@ img,video,iframe{max-width:100%}
 <div><div class="test-name">Laura Perelló</div><div class="test-role">BMS Parent</div></div>
 </div>
 </div>
-<div class="test">
+<div class="test reveal">
 <div class="test-mark">"</div>
 <div class="test-text">My son has been attending the school since he was 2 years old, first in Nido and now in Primary at BMS. He and his little friends go to school every day with such joy and enthusiasm that it’s hard to describe. The Montessori guides and assistants are AMI-certified, and the work they’re doing to ensure the children experience and enjoy a trilingual education based on the British curriculum adapted to Montessori is truly admirable. It’s inspiring to see Montessori pedagogy and positive discipline fully in action, but what matters most is that the children are truly at the centre of their own learning, and each child’s pace is respected without compromising the rigour of knowledge acquisition.</div>
 <div class="test-author">
@@ -2761,7 +2833,7 @@ img,video,iframe{max-width:100%}
 <div><div class="test-name">Patricia Torres</div><div class="test-role">BMS Parent</div></div>
 </div>
 </div>
-<div class="test">
+<div class="test reveal">
 <div class="test-mark">"</div>
 <div class="test-text">We’ve been a founding family since Nido was created and have continued with Tim and Abi at BMS. My son has been learning at the school for 7 years with the Montessori method, and my daughter for 5. We’ve watched the project grow and become what it is today—a school with strong values and incredibly professional people.</div>
 <div class="test-author">
@@ -2769,7 +2841,7 @@ img,video,iframe{max-width:100%}
 <div><div class="test-name">Cecilia Silva</div><div class="test-role">Founding BMS Family</div></div>
 </div>
 </div>
-<div class="test">
+<div class="test reveal">
 <div class="test-mark">"</div>
 <div class="test-text">Our 18 months old daughter started this year and the experience for both her and us has been amazing. The team looking after the little ones is very caring, patient and professional. They take their time for a smooth integration, the communication with parents is easy and the Montessori pedagogy is well implemented. They sent daily updates and pictures. My daughter loves it there!</div>
 <div class="test-author">
@@ -2777,7 +2849,7 @@ img,video,iframe{max-width:100%}
 <div><div class="test-name">Amelie Van De Pol</div><div class="test-role">BMS Parent</div></div>
 </div>
 </div>
-<div class="test">
+<div class="test reveal">
 <div class="test-mark">"</div>
 <div class="test-text">A team of highly professional educators, kind people who are very approachable. You can feel the Montessori spirit the moment you walk in—highly recommended.</div>
 <div class="test-author">
@@ -2785,7 +2857,7 @@ img,video,iframe{max-width:100%}
 <div><div class="test-name">Joan-Ignasi Casanovas-Permanyer</div><div class="test-role">BMS Parent</div></div>
 </div>
 </div>
-<div class="test">
+<div class="test reveal">
 <div class="test-mark">"</div>
 <div class="test-text">We wanted a school that taught in English and we knew almost nothing about Montessori. But when we came to Nido de Gran de Gracia we were convinced by everything. The methodology that trusts in the child, giving them freedom and working on their autonomy from a very young age, including domestic chores. The concept of the accompanying guide in learning, as opposed to the teacher who imposes in a desk school. Discipline through dialogue. The materials are very attractive and appealing to interact with; for example, learning mathematics is very easy if you can touch the numbers, it does not require acts of faith. And the environment, adapted to its users down to the smallest detail and aesthetic (we think that you also have to educate in good taste). Our daughter has grown up with the centre, first at Nido and then at Barcelona Montessori School, attending Infant Community, Children's House and now third year of Primary. She has been happy from the first day and we feel that she is progressing as expected, both in terms of language and subjects.</div>
 <div class="test-author">
@@ -2793,7 +2865,7 @@ img,video,iframe{max-width:100%}
 <div><div class="test-name">Silvia and Jorge</div><div class="test-role">Parents of Estela</div></div>
 </div>
 </div>
-<div class="test">
+<div class="test reveal">
 <div class="test-mark">"</div>
 <div class="test-text">Our children have been in the school since 2018, when it was a small nursery in Gràcia. Their learning and emotional growth has been well supported over the last 5 years. As a parent, I value the love for learning I see in my children everyday, along with their curiosity for the materials and the opportunity they have to be in charge of their own learning. The school's strong points are the emotional support and "learning for life". At the same time, the commitment and involvement of the teaching staff is very high. This can be seen how they know the children and their families and the individual follow-up for each student throughout the year.</div>
 <div class="test-author">
@@ -2801,7 +2873,7 @@ img,video,iframe{max-width:100%}
 <div><div class="test-name">Laura</div><div class="test-role">Mother of Vera and Oliver</div></div>
 </div>
 </div>
-<div class="test">
+<div class="test reveal">
 <div class="test-mark">"</div>
 <div class="test-text">Our oldest daughter joined the school before it was called Barcelona Montessori School, at Nido, 6 years ago. Our second enrolled at 3 years old and our 18 month daughter will begin in a few months. We wouldn't commit if we weren't fully convinced we're offering our kids a multi cultural and kid centered education.</div>
 <div class="test-author">
@@ -2809,7 +2881,7 @@ img,video,iframe{max-width:100%}
 <div><div class="test-name">Coralie and Alexandre</div><div class="test-role">Parents of Josephine, Marin and Philippa</div></div>
 </div>
 </div>
-<div class="test">
+<div class="test reveal">
 <div class="test-mark">"</div>
 <div class="test-text">Very good school. 100% Montessori. Very kind staff and excellent teachers. My son has been attending since he was 16 months old and is completely trilingual.</div>
 <div class="test-author">
@@ -2824,7 +2896,7 @@ img,video,iframe{max-width:100%}
 <!-- ─── ADMISSIONS ────────────────────────────────── -->
 <section class="sec" id="admissions">
 <div class="wrap">
-<div class="sec-head">
+<div class="sec-head reveal">
 <span class="tag">Admissions</span>
 <h2 class="h2">How to join our community.</h2>
 <div class="rule"></div>
@@ -2884,7 +2956,7 @@ img,video,iframe{max-width:100%}
 <!-- ─── CAMPUSES ──────────────────────────────────── -->
 <section class="sec sec--tint" id="campuses">
 <div class="wrap">
-<div class="sec-head">
+<div class="sec-head reveal">
 <span class="tag">Our Campuses</span>
 <h2 class="h2">Two campuses, one community.</h2>
 <div class="rule"></div>
@@ -2951,7 +3023,7 @@ img,video,iframe{max-width:100%}
 <!-- ─── FEES 2026-27 (source: Precios BMS 2026-2027, Nuria Quintero) ─── -->
 <section class="sec" id="fees">
 <div class="wrap">
-<div class="sec-head">
+<div class="sec-head reveal">
 <span class="tag">Transparent Pricing</span>
 <h2 class="h2">Fees 2026–2027.</h2>
 <div class="rule"></div>
@@ -3026,14 +3098,14 @@ img,video,iframe{max-width:100%}
 </section>
 <section class="sec sec--tint" id="blog">
 <div class="wrap">
-<div class="sec-head">
+<div class="sec-head reveal">
 <span class="tag">From Our Classrooms</span>
 <h2 class="h2">The BMS blog.</h2>
 <div class="rule"></div>
 <p class="body body--lg" style="max-width:620px">Life at BMS, written as it happens — classroom stories, celebrations, Montessori insights and news from every environment. Latest posts:</p>
 </div>
 <div class="blog-grid" style="row-gap:28px">
-<article class="blog-card" id="international-visitors-and-student-led-lunch">
+<article class="blog-card reveal" id="international-visitors-and-student-led-lunch">
 <div class="blog-thumb">
 <img alt="Students preparing a student-led lunch in the kitchen" loading="lazy" src="images/students-preparing-a-student-led-lunch-in-the-kitc.webp"/>
 </div>
@@ -3045,7 +3117,7 @@ img,video,iframe{max-width:100%}
 <a class="btn btn-outline blog-read" href="blog/international-visitors-and-student-led-lunch.html" target="_self">Read full article →</a>
 </div>
 </article>
-<article class="blog-card" id="end-of-year-speech-from-julianna">
+<article class="blog-card reveal" id="end-of-year-speech-from-julianna">
 <div class="blog-thumb">
 <img alt="Hand-holding illustration" loading="lazy" src="images/hand-holding-illustration.webp"/>
 </div>
@@ -3057,7 +3129,7 @@ img,video,iframe{max-width:100%}
 <a class="btn btn-outline blog-read" href="blog/end-of-year-speech-from-julianna.html" target="_self">Read full article →</a>
 </div>
 </article>
-<article class="blog-card" id="bms-first-art-exhibition">
+<article class="blog-card reveal" id="bms-first-art-exhibition">
 <div class="blog-thumb">
 <img alt="Children visiting the BMS art exhibition" loading="lazy" src="images/children-visiting-the-bms-art-exhibition.webp"/>
 </div>
@@ -3069,7 +3141,7 @@ img,video,iframe{max-width:100%}
 <a class="btn btn-outline blog-read" href="blog/bms-first-art-exhibition.html" target="_self">Read full article →</a>
 </div>
 </article>
-<article class="blog-card" id="romeo-and-juliet-performance">
+<article class="blog-card reveal" id="romeo-and-juliet-performance">
 <div class="blog-thumb">
 <img alt="Adolescent students performing Romeo and Juliet" loading="lazy" src="images/adolescent-students-performing-romeo-and-juliet.webp"/>
 </div>
@@ -3081,7 +3153,7 @@ img,video,iframe{max-width:100%}
 <a class="btn btn-outline blog-read" href="blog/romeo-and-juliet-performance.html" target="_self">Read full article →</a>
 </div>
 </article>
-<article class="blog-card" id="a-special-night-for-our-primary-graduates">
+<article class="blog-card reveal" id="a-special-night-for-our-primary-graduates">
 <div class="blog-thumb">
 <img alt="Primary graduates at the bowling outing" loading="lazy" src="images/primary-graduates-at-the-bowling-outing.webp"/>
 </div>
@@ -3093,7 +3165,7 @@ img,video,iframe{max-width:100%}
 <a class="btn btn-outline blog-read" href="blog/a-special-night-for-our-primary-graduates.html" target="_self">Read full article →</a>
 </div>
 </article>
-<article class="blog-card" id="summer-a-time-to-practise-life-skills">
+<article class="blog-card reveal" id="summer-a-time-to-practise-life-skills">
 <div class="blog-thumb">
 <img alt="Adult and child practising safety near a road" loading="lazy" src="images/adult-and-child-practising-safety-near-a-road.webp"/>
 </div>
@@ -3130,7 +3202,7 @@ img,video,iframe{max-width:100%}
 </section>
 <section class="sec" id="contact">
 <div class="wrap">
-<div class="sec-head c">
+<div class="sec-head c reveal">
 <span class="tag">Get in Touch</span>
 <h2 class="h2">We'd love to hear from you.</h2>
 <div class="rule"></div>
@@ -3161,29 +3233,29 @@ img,video,iframe{max-width:100%}
 <!-- ─── SCHOOL POLICIES HANDBOOK — internal page destination ───────────── -->
 <section class="sec" id="school-policies-handbook">
 <div class="wrap">
-<div class="sec-head c">
+<div class="sec-head c reveal">
 <span class="tag">Policies &amp; Procedures</span>
 <h2 class="h2">Parent-facing school handbook and statutory documents.</h2>
 <div class="rule"></div>
 <p class="body">This section replaces the broken external policies link with an internal destination in the new BMS design. It is designed as the gateway for families to find safeguarding, health, payments, re-enrolment and school procedure documents.</p>
 </div>
 <div class="g4">
-<article class="why-item" style="background:var(--white);border:1px solid var(--cream-dd);border-radius:var(--r-xl);box-shadow:var(--sh);border-top:4px solid var(--navy)">
+<article class="why-item reveal" style="background:var(--white);border:1px solid var(--cream-dd);border-radius:var(--r-xl);box-shadow:var(--sh);border-top:4px solid var(--navy)">
 <div class="why-num">01</div>
 <h4>Safeguarding &amp; Child Protection</h4>
 <p>Child protection expectations, staff responsibilities, reporting routes, visitor procedures and safeguarding guidance for the school community.</p>
 </article>
-<article class="why-item" style="background:var(--white);border:1px solid var(--cream-dd);border-radius:var(--r-xl);box-shadow:var(--sh);border-top:4px solid var(--teal)">
+<article class="why-item reveal" style="background:var(--white);border:1px solid var(--cream-dd);border-radius:var(--r-xl);box-shadow:var(--sh);border-top:4px solid var(--teal)">
 <div class="why-num">02</div>
 <h4>Health, Medical &amp; Emergency</h4>
 <p>Medical forms, allergies, medicine administration, illness procedures, first aid, emergency contacts and campus safety procedures.</p>
 </article>
-<article class="why-item" style="background:var(--white);border:1px solid var(--cream-dd);border-radius:var(--r-xl);box-shadow:var(--sh);border-top:4px solid var(--green)">
+<article class="why-item reveal" style="background:var(--white);border:1px solid var(--cream-dd);border-radius:var(--r-xl);box-shadow:var(--sh);border-top:4px solid var(--green)">
 <div class="why-num">03</div>
 <h4>Payments, Fees &amp; Re-enrolment</h4>
 <p>Tuition, invoices, deposits, re-enrolment documents, payment deadlines and finance-related forms for current and incoming families.</p>
 </article>
-<article class="why-item" style="background:var(--white);border:1px solid var(--cream-dd);border-radius:var(--r-xl);box-shadow:var(--sh);border-top:4px solid var(--peach-d)">
+<article class="why-item reveal" style="background:var(--white);border:1px solid var(--cream-dd);border-radius:var(--r-xl);box-shadow:var(--sh);border-top:4px solid var(--peach-d)">
 <div class="why-num">04</div>
 <h4>School Policies, Procedures &amp; Forms</h4>
 <p>Operational policies, parent forms, permissions, campus procedures, handbooks and guidance documents for day-to-day school life.</p>
@@ -3202,26 +3274,26 @@ img,video,iframe{max-width:100%}
 <!-- ─── ACCREDITATIONS, REPORTS & LEGAL — internalised ───────────── -->
 <section class="sec sec--tint" id="accreditation-documents">
 <div class="wrap">
-<div class="sec-head c">
+<div class="sec-head c reveal">
 <span class="tag">Accreditations &amp; Reports</span>
 <h2 class="h2">Inspection, recognition and legal information.</h2>
 <div class="rule"></div>
 <p class="body">These pages replace the old Squarespace and Google Drive destinations with content inside the new BMS design. Upload the original PDF files to the new server later only if you want the full reports available as downloads.</p>
 </div>
 <div class="g3">
-<article class="why-item" id="nabss-2023" style="background:var(--white);border:1px solid var(--cream-dd);border-radius:var(--r-xl);box-shadow:var(--sh)">
+<article class="why-item reveal" id="nabss-2023" style="background:var(--white);border:1px solid var(--cream-dd);border-radius:var(--r-xl);box-shadow:var(--sh)">
 <div class="why-num">NABSS · 2023</div>
 <h4>NABSS Inspection Report 2023</h4>
 <p>The current BMS website links to the 2023 final inspection report. This internal card keeps the report destination alive inside the new website and avoids a dependency on the old Squarespace file path.</p>
 <p style="margin-top:12px"><strong>Migration note:</strong> when the final site goes live, upload the original 2023 PDF to the new media library and connect the download button here.</p>
 </article>
-<article class="why-item" id="nabss-2025" style="background:var(--white);border:1px solid var(--cream-dd);border-radius:var(--r-xl);box-shadow:var(--sh)">
+<article class="why-item reveal" id="nabss-2025" style="background:var(--white);border:1px solid var(--cream-dd);border-radius:var(--r-xl);box-shadow:var(--sh)">
 <div class="why-num">NABSS · 2025</div>
 <h4>NABSS Inspection Report 2025</h4>
 <p>The current site introduces the latest full report from April 2025 and highlights that pupils show outstanding independent learning skills, are highly motivated, hardworking and resilient.</p>
 <p style="margin-top:12px"><strong>Migration note:</strong> upload the 2025 PDF to the new server or Odoo documents area and link it here once the new site is live.</p>
 </article>
-<article class="why-item" style="background:var(--white);border:1px solid var(--cream-dd);border-radius:var(--r-xl);box-shadow:var(--sh)">
+<article class="why-item reveal" style="background:var(--white);border:1px solid var(--cream-dd);border-radius:var(--r-xl);box-shadow:var(--sh)">
 <div class="why-num">Recognition</div>
 <h4>British Council, Generalitat &amp; Montessori</h4>
 <p>Barcelona Montessori School is presented on the current site as a British School recognised by the British Council and by the Generalitat de Catalunya, with centre code 08078211. The school has also been presented as an AMS Verified School.</p>
@@ -3232,14 +3304,14 @@ img,video,iframe{max-width:100%}
 </section>
 <section class="sec" id="legal-notice">
 <div class="wrap">
-<div class="sec-head">
+<div class="sec-head reveal">
 <span class="tag">Legal</span>
 <h2 class="h2">Terms of Use / Legal Notice</h2>
 <div class="rule"></div>
 <p class="body body--lg">A dedicated legal page for website ownership, terms of use, intellectual property, liability, links and governing law.</p>
 </div>
 <div class="g2" style="align-items:start">
-<div class="why-item" style="background:var(--white);border:1px solid var(--cream-dd);border-radius:var(--r-xl);box-shadow:var(--sh)">
+<div class="why-item reveal" style="background:var(--white);border:1px solid var(--cream-dd);border-radius:var(--r-xl);box-shadow:var(--sh)">
 <h4>Website ownership</h4>
 <p><strong>Website manager:</strong> Timothée Ducrocq</p>
 <p><strong>Legal entity:</strong> OBJETIVO EXCELENCIA S.L.</p>
@@ -3247,7 +3319,7 @@ img,video,iframe{max-width:100%}
 <p><strong>Address:</strong> C/ de l’Esperança 13, 08017 Barcelona</p>
 <p><strong>Email:</strong> info@barcelonamontessorischool.com</p>
 </div>
-<div class="why-item" style="background:var(--white);border:1px solid var(--cream-dd);border-radius:var(--r-xl);box-shadow:var(--sh)">
+<div class="why-item reveal" style="background:var(--white);border:1px solid var(--cream-dd);border-radius:var(--r-xl);box-shadow:var(--sh)">
 <h4>Full terms hosted by BMS</h4>
 <p>The full Terms of Use and Legal Notice are now hosted as a separate page on the new website, so the footer does not depend on the old Squarespace site.</p>
 <p style="margin-top:18px"><a class="btn btn-primary" href="terms-of-use.html">Read full Terms of Use</a></p>
@@ -3257,24 +3329,24 @@ img,video,iframe{max-width:100%}
 </section>
 <section class="sec sec--tint" id="privacy-policy">
 <div class="wrap">
-<div class="sec-head">
+<div class="sec-head reveal">
 <span class="tag">Data Protection</span>
 <h2 class="h2">Privacy Policy</h2>
 <div class="rule"></div>
 <p class="body body--lg">A dedicated privacy page for website, admissions and school-related personal data, including children’s data.</p>
 </div>
 <div class="g3">
-<div class="why-item" style="background:var(--white);border:1px solid var(--cream-dd);border-radius:var(--r-xl);box-shadow:var(--sh)">
+<div class="why-item reveal" style="background:var(--white);border:1px solid var(--cream-dd);border-radius:var(--r-xl);box-shadow:var(--sh)">
 <div class="why-num">01</div>
 <h4>Controller and DPO/contact</h4>
 <p>OBJETIVO EXCELENCIA S.L. is identified as the controller. The full policy includes a data-protection contact/DPD route for families and website users.</p>
 </div>
-<div class="why-item" style="background:var(--white);border:1px solid var(--cream-dd);border-radius:var(--r-xl);box-shadow:var(--sh)">
+<div class="why-item reveal" style="background:var(--white);border:1px solid var(--cream-dd);border-radius:var(--r-xl);box-shadow:var(--sh)">
 <div class="why-num">02</div>
 <h4>Children’s data</h4>
 <p>The full policy includes specific safeguards for children’s information, image rights, consent by parents or guardians, safeguarding, health and educational data.</p>
 </div>
-<div class="why-item" style="background:var(--white);border:1px solid var(--cream-dd);border-radius:var(--r-xl);box-shadow:var(--sh)">
+<div class="why-item reveal" style="background:var(--white);border:1px solid var(--cream-dd);border-radius:var(--r-xl);box-shadow:var(--sh)">
 <div class="why-num">03</div>
 <h4>Full policy hosted by BMS</h4>
 <p>The full Privacy Policy is now hosted as a separate page on the new website.</p>
@@ -3319,26 +3391,26 @@ img,video,iframe{max-width:100%}
 <!-- ─── PARTNERS & ACCREDITATIONS LOGO WALL ──────── -->
 <section class="sec sec--tint" id="work-and-learn-with-us">
 <div class="wrap">
-<div class="sec-head c">
+<div class="sec-head c reveal">
 <span class="tag">Work &amp; learn with us</span>
 <h2 class="h2">Join a growing Montessori community.</h2>
 <div class="rule"></div>
 <p class="body body--lg">BMS is both a school and a training community. We welcome educators, assistants, guides, specialists and future Montessori practitioners who want to grow in an international, child-centred environment.</p>
 </div>
 <div class="g3">
-<article class="why-item" style="background:var(--white);border:1px solid var(--cream-dd);border-radius:var(--r-xl);box-shadow:var(--sh)">
+<article class="why-item reveal" style="background:var(--white);border:1px solid var(--cream-dd);border-radius:var(--r-xl);box-shadow:var(--sh)">
 <div class="why-num">Careers</div>
 <h4>Work at BMS</h4>
 <p>We look for adults who respect the child, value observation, communicate warmly with families and contribute to a peaceful, prepared environment. Roles may include Montessori guides, classroom assistants, specialists, SEN support, operations and administration.</p>
 <p style="margin-top:14px"><a class="btn btn-outline" href="mailto:info@barcelonamontessorischool.com?subject=Working%20at%20Barcelona%20Montessori%20School">Send your CV</a></p>
 </article>
-<article class="why-item" style="background:var(--white);border:1px solid var(--cream-dd);border-radius:var(--r-xl);box-shadow:var(--sh)">
+<article class="why-item reveal" style="background:var(--white);border:1px solid var(--cream-dd);border-radius:var(--r-xl);box-shadow:var(--sh)">
 <div class="why-num">Training</div>
 <h4>Learn through BMTC</h4>
 <p>Barcelona Montessori Training Center is linked to BMS and offers AMS Secondary I–II training in partnership with CMStep, supporting adults who want to work with adolescents aged 12–18.</p>
 <p style="margin-top:14px"><a class="btn btn-teal" href="#training">Explore training</a></p>
 </article>
-<article class="why-item" style="background:var(--white);border:1px solid var(--cream-dd);border-radius:var(--r-xl);box-shadow:var(--sh)">
+<article class="why-item reveal" style="background:var(--white);border:1px solid var(--cream-dd);border-radius:var(--r-xl);box-shadow:var(--sh)">
 <div class="why-num">Volunteers &amp; partners</div>
 <h4>Contribute to school life</h4>
 <p>Families, professionals and local partners enrich the children’s experience through talks, projects, Going Outs, practical work, farm experiences and community partnerships.</p>
@@ -3349,54 +3421,54 @@ img,video,iframe{max-width:100%}
 </section>
 <section class="sec partner-logo-wall" id="partners-accreditations">
 <div class="wrap">
-<div class="sec-head c">
+<div class="sec-head c reveal">
 <span class="tag">Partners &amp; accreditations</span>
 <h2 class="h2">A wider network supporting the BMS community.</h2>
 <div class="rule"></div>
 <p class="body">Our school works with education, Montessori, food, sport, social-impact and specialist partners who enrich school life and support the development of the project.</p>
 </div>
 <div aria-label="Barcelona Montessori School partners and accreditations" class="logo-wall">
-<a aria-label="American Montessori Society" class="logo-tile" href="https://amshq.org" rel="noopener" target="_blank">
+<a aria-label="American Montessori Society" class="logo-tile reveal" href="https://amshq.org" rel="noopener" target="_blank">
 <img alt="American Montessori Society Verified School logo" src="images/american-montessori-society-verified-school-logo.webp"/>
 </a>
-<a aria-label="Departament d’Educació de la Generalitat de Catalunya" class="logo-tile" href="https://educacio.gencat.cat" rel="noopener" target="_blank">
+<a aria-label="Departament d’Educació de la Generalitat de Catalunya" class="logo-tile reveal" href="https://educacio.gencat.cat" rel="noopener" target="_blank">
 <img alt="Generalitat de Catalunya Departament d’Educació logo" src="images/generalitat-de-catalunya-departament-d-educaci-log.webp"/>
 </a>
-<a aria-label="Asociación Montessori Española PGCM" class="logo-tile" href="https://asociacionmontessori.net" rel="noopener" target="_blank">
+<a aria-label="Asociación Montessori Española PGCM" class="logo-tile reveal" href="https://asociacionmontessori.net" rel="noopener" target="_blank">
 <img alt="PGCM Programa de Garantía de Calidad Montessori logo" src="images/pgcm-programa-de-garant-a-de-calidad-montessori-lo.webp"/>
 </a>
-<a aria-label="Fundación Anima" class="logo-tile" href="https://www.fundacionanima.org" rel="noopener" target="_blank">
+<a aria-label="Fundación Anima" class="logo-tile reveal" href="https://www.fundacionanima.org" rel="noopener" target="_blank">
 <img alt="Fundación Anima logo" src="images/fundaci-n-anima-logo.webp"/>
 </a>
-<a aria-label="Montessori Model United Nations" class="logo-tile logo-tile--partner" href="https://montessori-mun.org" rel="noopener" target="_blank">
+<a aria-label="Montessori Model United Nations" class="logo-tile logo-tile--partner reveal" href="https://montessori-mun.org" rel="noopener" target="_blank">
 <span class="logo-mark"><img alt="Montessori MUN logo" loading="lazy" src="https://www.google.com/s2/favicons?domain=montessori-mun.org&amp;sz=128"/></span>
 <span class="logo-wordmark">Montessori MUN<small>Model United Nations</small></span>
 </a>
-<a aria-label="Ametller Origen" class="logo-tile logo-tile--partner" href="https://corp.ametllerorigen.com" rel="noopener" target="_blank">
+<a aria-label="Ametller Origen" class="logo-tile logo-tile--partner reveal" href="https://corp.ametllerorigen.com" rel="noopener" target="_blank">
 <span class="logo-mark"><img alt="Ametller Origen logo" loading="lazy" src="https://www.google.com/s2/favicons?domain=ametllerorigen.com&amp;sz=128"/></span>
 <span class="logo-wordmark">Ametller Origen<small>School catering</small></span>
 </a>
-<a aria-label="Fundesplai" class="logo-tile logo-tile--partner" href="https://fundesplai.org" rel="noopener" target="_blank">
+<a aria-label="Fundesplai" class="logo-tile logo-tile--partner reveal" href="https://fundesplai.org" rel="noopener" target="_blank">
 <span class="logo-mark"><img alt="Fundesplai logo" loading="lazy" src="https://www.google.com/s2/favicons?domain=fundesplai.org&amp;sz=128"/></span>
 <span class="logo-wordmark">Fundesplai<small>Community &amp; services</small></span>
 </a>
-<a aria-label="Barcelona Montessori Training Center" class="logo-tile logo-tile--partner" href="https://barcelonamontessoritrainingcenter.com" rel="noopener" target="_blank">
+<a aria-label="Barcelona Montessori Training Center" class="logo-tile logo-tile--partner reveal" href="https://barcelonamontessoritrainingcenter.com" rel="noopener" target="_blank">
 <span class="logo-mark"><img alt="Barcelona Montessori Training Center logo" loading="lazy" src="https://www.google.com/s2/favicons?domain=barcelonamontessoritrainingcenter.com&amp;sz=128"/></span>
 <span class="logo-wordmark">BMTC<small>Teacher training</small></span>
 </a>
-<a aria-label="Carrera contra el Hambre" class="logo-tile logo-tile--partner" href="https://carreracontraelhambre.accioncontraelhambre.org" rel="noopener" target="_blank">
+<a aria-label="Carrera contra el Hambre" class="logo-tile logo-tile--partner reveal" href="https://carreracontraelhambre.accioncontraelhambre.org" rel="noopener" target="_blank">
 <span class="logo-mark"><img alt="Carrera contra el Hambre logo" loading="lazy" src="https://www.google.com/s2/favicons?domain=accioncontraelhambre.org&amp;sz=128"/></span>
 <span class="logo-wordmark">Carrera contra el Hambre<small>Solidarity project</small></span>
 </a>
-<a aria-label="Alella Green Tech" class="logo-tile logo-tile--partner" href="https://alellagreentech.com" rel="noopener" target="_blank">
+<a aria-label="Alella Green Tech" class="logo-tile logo-tile--partner reveal" href="https://alellagreentech.com" rel="noopener" target="_blank">
 <span class="logo-mark"><img alt="Alella Green Tech logo" loading="lazy" src="https://www.google.com/s2/favicons?domain=alellagreentech.com&amp;sz=128"/></span>
 <span class="logo-wordmark">Alella Green Tech<small>Adolescent farm work</small></span>
 </a>
-<a aria-label="Vidia" class="logo-tile logo-tile--partner" href="https://vidia.cat" rel="noopener" target="_blank">
+<a aria-label="Vidia" class="logo-tile logo-tile--partner reveal" href="https://vidia.cat" rel="noopener" target="_blank">
 <span class="logo-mark"><img alt="Vidia logo" loading="lazy" src="https://www.google.com/s2/favicons?domain=vidia.cat&amp;sz=128"/></span>
 <span class="logo-wordmark">Vidia<small>Community partner</small></span>
 </a>
-<a aria-label="Montessori Sports" class="logo-tile logo-tile--partner" href="https://www.montessori-sports.com" rel="noopener" target="_blank">
+<a aria-label="Montessori Sports" class="logo-tile logo-tile--partner reveal" href="https://www.montessori-sports.com" rel="noopener" target="_blank">
 <span class="logo-mark"><img alt="Montessori Sports logo" loading="lazy" src="https://www.google.com/s2/favicons?domain=montessori-sports.com&amp;sz=128"/></span>
 <span class="logo-wordmark">Montessori Sports<small>Movement &amp; PE</small></span>
 </a>
@@ -3407,7 +3479,7 @@ img,video,iframe{max-width:100%}
 <!-- ─── FOOTER ────────────────────────────────────── -->
 <section aria-labelledby="ai-summary-title" class="sec" id="about-bms-for-ai" style="padding:56px 0;background:var(--cream-d)">
 <div class="wrap">
-<div class="sec-head" style="margin-bottom:24px">
+<div class="sec-head reveal" style="margin-bottom:24px">
 <span class="tag">Quick facts</span>
 <h2 class="h2" id="ai-summary-title">Barcelona Montessori School at a glance</h2>
 <div class="rule"></div>
@@ -3627,6 +3699,77 @@ function bmsYearFinder(){
   btn.addEventListener('click', () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   });
+})();
+</script>
+<script>
+/* ─── MOTION: scroll reveal, hero entrance, stat count-up ───
+   No-op under reduced-motion. Safe if IntersectionObserver missing. */
+(function(){
+  const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Hero entrance — trigger on next frame so transitions apply
+  const hero = document.querySelector('.hero');
+  if(hero && !reduce){
+    requestAnimationFrame(function(){ requestAnimationFrame(function(){ hero.classList.add('ready'); }); });
+  } else if(hero){
+    hero.classList.add('ready');
+  }
+
+  const reveals = Array.prototype.slice.call(document.querySelectorAll('.reveal'));
+
+  // Fallback: no IO or reduced motion -> just show everything
+  if(reduce || !('IntersectionObserver' in window)){
+    reveals.forEach(function(el){ el.classList.add('in'); });
+  } else {
+    // Stagger: elements sharing a parent get incremental transition-delay
+    reveals.forEach(function(el){
+      var sibs = Array.prototype.slice.call(el.parentElement.children)
+        .filter(function(c){ return c.classList.contains('reveal'); });
+      var i = sibs.indexOf(el);
+      if(i > 0) el.style.transitionDelay = Math.min(i, 8) * 70 + 'ms';
+    });
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+    reveals.forEach(function(el){ io.observe(el); });
+  }
+
+  // Stat count-up
+  var statBox = document.querySelector('.hero-stats');
+  if(statBox && !reduce && ('IntersectionObserver' in window)){
+    var animated = false;
+    function parseStat(txt){
+      if(/[–—-]/.test(txt)) return null;            // ranges like "0–18" stay static
+      var m = txt.match(/^(\d+)(\D*)$/);             // "195+", "10+", "2"
+      return m ? { target: parseInt(m[1],10), suffix: m[2] || '' } : null;
+    }
+    var nums = Array.prototype.slice.call(statBox.querySelectorAll('.hero-stat-n')).map(function(el){
+      var p = parseStat(el.textContent.trim());
+      return p ? { el: el, target: p.target, suffix: p.suffix, orig: el.textContent } : null;
+    });
+    function run(){
+      if(animated) return; animated = true;
+      var dur = 1100, start = null;
+      function frame(ts){
+        if(!start) start = ts;
+        var t = Math.min((ts - start) / dur, 1);
+        var eased = 1 - Math.pow(1 - t, 3);          // ease-out cubic
+        nums.forEach(function(n){
+          if(!n) return;
+          n.el.textContent = Math.round(eased * n.target) + n.suffix;
+        });
+        if(t < 1) requestAnimationFrame(frame);
+        else nums.forEach(function(n){ if(n) n.el.textContent = n.orig; });
+      }
+      requestAnimationFrame(frame);
+    }
+    var sio = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if(e.isIntersecting){ run(); sio.disconnect(); } });
+    }, { threshold: 0.4 });
+    sio.observe(statBox);
+  }
 })();
 </script>
 </body>

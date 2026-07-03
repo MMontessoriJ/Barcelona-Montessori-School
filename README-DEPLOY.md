@@ -9,16 +9,24 @@
 3. **Launch files added** — `_redirects`, `netlify.toml`, rebuilt `sitemap.xml`,
    OG/Twitter preview image, removed obsolete `htaccess.txt`.
 
-## Step 1 — download the images (run once, locally)
-From this folder (the one containing index.html), run:
+## Step 1 — get the images (one time, ~1 min)
+The photos are NOT inside this folder yet (they're ~40MB and had to come straight
+from Squarespace). To download them:
 
-    bash download-images.sh
+**Mac:** double-click **download-images.command**
+   (If macOS blocks it: right-click it -> Open -> Open. Or System Settings ->
+    Privacy & Security -> "Open Anyway".)
 
-This creates ./images/ and downloads all 72 assets from Squarespace, named per
-`image-manifest.json`. It reports how many succeeded/failed; re-run to retry failures.
-(macOS/Linux have curl built in. On Windows, use Git Bash or WSL.)
+**Windows:** double-click **download-images.bat**
 
-After this, you no longer depend on Squarespace.
+**Either way:** a window opens, downloads all 72 images into an `images/` folder
+next to index.html, and tells you when it's done. If any fail, just double-click
+again to retry.
+
+Then open **index.html** — all photos will show. After this you no longer depend
+on Squarespace.
+
+(Advanced/Linux: `bash download-images.sh` from a terminal does the same thing.)
 
 ## Step 2 — deploy
 ### Netlify
