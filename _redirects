@@ -1,0 +1,17 @@
+# ─── BMS old Squarespace URL redirects → new single-page anchors ───
+# Netlify reads this file automatically. 301 = permanent (SEO-safe).
+
+/adolescents-program                 /#secondary-detail          301
+/summer-camp-2026                    /#summer-camp-2026          301
+/parents-information-and-resources   /#parents                   301
+/blog-english                        /#blog                      301
+/contact-us                          /#contact                   301
+/contact-admissions                  /#admissions                301
+/calendar                            /#school-calendar           301
+/new-nido                            /#nido                      301
+/policies-and-procedures             /#policies-procedures       301
+/enrichment-activities               /#enrichment-activities     301
+/our-program                         /#training                  301
+/work-and-learn-with-us              /#work-and-learn-with-us     301
+/testimonials                        /#testimonials              301
+/about-us                            /#about                     301
