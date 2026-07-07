@@ -2402,9 +2402,29 @@ const I18N = {"fr":{"Barcelona Montessori School — Holistic Montessori Educati
       });
       document.addEventListener('click', function(){ menu.style.display='none'; btn.setAttribute('aria-expanded','false'); });
     }
-    let saved = 'en';
-    try{ saved = localStorage.getItem('bms_lang') || 'en'; }catch(e){}
-    if(saved!=='en' && I18N[saved]) apply(saved); else apply('en');
+    function detectDeviceLanguage(){
+      const supported = ['en','fr','es','ca'];
+      const langs = (navigator.languages && navigator.languages.length) ? navigator.languages : [navigator.language || navigator.userLanguage || 'en'];
+      for(const raw of langs){
+        if(!raw) continue;
+        const base = String(raw).toLowerCase().split('-')[0];
+        if(supported.includes(base)) return base;
+      }
+      return 'en';
+    }
+
+    // Language behaviour:
+    // 1. If the visitor has already chosen a language on the site, keep that choice.
+    // 2. Otherwise, use the device/browser language automatically.
+    // 3. Fallback to English if the device language is not available.
+    let preferred = 'en';
+    try{
+      const saved = localStorage.getItem('bms_lang');
+      preferred = saved || detectDeviceLanguage();
+    }catch(e){
+      preferred = detectDeviceLanguage();
+    }
+    if(preferred !== 'en' && I18N[preferred]) apply(preferred); else apply('en');
   }
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', init); else init();
 
