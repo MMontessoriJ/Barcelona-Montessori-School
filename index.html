@@ -190,38 +190,40 @@
 <style>
 /* ─── BRAND TOKENS ───────────────────────────────── */
 :root{
-  /* Palette v3 — anchored on the two light swatches sampled from the
-     campus photo: turquoise #91C8C6 (courtyard columns) and dusty pink
-     #B79A92 (comedor cabinetry). The light tones are the visible identity
-     and appear on the big surfaces (hero, mission, soft bands); darker
-     cousins are used ONLY where white text sits on a solid fill, so the
-     school's actual colours stay front and centre. All pairings pass WCAG AA. */
-  --navy:    #3A2B33;   /* warm near-black — primary text/headings          */
-  --navy-m:  #54404C;   /* ink mid (hover)                                  */
-  --teal:    #2C736F;   /* deep turquoise — text, tags, solid buttons       */
-  --teal-d:  #1E5451;   /* deepest turquoise — hero gradient end            */
-  --teal-lt: #D7EDEC;   /* pale turquoise for text on dark turquoise bgs    */
-  --teal-soft:#91C8C6;  /* THE light turquoise Tim likes — big soft surfaces*/
-  --green:   #009C80;   /* teal-green — secondary accent, unchanged         */
-  --peach:   #FFE1A7;   /* pastel apricot, unchanged                        */
-  --peach-d: #E9B85C;   /* apricot dark, unchanged                          */
-  --pink:    #7F5952;   /* deep dusty pink — solid buttons w/ white text    */
-  --pink-d:  #6F4E47;   /* pink dark (hover)                                */
-  --pink-lt: #F0E4E0;   /* pale pink wash                                   */
-  --pink-soft:#B79A92;  /* THE light pink Tim likes — big soft surfaces     */
-  --coral:   #7F5952;   /* alias -> pink                                    */
-  --coral-d: #6F4E47;   /* alias -> pink-d                                  */
-  --p-cyan:  #CAF8FE;   /* pastel cyan — programme colour-code, unchanged   */
-  --p-mint:  #80EDD4;   /* pastel mint, unchanged                           */
-  --p-lime:  #C4F88A;   /* pastel lime, unchanged                           */
-  --p-sky:   #A3DCFF;   /* pastel sky — programme colour-code, unchanged    */
-  --p-lav:   #D7D0FF;   /* pastel lavender, unchanged                       */
-  --cream:   #FFFFFF;   /* base background                                  */
-  --cream-d: #F6ECE9;   /* tinted section bg — warm pink wash               */
-  --cream-turq:#E6F3F2; /* alt tinted section bg — turquoise wash           */
-  --cream-dd:#E9DBD6;   /* border / divider — warm                          */
-  --text:    #3A2B33;   /* body text = warm near-black                      */
-  --muted:   #6B5D63;   /* secondary text (warm plum-grey)                  */
+  /* BMS palette v4 — based on the turquoise structural paint and the dusty pink cabinet in the comedor photo. */
+  --navy:    #30282E;   /* warm plum-black for headings */
+  --navy-m:  #4B3D45;   /* softer ink */
+
+  --teal:    #2C736F;   /* deep turquoise for links, headings and solid UI */
+  --teal-d:  #1E5B58;   /* dark turquoise for hero/footer bands */
+  --teal-lt: #DDF3F2;   /* pale turquoise wash */
+  --teal-soft:#79C9C7;  /* photographed structural turquoise */
+
+  --green:   #25796E;   /* muted Montessori green-teal */
+
+  --pink:    #9D6260;   /* accessible dusty pink for buttons with white text */
+  --pink-d:  #7F4F4E;   /* darker hover pink */
+  --pink-lt: #F6E8E5;   /* pale blush wash */
+  --pink-soft:#C98F8F;  /* photographed cabinet pink, used on soft surfaces */
+  --coral:   #9D6260;   /* alias -> pink */
+  --coral-d: #7F4F4E;   /* alias -> pink-d */
+
+  --peach:   #FFE1A7;   /* soft apricot accent */
+  --peach-d: #E9B85C;
+
+  --p-cyan:  #D9F6F5;   /* programme cards — calmer family of the new palette */
+  --p-mint:  #B6E7DC;
+  --p-lime:  #D8F2B2;
+  --p-sky:   #B8E0F5;
+  --p-lav:   #F5DFB3;
+
+  --cream:   #FFFCF7;   /* warm base background */
+  --cream-d: #FFF4E6;   /* warm cream section */
+  --cream-turq:#E8F6F5; /* turquoise wash section */
+  --cream-dd:#E8D8D3;   /* soft divider */
+
+  --text:    #30282E;
+  --muted:   #6B5D63;
   --white:   #FFFFFF;
 
   --font-h:  'Montserrat', sans-serif;
@@ -229,9 +231,9 @@
   --r:       8px;
   --r-l:     16px;
   --r-xl:    24px;
-  --sh:      0 2px 16px rgba(58,43,51,.08);
-  --sh-l:    0 8px 40px rgba(58,43,51,.14);
-}
+  --sh:      0 2px 16px rgba(48,40,46,.08);
+  --sh-l:    0 8px 40px rgba(48,40,46,.14);
+}}
 
 /* ─── RESET ──────────────────────────────────────── */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -1069,6 +1071,48 @@ img,video,iframe{max-width:100%}
   .lang-menu{right:0;left:auto}
 }
 
+
+
+/* ─── BMS PALETTE V4 VISUAL POLISH ─────────────────
+   Softer, school-specific colour direction: turquoise structure + dusty pink cabinet. */
+body{background:var(--cream)}
+.announce{background:linear-gradient(90deg,var(--pink) 0%,#B37773 100%)}
+nav{background:rgba(255,252,247,.96);backdrop-filter:saturate(1.2) blur(10px)}
+.hero{background:linear-gradient(135deg,var(--teal-d) 0%,var(--teal) 55%,var(--teal-soft) 150%)}
+.hero-img img{opacity:.16;mix-blend-mode:soft-light}
+.hero-pill{background:rgba(221,243,242,.10);border-color:rgba(221,243,242,.28)}
+.hero-pill-dot{background:var(--teal-soft)}
+.hero h1 em{color:var(--teal-lt)}
+.hero-stat{background:rgba(221,243,242,.11);border-color:rgba(221,243,242,.18)}
+.hero-stat-n{color:var(--teal-lt)}
+.btn-primary,.nav-apply{background:var(--pink);color:var(--white)}
+.btn-primary:hover,.nav-apply:hover{background:var(--pink-d)}
+.btn-teal{background:var(--teal)}
+.btn-teal:hover{background:var(--teal-d)}
+.sec--tint{background:linear-gradient(180deg,var(--cream-d) 0%,var(--pink-lt) 100%)}
+.sec--tint-turq{background:linear-gradient(180deg,var(--cream-turq) 0%,#F8FFFE 100%)}
+.sec--navy{background:linear-gradient(135deg,var(--teal-d) 0%,#183F3D 100%)}
+.prog-card{box-shadow:0 1px 0 rgba(48,40,46,.04)}
+.prog-card:hover{box-shadow:0 12px 38px rgba(48,40,46,.16)}
+.prog-bg{justify-content:space-between;padding-top:28px;min-height:276px}
+.prog-link{min-height:58px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.prog-link::after{content:'→';margin-left:auto;white-space:nowrap}
+.prog-link:hover{background:rgba(48,40,46,.055)}
+.prog-nido{background:#D9F6F5}
+.prog-ic{background:#B6E7DC}
+.prog-ch{background:#D8F2B2}
+.prog-pri{background:#B8E0F5}
+.prog-sec{background:#F5DFB3}
+.rule{background:var(--teal-soft)}
+.rule--peach{background:var(--pink-soft)}
+.tag{color:var(--teal)}
+.tag--coral{color:var(--pink)}
+.adm-wrap{background:linear-gradient(135deg,var(--pink) 0%,#B77B76 100%)}
+.adm-right{background:linear-gradient(135deg,var(--teal) 0%,var(--teal-d) 100%)}
+.campus-photo{background:var(--teal-soft)}
+.footer-col a:hover{color:var(--teal-lt)}
+footer{background:#241E22}
+
 </style>
 <!-- Google Analytics 4 with consent-aware loading. Replace G-XXXXXXXXXX with the BMS GA4 Measurement ID before publishing. -->
 <script>
@@ -1162,21 +1206,7 @@ img,video,iframe{max-width:100%}
 <a aria-label="Barcelona Montessori School — Home" class="logo" href="#welcome">
 <svg aria-label="Barcelona Montessori School" class="logo-lock" overflow="visible" role="img" viewbox="0 1.9 291.5 97.4"><use href="#bms-lockup" xlink:href="#bms-lockup"></use></svg>
 </a>
-<div class="nav-links" id="navLinks">
-<div class="nl-drop">
-<a class="nl" href="#programmes">Programmes</a>
-<button aria-expanded="false" aria-label="Show Programmes submenu" class="nl-caret" type="button"></button>
-<div class="nl-menu"><div class="nl-menu-inner">
-<a href="programmes.html#nido-detail">Nido<span class="nl-menu-age">0–1 yrs</span></a>
-<a href="programmes.html#infant-community-detail">Infant Community<span class="nl-menu-age">1–3 yrs</span></a>
-<a href="programmes.html#childrens-house-detail">Children's House<span class="nl-menu-age">3–6 yrs</span></a>
-<a href="programmes.html#primary-detail">Primary<span class="nl-menu-age">6–12 yrs</span></a>
-<a href="programmes.html#secondary-detail">Secondary<span class="nl-menu-age">12–18 yrs</span></a>
-<a class="nl-menu-all" href="#programmes">View all programmes →</a>
-</div></div>
-</div>
-<a class="nl" href="#discover">Events</a>
-<div class="nl-drop">
+<div class="nav-links" id="navLinks"><a class="nl" href="#programmes">Programmes</a><a class="nl" href="#discover">Events</a><div class="nl-drop">
 <a class="nl" href="#admissions">Admissions</a>
 <button aria-expanded="false" aria-label="Show Admissions submenu" class="nl-caret" type="button"></button>
 <div class="nl-menu"><div class="nl-menu-inner">
@@ -1184,8 +1214,7 @@ img,video,iframe{max-width:100%}
 <a href="fees.html#fees">Fees &amp; Discounts</a>
 <a href="#contact">Book a Campus Visit</a>
 </div></div>
-</div>
-<div class="nl-drop">
+</div><div class="nl-drop">
 <a class="nl" href="#about">About</a>
 <button aria-expanded="false" aria-label="Show About submenu" class="nl-caret" type="button"></button>
 <div class="nl-menu"><div class="nl-menu-inner">
@@ -1194,44 +1223,15 @@ img,video,iframe{max-width:100%}
 <a href="team.html#team">Our Team</a>
 <a href="#partners-accreditations">Accreditations &amp; Partners</a>
 </div></div>
-</div>
-<div class="nl-drop">
-<a class="nl" href="#campuses">Campuses</a>
-<button aria-expanded="false" aria-label="Show Campuses submenu" class="nl-caret" type="button"></button>
-<div class="nl-menu"><div class="nl-menu-inner">
-<a href="#campus-pomaret">Carrer Pomaret 25<span class="nl-menu-age">Early Years &amp; Secondary</span></a>
-<a href="#campus-esperanca">Carrer Esperança 13<span class="nl-menu-age">Primary</span></a>
-</div></div>
-</div>
-<a class="nl" href="#life">Life at BMS</a>
-<div class="nl-drop">
-<a class="nl" href="parents.html#parents">Parents</a>
-<button aria-expanded="false" aria-label="Show Parents submenu" class="nl-caret" type="button"></button>
-<div class="nl-menu"><div class="nl-menu-inner">
-<a href="parents.html#parents">Parent Partnership</a>
-<a href="parents.html#testimonials">Parent Testimonials</a>
-<a href="https://drive.google.com/drive/folders/1r4fqV7e0XIlaKVQA3wjpryQVRSD5japs" rel="noopener" target="_blank">Lunch Menu</a>
-</div></div>
-</div>
-<div class="nl-drop">
-<a class="nl" href="#training">Training</a>
-<button aria-expanded="false" aria-label="Show Training submenu" class="nl-caret" type="button"></button>
-<div class="nl-menu"><div class="nl-menu-inner">
-<a href="#training">Training Center Overview</a>
-<a href="programmes.html#curriculum">Our Curriculum</a>
-</div></div>
-</div>
-<a class="nl" href="#blog">Blog</a>
-<a class="nl" href="#contact">Contact</a>
-</div>
+</div><a class="nl" href="#campuses">Campuses</a><a class="nl" href="#life">Life at BMS</a><a class="nl" href="parents.html#parents">Parents</a><a class="nl" href="#training">Training</a><a class="nl" href="#blog">Blog</a><a class="nl" href="#contact">Contact</a></div>
 <div class="nav-act">
 <div class="lang-wrap">
-<div class="lang" id="langBtn" role="button" tabindex="0" aria-haspopup="listbox" aria-expanded="false"><span id="langCurrent">EN</span> ▾</div>
+<div aria-expanded="false" aria-haspopup="listbox" class="lang" id="langBtn" role="button" tabindex="0"><span id="langCurrent">EN</span> ▾</div>
 <div class="lang-menu" id="langMenu" role="listbox">
-<div class="lang-opt" data-lang="en" role="option" aria-selected="true">English</div>
-<div class="lang-opt" data-lang="fr" role="option" aria-selected="false">Français</div>
-<div class="lang-opt" data-lang="es" role="option" aria-selected="false">Español</div>
-<div class="lang-opt" data-lang="ca" role="option" aria-selected="false">Català</div>
+<div aria-selected="true" class="lang-opt" data-lang="en" role="option">English</div>
+<div aria-selected="false" class="lang-opt" data-lang="fr" role="option">Français</div>
+<div aria-selected="false" class="lang-opt" data-lang="es" role="option">Español</div>
+<div aria-selected="false" class="lang-opt" data-lang="ca" role="option">Català</div>
 </div>
 </div>
 <a class="nav-apply" href="https://docs.google.com/forms/d/e/1FAIpQLSdRuDKQOyXDjo9MuppdqoX6loy8Gt0mcX8pZob3G0Y3RNdbjA/viewform">More Information</a>
@@ -1446,7 +1446,7 @@ img,video,iframe{max-width:100%}
 <!-- ─── LIFE AT BMS — alternating photo+text ─────── -->
 <section class="sec" id="training" style="padding:72px 0">
 <div class="wrap">
-<a class="reveal training-cta" href="https://www.barcelonamontessoritrainingcenter.com" rel="noopener" target="_blank" style="display:block;background:var(--pink);border-radius:var(--r-xl);padding:56px 58px;text-decoration:none">
+<a class="reveal training-cta" href="https://www.barcelonamontessoritrainingcenter.com" rel="noopener" style="display:block;background:var(--pink);border-radius:var(--r-xl);padding:56px 58px;text-decoration:none" target="_blank">
 <span class="tag tag--peach">Montessori Teacher Training</span>
 <h2 class="h2" style="color:var(--white);font-size:clamp(24px,3vw,38px);margin:10px 0 14px">Barcelona Montessori Training Center</h2>
 <p class="body" style="color:rgba(255,255,255,.75);max-width:720px;margin-bottom:22px">AMS-affiliated adolescent training (Secondary I–II, ages 12–18), hosted at BMS in Barcelona — a low-residency programme designed for working educators.</p>
@@ -1881,7 +1881,6 @@ img,video,iframe{max-width:100%}
 </div>
 </section>
 <!-- ─── ACCREDITATIONS, REPORTS & LEGAL — internalised ───────────── -->
-
 <section class="sec" id="legal-notice">
 <div class="wrap">
 <div class="sec-head reveal">
@@ -1907,7 +1906,6 @@ img,video,iframe{max-width:100%}
 </div>
 </div>
 </section>
-
 <!-- ─── FLOATING CONTACT WIDGET ───────────────────── -->
 <div aria-live="polite" class="contact-widget" id="familyContactWidget">
 <div aria-hidden="true" aria-labelledby="contactWidgetTitle" class="contact-widget-panel" role="dialog">
@@ -1982,42 +1980,42 @@ img,video,iframe{max-width:100%}
 </div>
 <div aria-label="Barcelona Montessori School partners" class="logo-wall">
 <a aria-label="Fundación Anima" class="logo-tile reveal" href="https://www.fundacionanima.org" rel="noopener" target="_blank">
-<img alt="Fundación Anima logo" src="images/fundaci-n-anima-logo.webp"/>
+<img alt="Fundación Anima logo" src="images/partners/fundacion-anima.svg"/>
 </a>
 <a aria-label="Montessori Model United Nations" class="logo-tile logo-tile--partner reveal" href="https://montessori-mun.org" rel="noopener" target="_blank">
 <span class="logo-mark logo-mark--dark"><img alt="Montessori MUN logo" loading="lazy" src="images/partners/montessori-mun.svg"/></span>
 <span class="logo-wordmark">Montessori MUN<small>Model United Nations</small></span>
 </a>
 <a aria-label="Ametller Origen" class="logo-tile logo-tile--partner reveal" href="https://corp.ametllerorigen.com" rel="noopener" target="_blank">
-<span class="logo-mark"><img alt="Ametller Origen logo" loading="lazy" src="https://www.google.com/s2/favicons?domain=ametllerorigen.com&amp;sz=128"/></span>
+<span class="logo-mark"><img alt="Ametller Origen logo" loading="lazy" src="images/partners/ametller-origen.svg"/></span>
 <span class="logo-wordmark">Ametller Origen<small>School catering</small></span>
 </a>
 <a aria-label="Fundesplai" class="logo-tile logo-tile--partner reveal" href="https://fundesplai.org" rel="noopener" target="_blank">
-<span class="logo-mark"><img alt="Fundesplai logo" loading="lazy" src="https://www.google.com/s2/favicons?domain=fundesplai.org&amp;sz=128"/></span>
+<span class="logo-mark"><img alt="Fundesplai logo" loading="lazy" src="images/partners/fundesplai.svg"/></span>
 <span class="logo-wordmark">Fundesplai<small>Community &amp; services</small></span>
 </a>
 <a aria-label="Barcelona Montessori Training Center" class="logo-tile logo-tile--partner reveal" href="https://barcelonamontessoritrainingcenter.com" rel="noopener" target="_blank">
-<span class="logo-mark"><img alt="Barcelona Montessori Training Center logo" loading="lazy" src="https://www.google.com/s2/favicons?domain=barcelonamontessoritrainingcenter.com&amp;sz=128"/></span>
+<span class="logo-mark"><img alt="Barcelona Montessori Training Center logo" loading="lazy" src="images/partners/bmtc.svg"/></span>
 <span class="logo-wordmark">BMTC<small>Teacher training</small></span>
 </a>
 <a aria-label="Carrera contra el Hambre" class="logo-tile logo-tile--partner reveal" href="https://carreracontraelhambre.accioncontraelhambre.org" rel="noopener" target="_blank">
-<span class="logo-mark logo-mark--wide"><img alt="Carrera contra el Hambre logo" loading="lazy" src="images/partners/carrera-contra-el-hambre.jpg"/></span>
+<span class="logo-mark logo-mark--wide"><img alt="Carrera contra el Hambre logo" loading="lazy" src="images/partners/carrera-contra-el-hambre.svg"/></span>
 <span class="logo-wordmark">Carrera contra el Hambre<small>Solidarity project</small></span>
 </a>
 <a aria-label="Alella Green Tech" class="logo-tile logo-tile--partner reveal" href="https://alellagreentech.com" rel="noopener" target="_blank">
-<span class="logo-mark logo-mark--wide"><img alt="Alella Green Tech logo" loading="lazy" src="images/partners/alella-green-tech.png"/></span>
+<span class="logo-mark logo-mark--wide"><img alt="Alella Green Tech logo" loading="lazy" src="images/partners/alella-green-tech.svg"/></span>
 <span class="logo-wordmark">Alella Green Tech<small>Adolescent farm work</small></span>
 </a>
 <a aria-label="Vidia" class="logo-tile logo-tile--partner reveal" href="https://vidia.cat" rel="noopener" target="_blank">
-<span class="logo-mark"><img alt="Vidia logo" loading="lazy" src="https://www.google.com/s2/favicons?domain=vidia.cat&amp;sz=128"/></span>
+<span class="logo-mark"><img alt="Vidia logo" loading="lazy" src="images/partners/vidia.svg"/></span>
 <span class="logo-wordmark">Vidia<small>Community partner</small></span>
 </a>
 <a aria-label="Montessori Sports" class="logo-tile logo-tile--partner reveal" href="https://www.montessori-sports.com" rel="noopener" target="_blank">
-<span class="logo-mark"><img alt="Montessori Sports logo" loading="lazy" src="https://www.google.com/s2/favicons?domain=montessori-sports.com&amp;sz=128"/></span>
+<span class="logo-mark"><img alt="Montessori Sports logo" loading="lazy" src="images/partners/montessori-sports.svg"/></span>
 <span class="logo-wordmark">Montessori Sports<small>Movement &amp; PE</small></span>
 </a>
 <a aria-label="American Montessori Society" class="logo-tile logo-tile--partner reveal" href="https://amshq.org" rel="noopener" target="_blank">
-<span class="logo-mark logo-mark--wide"><img alt="American Montessori Society (AMS) logo" loading="lazy" src="images/partners/ams.png"/></span>
+<span class="logo-mark logo-mark--wide"><img alt="American Montessori Society (AMS) logo" loading="lazy" src="images/partners/ams.svg"/></span>
 <span class="logo-wordmark">AMS<small>American Montessori Society</small></span>
 </a>
 </div>
@@ -2251,7 +2249,6 @@ function bmsYearFinder(){
   out.textContent='For September '+entry.getFullYear()+': '+prog+yr+'.';
 }
 </script>
-
 <button aria-label="Back to top" class="back-to-top" id="backToTop" type="button">
 <svg aria-hidden="true" viewbox="0 0 24 24"><path d="M12 19V5"></path><path d="M5 12l7-7 7 7"></path></svg>
 </button>
