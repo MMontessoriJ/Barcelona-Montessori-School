@@ -1264,7 +1264,7 @@ img,video,iframe{max-width:100%}
 <p>We've received your interest form and will be in touch shortly. A copy of your responses will be emailed to the address you provided.</p>
 </div>
 
-<form id="ifForm" class="if-card" method="post" action="#" novalidate>
+<form id="ifForm" class="if-card" method="post" action="https://objetivo-excelencia-sl1.odoo.com/website/form/crm.lead" novalidate>
 
 <div id="ifError" class="if-error">Please fill in all required fields before submitting.</div>
 
@@ -1325,10 +1325,9 @@ img,video,iframe{max-width:100%}
 </div>
 
 <!-- Hidden fields wired to Odoo's website-form-to-CRM-lead endpoint. See ODOO-SETUP.md. -->
-<input type="hidden" name="subject" value="Interest Form — Website"/>
+<input type="hidden" name="name" value="Interest Form — Website"/>
 <textarea class="if-textarea" id="if-description" name="description" style="display:none"></textarea>
-<input type="hidden" name="email_to" value="info@barcelonamontessorischool.com"/>
-<input type="hidden" name="website_form_signature" value="PASTE_SIGNATURE_HERE"/>
+<!-- No website_form_signature needed: crm.lead's default field set doesn't require one. -->
 
 <div class="if-submit-row">
 <button type="submit" class="btn btn-primary">Submit</button>
@@ -1384,8 +1383,7 @@ img,video,iframe{max-width:100%}
     ];
     document.getElementById('if-description').value = lines.join('\n');
 
-    // TODO (Tim): point this fetch at your Odoo instance once website_form_signature is set — see ODOO-SETUP.md
-    var ODOO_FORM_URL = 'https://YOUR-ODOO-INSTANCE.odoo.com/website/form/';
+    var ODOO_FORM_URL = 'https://objetivo-excelencia-sl1.odoo.com/website/form/crm.lead';
     var fd = new FormData(form);
     fetch(ODOO_FORM_URL, { method:'POST', body: fd, mode:'no-cors' })
       .then(function(){ showSuccess(); })
