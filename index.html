@@ -262,7 +262,7 @@ ul{list-style:none}
 .rule{width:40px;height:3px;background:var(--teal);border-radius:2px;margin:18px 0 26px}
 .rule--peach{background:var(--peach)}
 .rule--white{background:rgba(255,255,255,.4)}
-.btn{display:inline-flex;align-items:center;gap:8px;padding:13px 26px;border-radius:100px;font-family:var(--font-h);font-size:14px;font-weight:700;letter-spacing:.02em;cursor:pointer;transition:all .2s;border:2px solid transparent}
+.btn{box-sizing:border-box;display:inline-flex;align-items:center;gap:8px;padding:13px 26px;border-radius:100px;font-family:var(--font-h);font-size:14px;font-weight:700;letter-spacing:.02em;cursor:pointer;transition:all .2s;border:2px solid transparent}
 .btn-primary{background:var(--pink);color:var(--white)}
 .btn-primary:hover{background:var(--pink-d);transform:translateY(-1px);box-shadow:0 6px 24px rgba(143,71,63,.3)}
 .btn-teal{background:var(--teal);color:var(--white)}
@@ -480,12 +480,12 @@ nav .wrap{max-width:1440px}
 
 /* ─── BLOG ────────────────────────────────────────── */
 .blog-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
-.blog-card{border-radius:var(--r-xl);overflow:hidden;background:var(--white);box-shadow:var(--sh);transition:transform .2s}
+.blog-card{border-radius:var(--r-xl);overflow:hidden;background:var(--white);box-shadow:var(--sh);transition:transform .2s;display:flex;flex-direction:column}
 .blog-card:hover{transform:translateY(-4px)}
 .blog-thumb{height:190px;background:var(--cream-d);position:relative;overflow:hidden}
 .blog-thumb img{width:100%;height:100%;object-fit:cover}
 .blog-thumb-note{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:var(--font-h);font-size:10px;color:var(--muted);letter-spacing:.06em;padding:16px;text-align:center}
-.blog-body{padding:22px 24px}
+.blog-body{padding:22px 24px;display:flex;flex-direction:column;flex:1}
 .blog-cat{font-family:var(--font-h);font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--teal);margin-bottom:8px}
 .blog-title{font-family:var(--font-h);font-size:16px;font-weight:700;line-height:1.35;color:var(--navy);margin-bottom:6px}
 .blog-date{font-family:var(--font-h);font-size:11px;color:var(--muted);letter-spacing:.04em}
@@ -598,7 +598,7 @@ footer{background:#232C3D;padding:72px 0 36px}
 .bio-more summary::after{content:' +'}
 .bio-more[open] summary::after{content:' \2212'}
 .bio-more p{font-size:13px;color:var(--muted);line-height:1.7;text-align:left;margin-top:10px}
-.team-group{font-family:var(--font-h);font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--green);margin:48px 0 18px;text-align:center}
+.team-group{font-family:var(--font-h);font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--teal);margin:48px 0 18px;text-align:center}
 @media(max-width:1020px){.tm-grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:780px){.tm-grid{grid-template-columns:1fr 1fr}}
 @media(max-width:480px){.tm-grid{grid-template-columns:1fr}}
@@ -992,7 +992,7 @@ img,video,iframe{max-width:100%}
 
 
 /* ─── BLOG ARTICLE PAGES ─────────────────────────── */
-.blog-card .blog-read{margin-top:16px;width:100%;justify-content:center;padding:11px 18px;font-size:12px}
+.blog-card .blog-read{margin-top:auto;width:100%;justify-content:center;padding:11px 18px;font-size:12px}
 .blog-article-page{display:none;background:var(--white);padding:96px 0;border-top:1px solid var(--cream-dd)}
 .blog-article-page:target{display:block}
 .blog-article-shell{max-width:880px;margin:0 auto;background:var(--white)}
@@ -1354,24 +1354,24 @@ footer{background:#232C3D}
 <h3 class="h3" style="color:var(--white);margin:12px 0 24px;font-family:var(--font-h);letter-spacing:-.01em">Five principles that guide everything we do.</h3>
 <div class="values-grid">
 <div class="val reveal">
-<h5>Respect</h5>
-<p>As a means for a peaceful world — for oneself, others, and the environment we share.</p>
-</div>
-<div class="val reveal">
-<h5>Curious, Life-Long Learning</h5>
-<p>Practical and emotional skills that promote educational and social independence at every stage.</p>
-</div>
-<div class="val reveal">
 <h5>Child-Centered Approach</h5>
 <p>Children at the centre of every decision, supporting every student's holistic development.</p>
+</div>
+<div class="val reveal">
+<h5>Respect</h5>
+<p>As a means for a peaceful world — for oneself, others, and the environment we share.</p>
 </div>
 <div class="val reveal">
 <h5>Responsibility</h5>
 <p>For oneself, for others, and for the wider world.</p>
 </div>
-<div class="val val-wide">
+<div class="val reveal">
 <h5>Belonging</h5>
 <p>Every staff member, student and parent shares a sense of connection and contribution to the BMS mission and vision. This is what makes BMS a community, not just a school.</p>
+</div>
+<div class="val val-wide">
+<h5>Curious, Life-Long Learning</h5>
+<p>Practical and emotional skills that promote educational and social independence at every stage.</p>
 </div>
 </div>
 </div>
@@ -1821,8 +1821,8 @@ footer{background:#232C3D}
 <div class="contact-col">
 <div class="contact-icon"><svg class="ic" viewbox="0 0 24 24"><path d="M12 21s-7-5.5-7-11a7 7 0 1 1 14 0c0 5.5-7 11-7 11z"></path><circle cx="12" cy="10" r="2.6"></circle></svg></div>
 <h4>Visit Us</h4>
-<p>Carrer Pomaret 25<br/>08017 Barcelona</p>
-<p style="margin-top:8px">Carrer de l'Esperança 13<br/>08017 Barcelona</p>
+<p><strong>Pomaret 25</strong><br/>Carrer Pomaret 25, 08017 Barcelona<br/><a href="tel:+34930272655">930 272 655</a></p>
+<p style="margin-top:12px"><strong>Esperança 13</strong><br/>Carrer de l'Esperança 13, 08017 Barcelona<br/><a href="tel:+34931420972">931 420 972</a> · <a href="https://wa.me/34931420972" rel="noopener" target="_blank">WhatsApp</a></p>
 </div>
 <div class="contact-col">
 <div class="contact-icon"><svg class="ic" viewbox="0 0 24 24"><rect height="14" rx="2" width="18" x="3" y="5"></rect><path d="M3 7l9 6 9-6"></path></svg></div>
@@ -1836,46 +1836,6 @@ footer{background:#232C3D}
 <h4>Book a Campus Visit</h4>
 <p>Tours run on weekday mornings during term time. Tim or a member of the leadership team will show you around.</p>
 <a class="btn btn-primary" href="https://docs.google.com/forms/d/e/1FAIpQLSdRuDKQOyXDjo9MuppdqoX6loy8Gt0mcX8pZob3G0Y3RNdbjA/viewform" style="margin-top:20px;font-size:13px">More Information</a>
-</div>
-</div>
-</div>
-</section>
-<!-- ─── SCHOOL POLICIES HANDBOOK — internal page destination ───────────── -->
-<section class="sec" id="school-policies-handbook">
-<div class="wrap">
-<div class="sec-head c reveal">
-<span class="tag">Policies &amp; Procedures</span>
-<h2 class="h2">Parent-facing school handbook and statutory documents.</h2>
-<div class="rule"></div>
-<p class="body">This section replaces the broken external policies link with an internal destination in the new BMS design. It is designed as the gateway for families to find safeguarding, health, payments, re-enrolment and school procedure documents.</p>
-</div>
-<div class="g4">
-<article class="why-item reveal" style="background:var(--white);border:1px solid var(--cream-dd);border-radius:var(--r-xl);box-shadow:var(--sh);border-top:4px solid var(--navy)">
-<div class="why-num">01</div>
-<h4>Safeguarding &amp; Child Protection</h4>
-<p>Child protection expectations, staff responsibilities, reporting routes, visitor procedures and safeguarding guidance for the school community.</p>
-</article>
-<article class="why-item reveal" style="background:var(--white);border:1px solid var(--cream-dd);border-radius:var(--r-xl);box-shadow:var(--sh);border-top:4px solid var(--teal)">
-<div class="why-num">02</div>
-<h4>Health, Medical &amp; Emergency</h4>
-<p>Medical forms, allergies, medicine administration, illness procedures, first aid, emergency contacts and campus safety procedures.</p>
-</article>
-<article class="why-item reveal" style="background:var(--white);border:1px solid var(--cream-dd);border-radius:var(--r-xl);box-shadow:var(--sh);border-top:4px solid var(--green)">
-<div class="why-num">03</div>
-<h4>Payments, Fees &amp; Re-enrolment</h4>
-<p>Tuition, invoices, deposits, re-enrolment documents, payment deadlines and finance-related forms for current and incoming families.</p>
-</article>
-<article class="why-item reveal" style="background:var(--white);border:1px solid var(--cream-dd);border-radius:var(--r-xl);box-shadow:var(--sh);border-top:4px solid var(--peach-d)">
-<div class="why-num">04</div>
-<h4>School Policies, Procedures &amp; Forms</h4>
-<p>Operational policies, parent forms, permissions, campus procedures, handbooks and guidance documents for day-to-day school life.</p>
-</article>
-</div>
-<div style="margin-top:34px;background:var(--cream-d);border:1px solid var(--cream-dd);border-radius:var(--r-xl);padding:30px 34px">
-<h3 class="h3" style="margin-bottom:10px">Document library note</h3>
-<p class="body">The old website used an external online folder for the live policy documents. In the new website, this section is ready to host those documents directly. Before launch, upload the PDF files to the new website or Odoo media library and connect the buttons to those internal file links.</p>
-<div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:20px">
-<a class="btn btn-outline" href="#contact">Request a policy document</a>
 </div>
 </div>
 </div>
@@ -2059,14 +2019,22 @@ footer{background:#232C3D}
 <li><a href="parents.html#testimonials">Testimonials</a></li>
 <li><a href="#training">Montessori Training</a></li>
 <li><a href="#blog">Blog</a></li>
-<li><a href="parents.html#parents">Parent Resources</a></li>
 <li><a href="#jobs">Work &amp; Learn With Us</a></li>
 </ul>
 </div>
 <div class="footer-col">
-<h4>School Information</h4>
+<h4>Parent Resources</h4>
 <ul>
-<li><a href="parents.html#policies-procedures">School Policies</a></li>
+<li><a href="https://drive.google.com/drive/folders/1wD0PvhyuoD9InKQiAuoKde3LCRNyH-WX" rel="noopener" target="_blank">Bus Routes</a></li>
+<li><a href="https://drive.google.com/drive/folders/1r4fqV7e0XIlaKVQA3wjpryQVRSD5japs" rel="noopener" target="_blank">Lunch Menu</a></li>
+<li><a href="https://barcelonamontessorischool.com/enrichment-activities" rel="noopener" target="_blank">Enrichment Activities</a></li>
+<li><a href="https://www.gotiteta.com/pages/bms-uniforms" rel="noopener" target="_blank">Uniform</a></li>
+<li><a href="https://barcelonamontessorischool.com/fabclub" rel="noopener" target="_blank">Families Association of BMS</a></li>
+<li><a href="https://barcelonamontessorischool.com/ambassadors" rel="noopener" target="_blank">Family Ambassador Programme</a></li>
+</ul>
+<h4 style="margin-top:24px">School Information</h4>
+<ul>
+<li><a href="https://drive.google.com/drive/folders/1j1dfYfvcD4zYeGJg4_3de4O4IzYlDJfR" target="_blank" rel="noopener">School Policies &amp; Procedures ↗</a></li>
 <li><a href="parents.html#school-calendar">School Calendar</a></li>
 </ul>
 <h4 style="margin-top:24px">Legal</h4>
@@ -2085,7 +2053,7 @@ footer{background:#232C3D}
 </div>
 </div>
 <div class="footer-bottom">
-<p>© 2026 Objetivo Excelencia S.L. · Barcelona Montessori School · CIF B-67519371</p>
+<p>© 2026 Objetivo Excelencia S.L. · Barcelona Montessori School · CIF B-67519371 · Codi de centre 08078211</p>
 <p>Carrer Pomaret 25 &amp; Carrer de l'Esperança 13, 08017 Barcelona, Spain</p>
 </div>
 </div>
