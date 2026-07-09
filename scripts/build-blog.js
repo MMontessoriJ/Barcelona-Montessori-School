@@ -15,6 +15,8 @@ const fmtDate=iso=>{const d=new Date(iso+'T00:00:00');return isNaN(d)?iso:`${d.g
 const esc=s=>String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 const imgPost=p=>{p=String(p||'').replace(/^\//,'');return p?'../'+p:'';};
 const imgIndex=p=>String(p||'').replace(/^\//,'');
+const DEFAULT_OG_IMAGE=`${SITE_URL}/images/mas-pomaret-building-at-carrer-pomaret-25-barcelon.webp`;
+const ogImage=p=>p?`${SITE_URL}/${String(p).replace(/^\//,'')}`:DEFAULT_OG_IMAGE;
 const firstPara=md=>{let t=md.trim().split(/\n\s*\n/)[0].replace(/[*_`]/g,'').replace(/^[#>\-\s]+/,'').trim();return t.length>190?t.slice(0,187).trim()+'…':t;};
 
 
@@ -57,6 +59,9 @@ for(const p of posts){
     .split('{{HERO}}').join(hero)
     .split('{{GALLERY}}').join(gallery)
     .split('{{SHARE}}').join(shareButtons(d.title, `${SITE_URL}/blog/${p.slug}.html`))
+    .split('{{OGIMAGE}}').join(ogImage(d.hero))
+    .split('{{PUBDATE}}').join(String(d.date))
+    .split('{{AUTHOR}}').join(esc(d.author||'Barcelona Montessori School'))
     .split('{{BODY}}').join(marked.parse(p.body.trim()));
   fs.writeFileSync(path.join(ROOT,'blog',p.slug+'.html'),html);
   console.log('wrote blog/'+p.slug+'.html');
