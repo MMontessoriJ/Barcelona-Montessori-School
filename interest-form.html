@@ -1388,20 +1388,8 @@ img,video,iframe{max-width:100%}
     fetch(ODOO_FORM_URL, { method:'POST', body: fd, mode:'no-cors' })
       .then(function(){ showSuccess(); })
       .catch(function(){ showSuccess(); }); // no-cors responses are opaque; treat completion as success
-
-    // Also email a copy to admissions@ — separate, non-blocking, best-effort.
-    // Uses Odoo's default "send an email" website form (mail.mail), same mechanism
-    // as the Contact Us page, just with a different recipient. If this one fails,
-    // it does not affect the CRM lead above or the success message shown to the family.
-    var ccForm = new FormData();
-    ccForm.append('name', form.querySelector('#if-name').value);
-    ccForm.append('phone', form.querySelector('#if-phone').value);
-    ccForm.append('email_from', form.querySelector('#if-email').value);
-    ccForm.append('subject', 'Interest Form — Website copy');
-    ccForm.append('description', document.getElementById('if-description').value);
-    ccForm.append('email_to', 'admissions@barcelonamontessorischool.com');
-    ccForm.append('website_form_signature', '465bf85c84fe60d2f00df6388b2e9ddca4afc685af13f6b4f096f7464601e58d');
-    fetch('https://objetivo-excelencia-sl1.odoo.com/website/form/', { method:'POST', body: ccForm, mode:'no-cors' }).catch(function(){});
+    // A copy is emailed to admissions@ automatically by an Odoo Automation Rule
+    // that fires whenever a new lead is created — no extra code needed here.
   });
 
   function showSuccess(){
