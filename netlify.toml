@@ -1,6 +1,7 @@
 # ─── BMS Netlify configuration ───
 [build]
   publish = "."
+  command = "npm run build"
 
 # Security & caching headers
 [[headers]]
