@@ -1,0 +1,43 @@
+backend:
+  name: git-gateway
+  branch: main
+
+# Staff edit here; images are committed to /images
+media_folder: "images"
+public_folder: "/images"
+
+# Draft → In review → Ready workflow (uncomment to require review before publish)
+publish_mode: editorial_workflow
+
+site_url: "https://www.barcelonamontessorischool.com"
+display_url: "https://www.barcelonamontessorischool.com"
+
+collections:
+  - name: "blog"
+    label: "Blog posts"
+    label_singular: "Blog post"
+    description: "Write and publish BMS blog articles. Fill the fields, add photos, hit Publish."
+    folder: "content/blog"
+    create: true
+    slug: "{{slug}}"
+    summary: "{{title}}  ·  {{date}}"
+    sortable_fields: ["date", "title"]
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Date", name: "date", widget: "datetime", date_format: "YYYY-MM-DD", time_format: false, format: "YYYY-MM-DD" }
+      - { label: "Author", name: "author", widget: "string", default: "Barcelona Montessori School" }
+      - { label: "Category", name: "category", widget: "select", options: ["Community","School Life","Arts","Celebrations","Montessori","Events","News"], default: "News" }
+      - { label: "Short description (used on the blog card and for SEO/social sharing)", name: "description", widget: "text" }
+      - { label: "Hero image", name: "hero", widget: "image", required: false }
+      - { label: "Hero image — alt text (describe the photo)", name: "hero_alt", widget: "string", required: false }
+      - { label: "Hero image — caption", name: "hero_caption", widget: "string", required: false }
+      - label: "Photo gallery (optional)"
+        name: "gallery"
+        widget: "list"
+        required: false
+        summary: "{{fields.alt}}"
+        fields:
+          - { label: "Image", name: "image", widget: "image" }
+          - { label: "Alt text", name: "alt", widget: "string", required: false }
+          - { label: "Caption", name: "caption", widget: "string", required: false }
+      - { label: "Body", name: "body", widget: "markdown" }
