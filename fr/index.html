@@ -2329,5 +2329,17 @@ const I18N = {"fr":{"Barcelona Montessori School — Holistic Montessori Educati
 <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 <script>if(window.netlifyIdentity){window.netlifyIdentity.on("init",u=>{if(!u){window.netlifyIdentity.on("login",()=>{document.location.href="/admin/";});}});}</script>
 
-
+script>
+document.querySelectorAll('.lang-opt').forEach(function(el){
+  el.addEventListener('click', function(){
+    var lang = el.getAttribute('data-lang');
+    var slug = el.getAttribute('data-post-slug');
+    if (slug) {
+      location.href = (lang === 'en' ? '/blog/' : '/' + lang + '/blog/') + slug + '.html';
+    } else {
+      location.href = (lang === 'en' ? '/' : '/' + lang + '/');
+    }
+  });
+});
+</script>
 </body></html>
