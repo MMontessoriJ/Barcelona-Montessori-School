@@ -218,10 +218,12 @@ function renderPost(slug, data, body, locale, depth, outDir){
   const catLabel=(CATEGORY_LABELS[locale]&&CATEGORY_LABELS[locale][catKey])||catKey;
   const root='../'.repeat(depth);
   const localePath = locale==='en' ? '' : (locale+'/');
-  // Note: the hero image intentionally has no caption/figcaption — the descriptive
-  // text under the main image was removed per feedback (it wasn't adding value).
-  const hero=data.hero?`<figure class="blog-article-hero"><img alt="${esc(data.hero_alt||data.title)}" loading="lazy" src="${imgPost(data.hero,depth)}"/></figure>`:'';
-  const gallery=(Array.isArray(data.gallery)&&data.gallery.length)?'<div class="blog-article-gallery">'+data.gallery.map(g=>`<figure><img alt="${esc(g.alt||'')}" loading="lazy" src="${imgPost(g.image,depth)}"/>`+(g.caption?`<figcaption>${esc(g.caption)}</figcaption>`:'')+`</figure>`).join('')+'</div>':'';
+  // Design 3 (full-bleed editorial): the hero image is now the edge-to-edge masthead
+  // behind the title, so it's a bare <img> (no figure/caption — that text was removed
+  // per feedback). Gallery photos render as individual full-bleed "bleed-img" figures
+  // that break out to full viewport width between sections of body text.
+  const hero=data.hero?`<img alt="${esc(data.hero_alt||data.title)}" loading="lazy" src="${imgPost(data.hero,depth)}"/>`:'';
+  const gallery=(Array.isArray(data.gallery)&&data.gallery.length)?data.gallery.map(g=>`<figure class="bleed-img"><img alt="${esc(g.alt||'')}" loading="lazy" src="${imgPost(g.image,depth)}"/>`+(g.caption?`<figcaption>${esc(g.caption)}</figcaption>`:'')+`</figure>`).join(''):'';
   const meta=`${fmtDate(data.date,locale)} · ${S.writtenByMeta} ${esc(data.author||'Barcelona Montessori School')}`;
   const canonicalUrl=`${SITE_URL}/${localePath}blog/${slug}.html`;
 
