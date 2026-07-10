@@ -127,34 +127,49 @@
       .lang-menu{right:0;left:auto}
     }
 
-    /* ─── ARCHIVE PAGE HEADER ─── */
-    .archive-hero{
-      background:linear-gradient(135deg,var(--teal-d),#2C7A79 52%,#9E5C55);
-      color:#fff;
-      padding:72px 0 56px;
+    /* ─── ARCHIVE MASTHEAD — plain and editorial (It's Nice That style): no colour
+       band, just a big bold headline on the page background ─── */
+    .archive-masthead{padding:56px 0 40px;border-bottom:1px solid var(--cream-dd)}
+    .back-home{display:inline-flex;align-items:center;gap:8px;font-family:var(--font-h);font-size:13px;font-weight:800;color:var(--muted);margin-bottom:22px}
+    .back-home:hover{color:var(--teal-d)}
+    .archive-h1{font-family:var(--font-h);font-size:clamp(36px,6vw,64px);font-weight:800;line-height:1.02;letter-spacing:-.03em;color:var(--navy);margin-bottom:16px}
+    .archive-dek{font-family:var(--font-b);font-size:18px;line-height:1.7;color:var(--muted);max-width:620px}
+
+    /* ─── PILL (category tag) — used on both featured blocks and grid cards ─── */
+    .pill{display:inline-block;font-family:var(--font-h);font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--teal-d);background:var(--cream-turq);border-radius:999px;padding:5px 14px;margin-bottom:14px}
+
+    /* ─── FEATURED — the most recent posts as alternating image/text blocks ─── */
+    .featured-section{padding:48px 0 16px}
+    .featured-list{display:flex;flex-direction:column;gap:64px}
+    .feat-block{display:grid;grid-template-columns:1.1fr 1fr;gap:48px;align-items:center}
+    .feat-block.flip{grid-template-columns:1fr 1.1fr}
+    .feat-block.flip .feat-media{order:2}
+    .feat-block.flip .feat-copy{order:1}
+    .feat-media{border-radius:var(--r-l);overflow:hidden;aspect-ratio:4/3;background:var(--cream-d)}
+    .feat-media img{width:100%;height:100%;object-fit:cover;transition:transform .4s}
+    .feat-block:hover .feat-media img{transform:scale(1.03)}
+    .feat-title{font-family:var(--font-h);font-size:clamp(22px,2.6vw,32px);font-weight:800;line-height:1.15;letter-spacing:-.02em;color:var(--navy);margin-bottom:14px}
+    .feat-excerpt{font-family:var(--font-b);font-size:16px;line-height:1.75;color:var(--muted);margin-bottom:16px}
+    .feat-meta{font-family:var(--font-h);font-size:12px;font-weight:700;color:var(--muted);letter-spacing:.02em}
+
+    /* ─── FLAT GRID — remaining posts: borderless, image-led, no card box ─── */
+    .archive-section{padding:32px 0 96px}
+    .grid-heading{font-family:var(--font-h);font-size:13px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:28px;padding-top:32px;border-top:1px solid var(--cream-dd)}
+    .flat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:36px 28px}
+    .grid-card{display:block}
+    .grid-thumb{border-radius:var(--r);overflow:hidden;aspect-ratio:4/3;background:var(--cream-d);margin-bottom:16px}
+    .grid-thumb img{width:100%;height:100%;object-fit:cover;transition:transform .4s}
+    .grid-card:hover .grid-thumb img{transform:scale(1.04)}
+    .grid-title{font-family:var(--font-h);font-size:17px;font-weight:700;line-height:1.35;color:var(--navy);margin-bottom:8px}
+    .grid-date{font-family:var(--font-h);font-size:12px;color:var(--muted);letter-spacing:.03em}
+
+    @media(max-width:900px){
+      .feat-block,.feat-block.flip{grid-template-columns:1fr;gap:24px}
+      .feat-block.flip .feat-media,.feat-block.flip .feat-copy{order:0}
+      .featured-list{gap:44px}
     }
-    .archive-hero .tag{display:inline-block;font-family:var(--font-h);font-size:11px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--peach);margin-bottom:14px}
-    .archive-hero h1{font-family:var(--font-h);font-size:clamp(32px,5vw,52px);font-weight:800;line-height:1.08;letter-spacing:-.02em;margin-bottom:16px}
-    .archive-hero p{font-size:17px;line-height:1.7;color:rgba(255,255,255,.82);max-width:640px}
-    .back-home{display:inline-flex;align-items:center;gap:8px;font-family:var(--font-h);font-size:13px;font-weight:800;color:rgba(255,255,255,.82);margin-bottom:22px}
-    .back-home:hover{color:#fff}
-
-    /* ─── BLOG GRID / CARDS (matches the homepage's blog section exactly) ─── */
-    .archive-section{padding:56px 0 96px}
-    .blog-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
-    .blog-card{border-radius:var(--r-xl);overflow:hidden;background:var(--white);box-shadow:var(--sh);transition:transform .2s;display:flex;flex-direction:column}
-    .blog-card:hover{transform:translateY(-4px)}
-    .blog-thumb{height:190px;background:var(--cream-d);position:relative;overflow:hidden}
-    .blog-thumb img{width:100%;height:100%;object-fit:cover}
-    .blog-body{padding:20px;display:flex;flex-direction:column;flex:1}
-    .blog-cat{font-family:var(--font-h);font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--teal);margin-bottom:8px}
-    .blog-title{font-family:var(--font-h);font-size:16px;font-weight:700;line-height:1.35;color:var(--navy);margin-bottom:6px}
-    .blog-date{font-family:var(--font-h);font-size:11px;color:var(--muted);letter-spacing:.04em}
-    .blog-excerpt{font-family:var(--font-b);font-size:14px;line-height:1.75;color:var(--muted);margin-top:12px}
-    .blog-card .blog-read{margin-top:auto;width:100%;justify-content:center;padding:11px 18px;font-size:12px}
-
-    @media(max-width:1024px){.blog-grid{grid-template-columns:1fr 1fr}}
-    @media(max-width:760px){.blog-grid{grid-template-columns:1fr}.blog-thumb{height:210px}}
+    @media(max-width:1024px){.flat-grid{grid-template-columns:1fr 1fr}}
+    @media(max-width:760px){.flat-grid{grid-template-columns:1fr}}
 
     .site-footer{background:#241A20;color:rgba(255,255,255,.65);padding:46px 0;font-family:var(--font-h);font-size:12px}
     .site-footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
@@ -276,19 +291,27 @@
     </div>
   </nav>
 
-  <header class="archive-hero">
+  <header class="archive-masthead">
     <div class="wrap">
       <a class="back-home" href="{{ROOT}}index.html#blog">{{BACK_LINK}}</a>
-      <div class="tag">{{NAV_BLOG}}</div>
-      <h1>{{ARCHIVE_TITLE}}</h1>
-      <p>{{ARCHIVE_DESC}}</p>
+      <h1 class="archive-h1">{{ARCHIVE_TITLE}}</h1>
+      <p class="archive-dek">{{ARCHIVE_DESC}}</p>
     </div>
   </header>
 
+  <section class="featured-section">
+    <div class="wrap">
+      <div class="featured-list">
+        {{FEATURED}}
+      </div>
+    </div>
+  </section>
+
   <section class="archive-section">
     <div class="wrap">
-      <div class="blog-grid">
-        {{CARDS}}
+      <div class="grid-heading">{{MORE_POSTS_LABEL}}</div>
+      <div class="flat-grid">
+        {{GRID_CARDS}}
       </div>
     </div>
   </section>

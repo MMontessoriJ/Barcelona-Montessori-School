@@ -59,6 +59,7 @@ const STRINGS={
     writtenByMeta:'Written by',
     readMoreLabel:'Read full article →',
     archiveTitle:'All Blog Posts', archiveDesc:'Stories, updates and reflections from life at Barcelona Montessori School — browse the full archive.',
+    morePostsLabel:'More from the blog', aboveLabel:'Above',
   },
   fr:{
     announce:'Admissions ouvertes pour 2026-27 · Visitez nos campus à Sarrià',
@@ -87,6 +88,7 @@ const STRINGS={
     writtenByMeta:'Écrit par',
     readMoreLabel:'Lire l\'article complet →',
     archiveTitle:'Tous les articles du blog', archiveDesc:'Récits, actualités et réflexions sur la vie à Barcelona Montessori School — parcourez les archives complètes.',
+    morePostsLabel:'Plus d\'articles du blog', aboveLabel:'Ci-dessus',
   },
   es:{
     announce:'Admisiones abiertas para 2026-27 · Visite nuestros campus en Sarrià',
@@ -115,6 +117,7 @@ const STRINGS={
     writtenByMeta:'Escrito por',
     readMoreLabel:'Leer el artículo completo →',
     archiveTitle:'Todos los artículos del blog', archiveDesc:'Historias, novedades y reflexiones sobre la vida en Barcelona Montessori School — explora el archivo completo.',
+    morePostsLabel:'Más artículos del blog', aboveLabel:'Arriba',
   },
   ca:{
     announce:'Admissions obertes per al 2026-27 · Visiteu els nostres campus a Sarrià',
@@ -143,6 +146,7 @@ const STRINGS={
     writtenByMeta:'Escrit per',
     readMoreLabel:'Llegir l\'article complet →',
     archiveTitle:'Tots els articles del blog', archiveDesc:'Històries, novetats i reflexions sobre la vida a Barcelona Montessori School — explora l\'arxiu complet.',
+    morePostsLabel:'Més articles del blog', aboveLabel:'A dalt',
   },
 };
 
@@ -212,6 +216,59 @@ function cardHTML(post, locale, opts){
 </article>`;
 }
 
+// Look up the translated title/excerpt for a post in a given locale, falling back
+// to the English source. Shared by the two archive-only renderers below.
+function localizedCard(post, locale){
+  const d=post.data;
+  let title=d.title, excerpt=esc(firstPara(post.body));
+  if(locale!=='en'){
+    const tFile=path.join(CONTENT,locale,post.slug+'.md');
+    if(fs.existsSync(tFile)){
+      const g=matter(fs.readFileSync(tFile,'utf8'));
+      title=g.data.title||d.title;
+      if(g.content && g.content.trim()) excerpt=esc(firstPara(g.content));
+    }
+  }
+  return {title, excerpt};
+}
+
+// ─── It's Nice That–style archive renderers ───
+// These are deliberately SEPARATE from cardHTML()/.blog-card above, which continues
+// to feed the homepage's own embedded blog section unchanged. archiveFeaturedHTML()
+// renders the top few posts as alternating image/text "featured" blocks; archiveGridHTML()
+// renders the rest as a flat, borderless, image-led grid. Both are only used inside
+// renderArchiveIndex() below.
+function archiveFeaturedHTML(post, locale, opts){
+  const d=post.data;
+  const S=STRINGS[locale]||STRINGS.en;
+  const {title, excerpt}=localizedCard(post, locale);
+  const catLabel=(CATEGORY_LABELS[locale]&&CATEGORY_LABELS[locale][d.category])||d.category||'News';
+  const img=d.hero?`<img alt="${esc(d.hero_alt||title)}" loading="lazy" src="${imgPost(d.hero,opts.depth)}"/>`:'';
+  const flip = opts.index % 2 === 1 ? ' flip' : '';
+  return `<a class="feat-block${flip} reveal" href="${opts.hrefPrefix}${post.slug}.html">
+<div class="feat-media">${img}</div>
+<div class="feat-copy">
+<div class="pill">${esc(catLabel)}</div>
+<h2 class="feat-title">${esc(title)}</h2>
+<p class="feat-excerpt">${excerpt}</p>
+<div class="feat-meta">${fmtDate(d.date,locale)} · ${S.writtenByMeta} ${esc(d.author||'BMS')}</div>
+</div>
+</a>`;
+}
+
+function archiveGridHTML(post, locale, opts){
+  const d=post.data;
+  const {title}=localizedCard(post, locale);
+  const catLabel=(CATEGORY_LABELS[locale]&&CATEGORY_LABELS[locale][d.category])||d.category||'News';
+  const thumb=d.hero?`<img alt="${esc(d.hero_alt||title)}" loading="lazy" src="${imgPost(d.hero,opts.depth)}"/>`:'';
+  return `<a class="grid-card reveal" href="${opts.hrefPrefix}${post.slug}.html">
+<div class="grid-thumb">${thumb}</div>
+<div class="pill">${esc(catLabel)}</div>
+<h3 class="grid-title">${esc(title)}</h3>
+<div class="grid-date">${fmtDate(d.date,locale)}</div>
+</a>`;
+}
+
 function renderPost(slug, data, body, locale, depth, outDir){
   const S=STRINGS[locale]||STRINGS.en;
   const catKey=data.category||'News';
@@ -229,7 +286,9 @@ function renderPost(slug, data, body, locale, depth, outDir){
   const HERO_POSITIONS={Top:'center 15%', Center:'center 50%', Bottom:'center 85%'};
   const heroPos=HERO_POSITIONS[data.hero_position]||HERO_POSITIONS.Center;
   const hero=data.hero?`<img alt="${esc(data.hero_alt||data.title)}" loading="lazy" src="${imgPost(data.hero,depth)}" style="object-position:${heroPos}"/>`:'';
-  const gallery=(Array.isArray(data.gallery)&&data.gallery.length)?data.gallery.map(g=>`<figure class="bleed-img"><img alt="${esc(g.alt||'')}" loading="lazy" src="${imgPost(g.image,depth)}"/>`+(g.caption?`<figcaption>${esc(g.caption)}</figcaption>`:'')+`</figure>`).join(''):'';
+  // Gallery photos are contained, inline images (not full-bleed) with an
+  // It's Nice That–style "Above / caption" credit line under each one.
+  const gallery=(Array.isArray(data.gallery)&&data.gallery.length)?data.gallery.map(g=>`<figure class="gallery-figure"><img alt="${esc(g.alt||'')}" loading="lazy" src="${imgPost(g.image,depth)}"/>`+(g.caption?`<figcaption><span class="above-label">${S.aboveLabel}</span>${esc(g.caption)}</figcaption>`:'')+`</figure>`).join(''):'';
   const meta=`${fmtDate(data.date,locale)} · ${S.writtenByMeta} ${esc(data.author||'Barcelona Montessori School')}`;
   const canonicalUrl=`${SITE_URL}/${localePath}blog/${slug}.html`;
 
@@ -241,6 +300,7 @@ function renderPost(slug, data, body, locale, depth, outDir){
     .split('{{SLUG}}').join(slug)
     .split('{{CATEGORY}}').join(esc(catLabel))
     .split('{{META}}').join(meta)
+    .split('{{DEK}}').join(esc(data.description||''))
     .split('{{HERO}}').join(hero)
     .split('{{GALLERY}}').join(gallery)
     .split('{{SHARE}}').join(shareButtons(data.title, canonicalUrl))
@@ -388,7 +448,13 @@ function renderArchiveIndex(locale, depth, outDir){
   const S=STRINGS[locale]||STRINGS.en;
   const root='../'.repeat(depth);
   const localePath = locale==='en' ? '' : (locale+'/');
-  const cardsHtml = enPosts.map(p=>cardHTML(p, locale, {hrefPrefix:'', depth})).join('\n');
+  // Top few posts render as alternating image/text "featured" blocks (It's Nice
+  // That style); everything else renders as a flat, borderless, image-led grid.
+  const FEATURED_COUNT=3;
+  const featuredPosts=enPosts.slice(0,FEATURED_COUNT);
+  const gridPosts=enPosts.slice(FEATURED_COUNT);
+  const featuredHtml=featuredPosts.map((p,i)=>archiveFeaturedHTML(p, locale, {hrefPrefix:'', depth, index:i})).join('\n');
+  const gridHtml=gridPosts.map(p=>archiveGridHTML(p, locale, {hrefPrefix:'', depth})).join('\n');
   const archivePaths={
     en:`${SITE_URL}/blog/index.html`,
     fr:`${SITE_URL}/fr/blog/index.html`,
@@ -406,7 +472,9 @@ function renderArchiveIndex(locale, depth, outDir){
     .split('{{HREFLANG_TAGS}}').join(hreflangTags)
     .split('{{ARCHIVE_TITLE}}').join(esc(S.archiveTitle))
     .split('{{ARCHIVE_DESC}}').join(esc(S.archiveDesc))
-    .split('{{CARDS}}').join(cardsHtml)
+    .split('{{FEATURED}}').join(featuredHtml)
+    .split('{{GRID_CARDS}}').join(gridHtml)
+    .split('{{MORE_POSTS_LABEL}}').join(esc(S.morePostsLabel))
     .split('{{ANNOUNCE}}').join(S.announce)
     .split('{{BACK_LINK}}').join(S.backLink)
     .split('{{NAV_ABOUT}}').join(S.navAbout)
