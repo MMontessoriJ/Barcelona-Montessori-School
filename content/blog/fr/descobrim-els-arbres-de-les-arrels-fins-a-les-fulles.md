@@ -1,0 +1,7 @@
+---
+title: "À la découverte des arbres : des racines jusqu'aux feuilles !"
+description: "Ce mois-ci, nous avons travaillé sur les arbres et leurs différentes parties. Tout d'abord, nous avons lu un livre sur les arbres, qui expliquait comment ils peuvent changer et à quel point ils peuvent être différents. Ensuite, je leur ai montré des cartes illustrant les différentes parties des arbres : nous les avons observées, nous avons répété leurs noms et nous les avons"
+---
+Ce mois-ci, nous avons travaillé sur les arbres et leurs différentes parties. Tout d'abord, nous avons lu un livre sur les arbres, qui expliquait comment ils peuvent changer et à quel point ils peuvent être différents. Ensuite, je leur ai montré des cartes illustrant les différentes parties des arbres : nous les avons observées, nous avons récité leurs noms et je leur ai donné quelques informations sur chacune d'elles (par exemple : les racines servent à absorber l'eau et les nutriments du sol).
+
+Ensuite, nous sommes allés dans le jardin pour observer les arbres de l'école et identifier leurs différentes parties à l'aide des fiches. Ils ont également observé certains arbres et ont pu constater à quel point ils étaient tous différents les uns des autres. À la fin, ils ont dessiné l'arbre qui leur avait le plus plu, en s'inspirant des fiches ou en observant les arbres du jardin. Tout au long de l'activité, ils sont restés très concentrés et participatifs. Ils ont beaucoup apprécié cette expérience.
