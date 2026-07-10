@@ -22,32 +22,62 @@
   <meta name="twitter:description" content="{{DESCRIPTION}}" />
   <meta name="twitter:image" content="{{OGIMAGE}}" />
 
+  <link rel="alternate" hreflang="en" href="https://www.barcelonamontessorischool.com/blog/{{SLUG}}.html" />
+  <link rel="alternate" hreflang="fr" href="https://www.barcelonamontessorischool.com/fr/blog/{{SLUG}}.html" />
+  <link rel="alternate" hreflang="es" href="https://www.barcelonamontessorischool.com/es/blog/{{SLUG}}.html" />
+  <link rel="alternate" hreflang="ca" href="https://www.barcelonamontessorischool.com/ca/blog/{{SLUG}}.html" />
+  <link rel="alternate" hreflang="x-default" href="https://www.barcelonamontessorischool.com/blog/{{SLUG}}.html" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": {{TITLE_JSON}},
+    "description": {{DESCRIPTION_JSON}},
+    "datePublished": "{{PUBDATE}}",
+    "inLanguage": "{{HTML_LANG}}",
+    "author": {"@type": "Person", "name": {{AUTHOR_JSON}}},
+    "publisher": {
+      "@type": "Organization",
+      "name": "Barcelona Montessori School",
+      "logo": {"@type": "ImageObject", "url": "https://www.barcelonamontessorischool.com/images/mas-pomaret-building-at-carrer-pomaret-25-barcelon.webp"}
+    },
+    "image": "{{OGIMAGE}}",
+    "mainEntityOfPage": {"@type": "WebPage", "@id": "https://www.barcelonamontessorischool.com/{{LOCALE_PATH}}blog/{{SLUG}}.html"}
+  }
+  </script>
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Lora:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet" />
 
   <style>
     :root{
-      --navy:#3A2B33;
+      /* Matches the live homepage's palette exactly (BMS palette v4). */
+      --navy:#30282E;
+      --navy-m:#4B3D45;
+      --blue:#232C3D;
       --muted:#6B5D63;
-      --teal:#2C736F;
-      --teal-d:#1E5451;
-      --teal-soft:#91C8C6;
-      --pink:#7F5952;
-      --pink-d:#6F4E47;
-      --peach:#FFE1A7;
-      --cream:#FFFFFF;
-      --cream-d:#F6ECE9;
-      --cream-turq:#E6F3F2;
-      --border:#E9DBD6;
+      --teal:#2C7A79;
+      --teal-d:#216160;
+      --teal-soft:#AAE8E7;
+      --pink:#9E5C55;
+      --pink-d:#874E48;
+      --peach:#D4A49F;
+      --cream:#FFFCF7;
+      --cream-d:#FBF1EF;
+      --cream-turq:#E8F6F5;
+      --cream-dd:#EFE1DE;
+      --border:#EFE1DE;
+      --text:#30282E;
       --white:#FFFFFF;
       --font-h:'Montserrat',sans-serif;
       --font-b:'Lora',Georgia,serif;
-      --r:12px;
-      --r-l:20px;
-      --r-xl:32px;
-      --sh:0 12px 40px rgba(58,43,51,.10);
-      --sh-l:0 24px 70px rgba(58,43,51,.18);
+      --r:8px;
+      --r-l:16px;
+      --r-xl:24px;
+      --sh:0 2px 16px rgba(48,40,46,.08);
+      --sh-l:0 8px 40px rgba(48,40,46,.14);
     }
 
     *{box-sizing:border-box;margin:0;padding:0}
@@ -77,130 +107,69 @@
       letter-spacing:.02em;
     }
 
-    .nav{
-      position:sticky;
-      top:0;
-      z-index:50;
-      background:rgba(255,255,255,.92);
-      backdrop-filter:blur(18px);
-      border-bottom:1px solid rgba(233,219,214,.82);
-    }
-    .nav-i{
-      height:66px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:22px;
-    }
-    .logo{
-      font-family:var(--font-h);
-      font-weight:800;
-      letter-spacing:.06em;
-      text-transform:uppercase;
-      font-size:12px;
-      display:flex;
-      align-items:center;
-      gap:10px;
-      white-space:nowrap;
-    }
-    .logo-mark{
-      width:30px;
-      height:30px;
-      border-radius:50%;
-      background:var(--teal);
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      color:#fff;
-      font-size:15px;
-    }
-    .nav-links{
-      display:flex;
-      align-items:center;
-      gap:2px;
-      font-family:var(--font-h);
-      font-size:13px;
-      font-weight:700;
-    }
-    .nav-links a{
-      padding:8px 11px;
-      border-radius:999px;
-      color:var(--muted);
-    }
-    .nav-links a:hover{
-      background:var(--cream-d);
-      color:var(--teal);
-    }
-    .nav-act{
-      display:flex;
-      align-items:center;
-      gap:12px;
-    }
-    .lang-wrap{position:relative}
-    .lang{
-      font-family:var(--font-h);
-      font-size:12px;
-      color:var(--muted);
-      padding:7px 12px;
-      border:1px solid var(--border);
-      border-radius:999px;
-      font-weight:600;
-      cursor:pointer;
-      letter-spacing:.04em;
-      white-space:nowrap;
-    }
+    /* ─── NAV: ported verbatim from the homepage for full visual/structural parity ─── */
+    nav{background:rgba(255,252,247,.96);backdrop-filter:saturate(1.2) blur(10px);position:sticky;top:0;z-index:200;border-bottom:1px solid var(--cream-dd)}
+    nav .wrap{max-width:1440px}
+    .nav-i{display:flex;align-items:center;justify-content:space-between;height:76px;gap:22px}
+    .logo{display:flex;align-items:center}
+    .logo-lock{height:46px;width:auto;color:var(--blue);display:block}
+    .nav-links{display:flex;align-items:center;gap:2px;flex:1;justify-content:center;min-width:0}
+    .nl{padding:8px 13px;border-radius:var(--r);font-family:var(--font-h);font-size:13px;font-weight:600;letter-spacing:.02em;color:var(--text);transition:all .15s;white-space:nowrap;flex:0 0 auto}
+    .nl:hover{background:var(--cream-d);color:var(--teal)}
+    .nav-act{display:flex;align-items:center;gap:12px;flex-shrink:0}
+    .nav-apply{padding:10px 22px;font-family:var(--font-h);font-size:13px;font-weight:700;letter-spacing:.04em;background:var(--pink);color:var(--white);border-radius:100px;transition:all .2s;white-space:nowrap;flex:0 0 auto}
+    .nav-apply:hover{background:var(--pink-d);transform:translateY(-1px)}
+
+    .nl-drop{display:flex;align-items:center;position:relative}
+    .nl-caret{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;margin-left:-4px;background:none;border:none;cursor:pointer;color:var(--muted);flex-shrink:0}
+    .nl-caret::after{content:'';width:7px;height:7px;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:rotate(45deg);margin-top:-3px;transition:transform .18s}
+    .nl-drop:hover .nl-caret,.nl-drop.open .nl-caret{color:var(--teal)}
+    .nl-drop.open .nl-caret::after{transform:rotate(225deg);margin-top:3px}
+    .nl-menu{position:absolute;top:100%;left:0;margin-top:0;padding-top:18px;min-width:250px;opacity:0;visibility:hidden;transform:translateY(6px);transition:opacity .15s,transform .15s;z-index:300}
+    .nl-menu-inner{background:var(--white);border:1px solid var(--cream-dd);border-radius:var(--r-l);box-shadow:var(--sh-l);padding:8px}
+    .nl-drop:hover .nl-menu,.nl-drop:focus-within .nl-menu,.nl-drop.open .nl-menu{opacity:1;visibility:visible;transform:translateY(0)}
+    .nl-menu a{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 12px;border-radius:var(--r);font-family:var(--font-h);font-size:13px;font-weight:600;color:var(--text);white-space:nowrap;transition:background .12s,color .12s}
+    .nl-menu a:hover{background:var(--cream-d);color:var(--teal)}
+
+    .lang-wrap{position:relative;flex:0 0 auto}
+    .lang{font-family:var(--font-h);font-size:12px;color:var(--muted);padding:7px 12px;border:1px solid var(--cream-dd);border-radius:var(--r);font-weight:600;cursor:pointer;letter-spacing:.04em;white-space:nowrap;flex:0 0 auto}
     .lang:hover{border-color:var(--navy);color:var(--navy)}
-    .lang-menu{
-      position:absolute;
-      top:100%;
-      right:0;
-      margin-top:8px;
-      min-width:150px;
-      background:#fff;
-      border:1px solid var(--border);
-      border-radius:var(--r-l);
-      box-shadow:var(--sh-l);
-      padding:6px;
-      opacity:0;
-      visibility:hidden;
-      transform:translateY(6px);
-      transition:opacity .15s,transform .15s;
-      z-index:300;
-    }
+    .lang-menu{display:none;position:absolute;top:calc(100% + 6px);right:0;background:var(--white);border:1px solid var(--cream-dd);border-radius:var(--r);box-shadow:var(--sh-l);overflow:hidden;z-index:1200;min-width:132px}
+    .lang-menu.open,
     .lang-wrap:hover .lang-menu,
-    .lang-wrap:focus-within .lang-menu{
-      opacity:1;
-      visibility:visible;
-      transform:translateY(0);
-    }
-    .lang-opt{
-      display:block;
-      padding:9px 12px;
-      border-radius:var(--r);
-      font-family:var(--font-h);
-      font-size:13px;
-      font-weight:600;
-      color:var(--navy);
-      cursor:pointer;
-      white-space:nowrap;
-    }
+    .lang-wrap:focus-within .lang-menu{display:block}
+    .lang-opt{font-family:var(--font-h);font-size:13px;font-weight:600;color:var(--text);padding:10px 16px;cursor:pointer;white-space:nowrap;transition:background .12s,color .12s;display:block}
     .lang-opt:hover{background:var(--cream-d);color:var(--teal)}
-    .lang-opt[aria-selected="true"]{color:var(--teal);font-weight:800}
-    .nav-cta{
-      font-family:var(--font-h);
-      font-size:13px;
-      font-weight:800;
-      background:var(--pink);
-      color:#fff;
-      padding:10px 18px;
-      border-radius:999px;
-      white-space:nowrap;
-      transition:transform .18s, background .18s, box-shadow .18s;
+    .lang-opt[aria-selected="true"]{color:var(--teal);background:var(--cream-d)}
+
+    .nav-burger{display:none;background:none;border:none;cursor:pointer;padding:8px;border-radius:var(--r)}
+    .nav-burger span{display:block;width:22px;height:2px;background:var(--navy);margin:5px 0;transition:transform .2s,opacity .2s}
+    .nav-burger[aria-expanded="true"] span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+    .nav-burger[aria-expanded="true"] span:nth-child(2){opacity:0}
+    .nav-burger[aria-expanded="true"] span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+
+    @media(max-width:1260px){
+      .logo-lock{height:40px}
+      .nav-links{gap:0}
+      .nl{padding:8px 8px;font-size:12px;letter-spacing:0}
+      .nav-act{gap:8px}
+      .nav-apply{padding:10px 16px;font-size:12px}
+      .lang{padding:7px 10px}
     }
-    .nav-cta:hover{
-      background:var(--pink-d);
-      transform:translateY(-1px);
-      box-shadow:0 10px 24px rgba(127,89,82,.24);
+    @media(max-width:1120px){
+      .nav-links{display:none;position:absolute;top:76px;left:0;right:0;background:var(--white);flex-direction:column;align-items:stretch;padding:12px 20px 20px;border-bottom:1px solid var(--cream-dd);box-shadow:var(--sh-l);gap:2px;max-height:calc(100vh - 76px);overflow-y:auto;z-index:210}
+      .nav-links.open{display:flex}
+      .nl{padding:13px 14px;font-size:15px;white-space:normal}
+      .nl-drop{flex-wrap:wrap}
+      .nl-caret{width:44px;height:44px}
+      .nl-menu{position:static;opacity:1;visibility:visible;transform:none;padding-top:0;display:none;width:100%}
+      .nl-menu-inner{box-shadow:none;border:none;border-radius:0;padding:0 0 6px 16px}
+      .nl-drop.open .nl-menu{display:block}
+      .nl-menu a{padding:10px 12px;font-size:14px}
+      .nav-burger{display:block}
+      .lang{display:flex;align-items:center;justify-content:center;min-width:48px;height:38px;padding:8px 10px;font-size:12px}
+      .lang-wrap{display:block}
+      .lang-menu{right:0;left:auto}
     }
 
     .article-hero{
@@ -616,8 +585,6 @@
     @media(max-width:920px){
       .hero-i{grid-template-columns:1fr;padding:58px 0 64px}
       .meta-card{max-width:480px}
-      .nav-links{display:none}
-      .nav-i{height:62px}
     }
     @media(max-width:720px){
       .wrap{padding:0 18px}
@@ -666,19 +633,90 @@
 <body>
   <div class="announce">{{ANNOUNCE}}</div>
 
-  <nav class="nav">
+  <!-- ─── OFFICIAL BMS BRAND MARKS (vector) — same symbols used on the homepage ─── -->
+  <svg aria-hidden="true" height="0" style="position:absolute" width="0">
+  <defs>
+  <symbol id="bms-owl" overflow="visible" viewBox="27.4 23.4 72.2 97.3"><path d="M 49.710938 53.171875 C 49.710938 55.148438 48.109375 56.746094 46.136719 56.746094 C 44.160156 56.746094 42.5625 55.148438 42.5625 53.171875 C 42.5625 51.199219 44.160156 49.597656 46.136719 49.597656 C 48.109375 49.597656 49.710938 51.199219 49.710938 53.171875 " fill="currentColor" fill-opacity="1" fill-rule="nonzero"></path>
+  <path d="M 84.355469 53.171875 C 84.355469 55.148438 82.757812 56.746094 80.78125 56.746094 C 78.808594 56.746094 77.207031 55.148438 77.207031 53.171875 C 77.207031 51.199219 78.808594 49.597656 80.78125 49.597656 C 82.757812 49.597656 84.355469 51.199219 84.355469 53.171875 " fill="currentColor" fill-opacity="1" fill-rule="nonzero"></path>
+  <path d="M 49.710938 118.683594 L 31.984375 118.683594 C 30.699219 118.683594 29.65625 117.640625 29.65625 116.355469 L 29.65625 58.652344 C 29.65625 57.367188 30.699219 56.324219 31.984375 56.324219 C 33.269531 56.324219 34.3125 57.367188 34.3125 58.652344 L 34.3125 114.027344 L 49.710938 114.027344 C 63.046875 114.027344 73.476562 109.890625 80.703125 101.726562 C 95.679688 84.808594 92.363281 56.023438 92.328125 55.738281 C 92.171875 54.460938 93.078125 53.300781 94.355469 53.144531 C 95.636719 52.988281 96.792969 53.894531 96.949219 55.171875 C 97.101562 56.4375 100.542969 86.34375 84.191406 104.8125 C 76.042969 114.015625 64.441406 118.683594 49.710938 118.683594 " fill="currentColor" fill-opacity="1" fill-rule="nonzero"></path>
+  <path d="M 31.984375 118.683594 C 30.949219 118.683594 30 117.984375 29.730469 116.9375 C 29.414062 115.695312 30.15625 114.429688 31.398438 114.105469 C 32.039062 113.933594 46.175781 109.84375 46.175781 87.757812 L 46.175781 81.136719 C 46.175781 79.851562 47.222656 78.808594 48.507812 78.808594 C 49.792969 78.808594 50.835938 79.851562 50.835938 81.136719 L 50.835938 87.757812 C 50.835938 113.625 33.3125 118.417969 32.566406 118.613281 C 32.371094 118.660156 32.175781 118.683594 31.984375 118.683594 " fill="currentColor" fill-opacity="1" fill-rule="nonzero"></path>
+  <path d="M 63.195312 58.867188 L 63.179688 58.867188 C 61.921875 58.855469 60.894531 57.847656 60.871094 56.585938 C 60.851562 55.757812 60.242188 36.277344 42.558594 36.277344 C 41.273438 36.277344 40.230469 35.234375 40.230469 33.949219 C 40.230469 32.664062 41.273438 31.621094 42.558594 31.621094 C 54.542969 31.621094 60.730469 38.980469 63.539062 46.417969 C 66.496094 40.1875 72.714844 33.363281 85.769531 33.363281 C 87.054688 33.363281 88.097656 34.40625 88.097656 35.691406 C 88.097656 36.976562 87.054688 38.019531 85.769531 38.019531 C 66.425781 38.019531 65.550781 55.863281 65.523438 56.621094 C 65.476562 57.875 64.449219 58.867188 63.195312 58.867188 " fill="currentColor" fill-opacity="1" fill-rule="nonzero"></path>
+  <path d="M 63.699219 30.28125 C 59.664062 30.28125 55.570312 30.515625 53.035156 30.914062 C 41.171875 32.777344 34.082031 44.855469 34.082031 55.453125 C 34.082031 69.890625 47.144531 81.636719 63.195312 81.636719 C 79.25 81.636719 92.3125 69.890625 92.3125 55.453125 C 92.3125 43.449219 84.136719 32.894531 73.296875 30.902344 C 70.953125 30.472656 67.355469 30.28125 63.699219 30.28125 M 63.195312 86.292969 C 44.574219 86.292969 29.425781 72.460938 29.425781 55.453125 C 29.425781 40.890625 39.265625 28.367188 52.3125 26.3125 C 57.628906 25.480469 68.546875 25.296875 74.136719 26.324219 C 87.152344 28.714844 96.964844 41.238281 96.964844 55.453125 C 96.964844 72.460938 81.816406 86.292969 63.195312 86.292969 " fill="currentColor" fill-opacity="1" fill-rule="nonzero"></path>
+  <path d="M 39.710938 81.648438 C 39.328125 81.746094 38.957031 82.003906 38.957031 82.003906 C 38.957031 82.003906 38.773438 81.867188 38.539062 81.753906 " fill="currentColor" fill-opacity="1" fill-rule="nonzero"></path></symbol>
+  <symbol id="bms-lockup" overflow="visible" viewBox="27.4 23.4 291.5 97.3"><path d="M 49.710938 53.171875 C 49.710938 55.148438 48.109375 56.746094 46.136719 56.746094 C 44.160156 56.746094 42.5625 55.148438 42.5625 53.171875 C 42.5625 51.199219 44.160156 49.597656 46.136719 49.597656 C 48.109375 49.597656 49.710938 51.199219 49.710938 53.171875 " fill="currentColor" fill-opacity="1" fill-rule="nonzero"></path>
+  <path d="M 84.355469 53.171875 C 84.355469 55.148438 82.757812 56.746094 80.78125 56.746094 C 78.808594 56.746094 77.207031 55.148438 77.207031 53.171875 C 77.207031 51.199219 78.808594 49.597656 80.78125 49.597656 C 82.757812 49.597656 84.355469 51.199219 84.355469 53.171875 " fill="currentColor" fill-opacity="1" fill-rule="nonzero"></path>
+  <path d="M 49.710938 118.683594 L 31.984375 118.683594 C 30.699219 118.683594 29.65625 117.640625 29.65625 116.355469 L 29.65625 58.652344 C 29.65625 57.367188 30.699219 56.324219 31.984375 56.324219 C 33.269531 56.324219 34.3125 57.367188 34.3125 58.652344 L 34.3125 114.027344 L 49.710938 114.027344 C 63.046875 114.027344 73.476562 109.890625 80.703125 101.726562 C 95.679688 84.808594 92.363281 56.023438 92.328125 55.738281 C 92.171875 54.460938 93.078125 53.300781 94.355469 53.144531 C 95.636719 52.988281 96.792969 53.894531 96.949219 55.171875 C 97.101562 56.4375 100.542969 86.34375 84.191406 104.8125 C 76.042969 114.015625 64.441406 118.683594 49.710938 118.683594 " fill="currentColor" fill-opacity="1" fill-rule="nonzero"></path>
+  <path d="M 31.984375 118.683594 C 30.949219 118.683594 30 117.984375 29.730469 116.9375 C 29.414062 115.695312 30.15625 114.429688 31.398438 114.105469 C 32.039062 113.933594 46.175781 109.84375 46.175781 87.757812 L 46.175781 81.136719 C 46.175781 79.851562 47.222656 78.808594 48.507812 78.808594 C 49.792969 78.808594 50.835938 79.851562 50.835938 81.136719 L 50.835938 87.757812 C 50.835938 113.625 33.3125 118.417969 32.566406 118.613281 C 32.371094 118.660156 32.175781 118.683594 31.984375 118.683594 " fill="currentColor" fill-opacity="1" fill-rule="nonzero"></path>
+  <path d="M 63.195312 58.867188 L 63.179688 58.867188 C 61.921875 58.855469 60.894531 57.847656 60.871094 56.585938 C 60.851562 55.757812 60.242188 36.277344 42.558594 36.277344 C 41.273438 36.277344 40.230469 35.234375 40.230469 33.949219 C 40.230469 32.664062 41.273438 31.621094 42.558594 31.621094 C 54.542969 31.621094 60.730469 38.980469 63.539062 46.417969 C 66.496094 40.1875 72.714844 33.363281 85.769531 33.363281 C 87.054688 33.363281 88.097656 34.40625 88.097656 35.691406 C 88.097656 36.976562 87.054688 38.019531 85.769531 38.019531 C 66.425781 38.019531 65.550781 55.863281 65.523438 56.621094 C 65.476562 57.875 64.449219 58.867188 63.195312 58.867188 " fill="currentColor" fill-opacity="1" fill-rule="nonzero"></path>
+  <path d="M 63.699219 30.28125 C 59.664062 30.28125 55.570312 30.515625 53.035156 30.914062 C 41.171875 32.777344 34.082031 44.855469 34.082031 55.453125 C 34.082031 69.890625 47.144531 81.636719 63.195312 81.636719 C 79.25 81.636719 92.3125 69.890625 92.3125 55.453125 C 92.3125 43.449219 84.136719 32.894531 73.296875 30.902344 C 70.953125 30.472656 67.355469 30.28125 63.699219 30.28125 M 63.195312 86.292969 C 44.574219 86.292969 29.425781 72.460938 29.425781 55.453125 C 29.425781 40.890625 39.265625 28.367188 52.3125 26.3125 C 57.628906 25.480469 68.546875 25.296875 74.136719 26.324219 C 87.152344 28.714844 96.964844 41.238281 96.964844 55.453125 C 96.964844 72.460938 81.816406 86.292969 63.195312 86.292969 " fill="currentColor" fill-opacity="1" fill-rule="nonzero"></path>
+  <path d="M 39.710938 81.648438 C 39.328125 81.746094 38.957031 82.003906 38.957031 82.003906 C 38.957031 82.003906 38.773438 81.867188 38.539062 81.753906 " fill="currentColor" fill-opacity="1" fill-rule="nonzero"></path>
+  <path d="M 136.238281 45.960938 C 136.238281 43.339844 132.742188 43.339844 132.742188 43.339844 L 129.21875 43.339844 L 129.21875 48.613281 L 132.742188 48.613281 C 132.742188 48.613281 136.238281 48.613281 136.238281 45.960938 M 129.21875 39.8125 L 132.742188 39.8125 C 132.742188 39.8125 136.238281 39.8125 136.238281 37.191406 C 136.238281 34.539062 132.742188 34.539062 132.742188 34.539062 L 129.21875 34.539062 Z M 139.765625 45.960938 C 139.765625 52.109375 132.742188 52.109375 132.742188 52.109375 L 125.722656 52.109375 L 125.722656 31.042969 L 132.742188 31.042969 C 132.742188 31.042969 139.765625 31.042969 139.765625 37.191406 C 139.765625 41.59375 136.238281 41.59375 136.238281 41.59375 C 139.765625 41.59375 139.765625 45.960938 139.765625 45.960938 " fill="currentColor" fill-opacity="1" fill-rule="nonzero"></path>
+  <path d="M 152.964844 45.960938 L 150.765625 40.507812 L 148.59375 45.960938 Z M 154.351562 49.457031 L 147.207031 49.457031 L 146.152344 52.109375 L 142.355469 52.109375 L 150.765625 31.015625 L 159.203125 52.109375 L 155.40625 52.109375 Z M 154.351562 49.457031 " fill="currentColor" fill-opacity="1" fill-rule="nonzero"></path>
+  <path d="M 165.984375 39.8125 L 169.480469 39.8125 C 169.480469 39.8125 173.003906 39.8125 173.003906 37.164062 C 173.003906 34.539062 169.480469 34.539062 169.480469 34.539062 L 165.984375 34.539062 Z M 168.847656 43.308594 L 165.984375 43.308594 L 165.984375 52.109375 L 162.457031 52.109375 L 162.457031 31.015625 L 169.480469 31.015625 C 169.480469 31.015625 176.53125 31.015625 176.53125 37.164062 C 176.53125 40.566406 174.359375 42.074219 172.460938 42.765625 L 176.773438 52.109375 L 172.882812 52.109375 Z M 168.847656 43.308594 " fill="currentColor" fill-opacity="1" fill-rule="nonzero"></path>
+  <path d="M 195.125 46.535156 L 197.59375 49.035156 C 195.695312 50.933594 193.074219 52.109375 190.152344 52.109375 C 184.335938 52.109375 179.605469 47.378906 179.605469 41.5625 C 179.605469 35.746094 184.335938 31.015625 190.152344 31.015625 C 193.074219 31.015625 195.695312 32.191406 197.59375 34.117188 L 195.125 36.589844 C 193.859375 35.324219 192.082031 34.539062 190.152344 34.539062 C 186.265625 34.539062 183.128906 37.675781 183.128906 41.5625 C 183.128906 45.449219 186.265625 48.585938 190.152344 48.585938 C 192.082031 48.585938 193.859375 47.800781 195.125 46.535156 " fill="currentColor" fill-opacity="1" fill-rule="nonzero"></path>
+  <path d="M 205.519531 34.539062 L 205.519531 39.8125 L 216.070312 39.8125 L 216.070312 43.308594 L 205.519531 43.308594 L 205.519531 48.582031 L 216.070312 48.582031 L 216.070312 52.109375 L 201.996094 52.109375 L 201.996094 31.015625 L 216.070312 31.015625 L 216.070312 34.539062 Z M 205.519531 34.539062 " fill="currentColor" fill-opacity="1" fill-rule="nonzero"></path>
+  <path d="M 231.648438 48.582031 L 231.648438 52.109375 L 220.316406 52.109375 L 220.316406 31.015625 L 223.84375 31.015625 L 223.84375 48.582031 Z M 231.648438 48.582031 " fill="currentColor" fill-opacity="1" fill-rule="nonzero"></path>
+  <path d="M 251.027344 41.5625 C 251.027344 37.675781 247.890625 34.539062 244.003906 34.539062 C 240.148438 34.539062 236.984375 37.675781 236.984375 41.5625 C 236.984375 45.417969 240.148438 48.582031 244.003906 48.582031 C 247.890625 48.582031 251.027344 45.417969 251.027344 41.5625 M 254.554688 41.5625 C 254.554688 47.378906 249.851562 52.078125 244.003906 52.078125 C 238.1875 52.078125 233.488281 47.378906 233.488281 41.5625 C 233.488281 35.746094 238.1875 31.015625 244.003906 31.015625 C 249.851562 31.015625 254.554688 35.746094 254.554688 41.5625 " fill="currentColor" fill-opacity="1" fill-rule="nonzero"></path>
+  <path d="M 273.539062 52.109375 L 263.050781 37.101562 L 263.050781 52.109375 L 259.523438 52.109375 L 259.523438 31.015625 L 263.082031 31.015625 L 273.597656 46.023438 L 273.597656 31.015625 L 277.09375 31.015625 L 277.09375 52.109375 Z M 273.539062 52.109375 " fill="currentColor" fill-opacity="1" fill-rule="nonzero"></path>
+  <path d="M 292.644531 45.960938 L 290.445312 40.507812 L 288.277344 45.960938 Z M 294.03125 49.457031 L 286.890625 49.457031 L 285.832031 52.109375 L 282.035156 52.109375 L 290.445312 31.015625 L 298.882812 52.109375 L 295.085938 52.109375 Z M 294.03125 49.457031 " fill="currentColor" fill-opacity="1" fill-rule="nonzero"></path>
+  <path d="M 148.59375 84.5625 L 145.070312 84.5625 L 145.070312 71.605469 L 139.011719 84.5625 L 135.695312 84.5625 L 129.246094 71.335938 L 129.246094 84.5625 L 125.722656 84.5625 L 125.722656 63.4375 L 129.308594 63.4375 L 137.324219 79.863281 L 145.007812 63.4375 L 148.59375 63.4375 Z M 148.59375 84.5625 " fill="currentColor" fill-opacity="1" fill-rule="nonzero"></path>
+  <path d="M 170.714844 74.015625 C 170.714844 70.128906 167.582031 66.996094 163.695312 66.996094 C 159.835938 66.996094 156.671875 70.128906 156.671875 74.015625 C 156.671875 77.875 159.835938 81.039062 163.695312 81.039062 C 167.582031 81.039062 170.714844 77.875 170.714844 74.015625 M 174.242188 74.015625 C 174.242188 79.832031 169.539062 84.535156 163.695312 84.535156 C 157.878906 84.535156 153.175781 79.832031 153.175781 74.015625 C 153.175781 68.199219 157.878906 63.46875 163.695312 63.46875 C 169.539062 63.46875 174.242188 68.199219 174.242188 74.015625 " fill="currentColor" fill-opacity="1" fill-rule="nonzero"></path>
+  <path d="M 193.226562 84.5625 L 182.738281 69.554688 L 182.738281 84.5625 L 179.214844 84.5625 L 179.214844 63.46875 L 182.769531 63.46875 L 193.285156 78.476562 L 193.285156 63.46875 L 196.78125 63.46875 L 196.78125 84.5625 Z M 193.226562 84.5625 " fill="currentColor" fill-opacity="1" fill-rule="nonzero"></path>
+  <path d="M 215.796875 66.996094 L 210.523438 66.996094 L 210.523438 84.5625 L 206.996094 84.5625 L 206.996094 66.996094 L 201.722656 66.996094 L 201.722656 63.46875 L 215.796875 63.46875 Z M 215.796875 66.996094 " fill="currentColor" fill-opacity="1" fill-rule="nonzero"></path>
+  <path d="M 223.332031 66.996094 L 223.332031 72.269531 L 233.878906 72.269531 L 233.878906 75.765625 L 223.332031 75.765625 L 223.332031 81.039062 L 233.878906 81.039062 L 233.878906 84.5625 L 219.804688 84.5625 L 219.804688 63.46875 L 233.878906 63.46875 L 233.878906 66.996094 Z M 223.332031 66.996094 " fill="currentColor" fill-opacity="1" fill-rule="nonzero"></path>
+  <path d="M 238.128906 78.417969 L 241.652344 78.417969 C 241.714844 80.164062 243.160156 81.039062 244.726562 81.039062 C 246.355469 81.039062 247.800781 80.074219 247.800781 78.417969 C 247.800781 76.636719 246.144531 75.824219 244.726562 75.765625 C 244.546875 75.765625 243.101562 75.765625 241.5625 75.070312 C 239.363281 74.046875 238.128906 72.117188 238.128906 69.617188 C 238.128906 65.878906 241.324219 63.46875 244.726562 63.46875 C 248.375 63.46875 251.238281 66.03125 251.296875 69.617188 L 247.800781 69.617188 C 247.742188 67.867188 246.324219 66.996094 244.726562 66.996094 C 243.070312 66.996094 241.652344 67.929688 241.652344 69.617188 C 241.652344 71.363281 243.160156 72.269531 244.726562 72.269531 C 244.878906 72.269531 246.355469 72.269531 247.863281 72.960938 C 250.09375 73.988281 251.296875 75.914062 251.296875 78.417969 C 251.296875 82.183594 248.132812 84.5625 244.726562 84.5625 C 241.082031 84.472656 238.1875 82.09375 238.128906 78.417969 " fill="currentColor" fill-opacity="1" fill-rule="nonzero"></path>
+  <path d="M 255.304688 78.417969 L 258.832031 78.417969 C 258.890625 80.164062 260.339844 81.039062 261.90625 81.039062 C 263.53125 81.039062 264.980469 80.074219 264.980469 78.417969 C 264.980469 76.636719 263.320312 75.824219 261.90625 75.765625 C 261.726562 75.765625 260.277344 75.765625 258.742188 75.070312 C 256.542969 74.046875 255.304688 72.117188 255.304688 69.617188 C 255.304688 65.878906 258.5 63.46875 261.90625 63.46875 C 265.550781 63.46875 268.414062 66.03125 268.476562 69.617188 L 264.980469 69.617188 C 264.917969 67.867188 263.503906 66.996094 261.90625 66.996094 C 260.25 66.996094 258.832031 67.929688 258.832031 69.617188 C 258.832031 71.363281 260.339844 72.269531 261.90625 72.269531 C 262.054688 72.269531 263.53125 72.269531 265.039062 72.960938 C 267.269531 73.988281 268.476562 75.914062 268.476562 78.417969 C 268.476562 82.183594 265.3125 84.5625 261.90625 84.5625 C 258.261719 84.472656 255.367188 82.09375 255.304688 78.417969 " fill="currentColor" fill-opacity="1" fill-rule="nonzero"></path>
+  <path d="M 287.941406 74.015625 C 287.941406 70.128906 284.808594 66.996094 280.921875 66.996094 C 277.0625 66.996094 273.898438 70.128906 273.898438 74.015625 C 273.898438 77.875 277.0625 81.039062 280.921875 81.039062 C 284.808594 81.039062 287.941406 77.875 287.941406 74.015625 M 291.46875 74.015625 C 291.46875 79.832031 286.765625 84.535156 280.921875 84.535156 C 275.105469 84.535156 270.402344 79.832031 270.402344 74.015625 C 270.402344 68.199219 275.105469 63.46875 280.921875 63.46875 C 286.765625 63.46875 291.46875 68.199219 291.46875 74.015625 " fill="currentColor" fill-opacity="1" fill-rule="nonzero"></path>
+  <path d="M 298.734375 72.269531 L 302.230469 72.269531 C 302.230469 72.269531 305.753906 72.269531 305.753906 69.617188 C 305.753906 66.996094 302.230469 66.996094 302.230469 66.996094 L 298.734375 66.996094 Z M 301.597656 75.765625 L 298.734375 75.765625 L 298.734375 84.5625 L 295.207031 84.5625 L 295.207031 63.46875 L 302.230469 63.46875 C 302.230469 63.46875 309.28125 63.46875 309.28125 69.617188 C 309.28125 73.023438 307.113281 74.527344 305.214844 75.222656 L 309.519531 84.5625 L 305.632812 84.5625 Z M 301.597656 75.765625 " fill="currentColor" fill-opacity="1" fill-rule="nonzero"></path>
+  <path d="M 313.199219 63.46875 L 316.722656 63.46875 L 316.722656 84.566406 L 313.199219 84.566406 Z M 313.199219 63.46875 " fill="currentColor" fill-opacity="1" fill-rule="nonzero"></path>
+  <path d="M 125.722656 110.871094 L 129.246094 110.871094 C 129.308594 112.617188 130.753906 113.492188 132.320312 113.492188 C 133.949219 113.492188 135.394531 112.527344 135.394531 110.871094 C 135.394531 109.09375 133.738281 108.28125 132.320312 108.21875 C 132.140625 108.21875 130.695312 108.21875 129.15625 107.523438 C 126.957031 106.5 125.722656 104.570312 125.722656 102.070312 C 125.722656 98.335938 128.917969 95.921875 132.320312 95.921875 C 135.96875 95.921875 138.832031 98.484375 138.890625 102.070312 L 135.394531 102.070312 C 135.335938 100.324219 133.917969 99.449219 132.320312 99.449219 C 130.664062 99.449219 129.246094 100.382812 129.246094 102.070312 C 129.246094 103.820312 130.753906 104.722656 132.320312 104.722656 C 132.472656 104.722656 133.949219 104.722656 135.457031 105.414062 C 137.6875 106.441406 138.890625 108.367188 138.890625 110.871094 C 138.890625 114.636719 135.726562 117.019531 132.320312 117.019531 C 128.675781 116.929688 125.78125 114.546875 125.722656 110.871094 " fill="currentColor" fill-opacity="1" fill-rule="nonzero"></path>
+  <path d="M 157.785156 111.441406 L 160.257812 113.945312 C 158.359375 115.84375 155.738281 117.019531 152.816406 117.019531 C 147 117.019531 142.265625 112.289062 142.265625 106.46875 C 142.265625 100.65625 147 95.921875 152.816406 95.921875 C 155.738281 95.921875 158.359375 97.097656 160.257812 99.027344 L 157.785156 101.5 C 156.519531 100.234375 154.742188 99.449219 152.816406 99.449219 C 148.925781 99.449219 145.792969 102.582031 145.792969 106.46875 C 145.792969 110.359375 148.925781 113.492188 152.816406 113.492188 C 154.742188 113.492188 156.519531 112.707031 157.785156 111.441406 " fill="currentColor" fill-opacity="1" fill-rule="nonzero"></path>
+  <path d="M 178.730469 95.921875 L 178.730469 117.019531 L 175.207031 117.019531 L 175.207031 108.21875 L 166.4375 108.21875 L 166.4375 117.019531 L 162.910156 117.019531 L 162.910156 95.921875 L 166.4375 95.921875 L 166.4375 104.664062 L 175.207031 104.664062 L 175.207031 95.921875 Z M 178.730469 95.921875 " fill="currentColor" fill-opacity="1" fill-rule="nonzero"></path>
+  <path d="M 200.519531 106.472656 C 200.519531 102.582031 197.382812 99.449219 193.496094 99.449219 C 189.640625 99.449219 186.476562 102.582031 186.476562 106.472656 C 186.476562 110.328125 189.640625 113.492188 193.496094 113.492188 C 197.382812 113.492188 200.519531 110.328125 200.519531 106.472656 M 204.046875 106.472656 C 204.046875 112.289062 199.34375 116.988281 193.496094 116.988281 C 187.679688 116.988281 182.980469 112.289062 182.980469 106.472656 C 182.980469 100.652344 187.679688 95.921875 193.496094 95.921875 C 199.34375 95.921875 204.046875 100.652344 204.046875 106.472656 " fill="currentColor" fill-opacity="1" fill-rule="nonzero"></path>
+  <path d="M 225.289062 106.472656 C 225.289062 102.582031 222.15625 99.449219 218.269531 99.449219 C 214.410156 99.449219 211.246094 102.582031 211.246094 106.472656 C 211.246094 110.328125 214.410156 113.492188 218.269531 113.492188 C 222.15625 113.492188 225.289062 110.328125 225.289062 106.472656 M 228.816406 106.472656 C 228.816406 112.289062 224.113281 116.988281 218.269531 116.988281 C 212.453125 116.988281 207.75 112.289062 207.75 106.472656 C 207.75 100.652344 212.453125 95.921875 218.269531 95.921875 C 224.113281 95.921875 228.816406 100.652344 228.816406 106.472656 " fill="currentColor" fill-opacity="1" fill-rule="nonzero"></path>
+  <path d="M 245.121094 113.492188 L 245.121094 117.019531 L 233.789062 117.019531 L 233.789062 95.921875 L 237.3125 95.921875 L 237.3125 113.492188 Z M 245.121094 113.492188 " fill="currentColor" fill-opacity="1" fill-rule="nonzero"></path></symbol>
+  </defs>
+  </svg>
+
+  <nav>
     <div class="wrap nav-i">
-      <a class="logo" href="{{ROOT}}index.html">
-        <span class="logo-mark">B</span>
-        <span>Barcelona Montessori School</span>
+      <a aria-label="Barcelona Montessori School — Home" class="logo" href="{{ROOT}}index.html">
+        <svg aria-label="Barcelona Montessori School" class="logo-lock" overflow="visible" role="img" viewBox="0 1.9 291.5 97.4"><use href="#bms-lockup" xlink:href="#bms-lockup"></use></svg>
       </a>
-      <div class="nav-links" aria-label="Main navigation">
-        <a href="{{ROOT}}index.html#about">{{NAV_ABOUT}}</a>
-        <a href="{{ROOT}}index.html#programmes">{{NAV_PROGRAMMES}}</a>
-        <a href="{{ROOT}}index.html#admissions">{{NAV_ADMISSIONS}}</a>
-        <a href="{{ROOT}}index.html#life">{{NAV_LIFE}}</a>
-        <a href="{{ROOT}}index.html#blog">{{NAV_BLOG}}</a>
-        <a href="{{ROOT}}index.html#contact">{{NAV_CONTACT}}</a>
+      <div class="nav-links" id="navLinks">
+        <a class="nl" href="{{ROOT}}index.html#programmes">{{NAV_PROGRAMMES}}</a>
+        <a class="nl" href="{{ROOT}}index.html#discover">{{NAV_EVENTS}}</a>
+        <div class="nl-drop">
+          <a class="nl" href="{{ROOT}}index.html#admissions">{{NAV_ADMISSIONS}}</a>
+          <button aria-expanded="false" aria-label="{{ARIA_ADMISSIONS}}" class="nl-caret" type="button"></button>
+          <div class="nl-menu"><div class="nl-menu-inner">
+            <a href="{{ROOT}}index.html#admissions">{{ADM_HOW}}</a>
+            <a href="{{ROOT}}fees.html#fees">{{ADM_FEES}}</a>
+            <a href="{{ROOT}}index.html#contact">{{ADM_VISIT}}</a>
+          </div></div>
+        </div>
+        <div class="nl-drop">
+          <a class="nl" href="{{ROOT}}index.html#about">{{NAV_ABOUT}}</a>
+          <button aria-expanded="false" aria-label="{{ARIA_ABOUT}}" class="nl-caret" type="button"></button>
+          <div class="nl-menu"><div class="nl-menu-inner">
+            <a href="{{ROOT}}index.html#about">{{ABOUT_WHY}}</a>
+            <a href="{{ROOT}}index.html#mission">{{ABOUT_MISSION}}</a>
+            <a href="{{ROOT}}team.html#team">{{ABOUT_TEAM}}</a>
+            <a href="{{ROOT}}index.html#partners-accreditations">{{ABOUT_ACCRED}}</a>
+          </div></div>
+        </div>
+        <div class="nl-drop">
+          <a class="nl" href="{{ROOT}}index.html#life">{{NAV_LIFE}}</a>
+          <button aria-expanded="false" aria-label="{{ARIA_LIFE}}" class="nl-caret" type="button"></button>
+          <div class="nl-menu"><div class="nl-menu-inner">
+            <a href="{{ROOT}}index.html#life">{{NAV_LIFE}}</a>
+            <a href="{{ROOT}}campuses.html">{{LIFE_CAMPUSES}}</a>
+            <a href="{{ROOT}}parents.html#parents">{{LIFE_PARENTS}}</a>
+          </div></div>
+        </div>
+        <a class="nl" href="{{ROOT}}index.html#training">{{NAV_TRAINING}}</a>
+        <a class="nl" href="{{ROOT}}index.html#blog">{{NAV_BLOG}}</a>
+        <a class="nl" href="{{ROOT}}index.html#contact">{{NAV_CONTACT}}</a>
       </div>
       <div class="nav-act">
         <div class="lang-wrap">
@@ -690,7 +728,10 @@
             <div class="lang-opt" data-lang="ca" data-post-slug="{{SLUG}}" aria-selected="{{SEL_CA}}" role="option">Català</div>
           </div>
         </div>
-        <a class="nav-cta" href="{{ROOT}}interest-form.html">{{NAV_INTEREST}}</a>
+        <a class="nav-apply" href="{{ROOT}}interest-form.html">{{NAV_INTEREST}}</a>
+        <button aria-controls="navLinks" aria-expanded="false" aria-label="Open menu" class="nav-burger" id="navBurger">
+          <span></span><span></span><span></span>
+        </button>
       </div>
     </div>
   </nav>
@@ -839,6 +880,44 @@
         }
       });
     });
+
+    // Mobile nav: burger toggles the main link list.
+    var navBurger = document.getElementById('navBurger');
+    var navLinks = document.getElementById('navLinks');
+    if (navBurger && navLinks) {
+      navBurger.addEventListener('click', function(){
+        var open = navBurger.getAttribute('aria-expanded') === 'true';
+        navBurger.setAttribute('aria-expanded', String(!open));
+        navLinks.classList.toggle('open', !open);
+      });
+    }
+
+    // Mobile nav: dropdown carets toggle their submenu.
+    document.querySelectorAll('.nl-drop').forEach(function(drop){
+      var caret = drop.querySelector('.nl-caret');
+      if (!caret) return;
+      caret.addEventListener('click', function(e){
+        e.preventDefault();
+        var open = drop.classList.toggle('open');
+        caret.setAttribute('aria-expanded', String(open));
+      });
+    });
+
+    // Touch devices: tapping the lang button toggles the menu (desktop uses hover/focus via CSS).
+    var langBtn = document.getElementById('langBtn');
+    var langMenu = document.getElementById('langMenu');
+    if (langBtn && langMenu) {
+      langBtn.addEventListener('click', function(){
+        var open = langMenu.classList.toggle('open');
+        langBtn.setAttribute('aria-expanded', String(open));
+      });
+      document.addEventListener('click', function(e){
+        if (!langBtn.contains(e.target) && !langMenu.contains(e.target)) {
+          langMenu.classList.remove('open');
+          langBtn.setAttribute('aria-expanded', 'false');
+        }
+      });
+    }
   </script>
 </body>
 </html>

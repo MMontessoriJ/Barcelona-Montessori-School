@@ -35,6 +35,11 @@ const STRINGS={
     announce:'Admissions open for 2026–27 · Visit our campuses in Sarrià',
     navAbout:'About', navProgrammes:'Programmes', navAdmissions:'Admissions', navLife:'Life at BMS',
     navBlog:'Blog', navContact:'Contact', navInterest:'More Information',
+    navEvents:'Events', navTraining:'Training',
+    admHow:'How to Apply', admFees:'Fees & Discounts', admVisit:'Book a Campus Visit',
+    aboutWhy:'Why Barcelona Montessori', aboutMission:'Our Mission', aboutTeam:'Our Team', aboutAccred:'Accreditations & Partners',
+    lifeCampuses:'Campuses', lifeParents:'Parents',
+    showLabel:'Show', submenuLabel:'submenu',
     backLink:'← Back to all blog posts',
     publishedLabel:'Published', writtenByLabel:'Written by', categoryLabel:'Category',
     articleLabel:'Article', allPostsLabel:'All blog posts', shareLabel:'Share article', bookVisitLabel:'Book a visit',
@@ -56,6 +61,11 @@ const STRINGS={
     announce:'Admissions ouvertes pour 2026-27 · Visitez nos campus à Sarrià',
     navAbout:'À propos', navProgrammes:'Programmes', navAdmissions:'Admissions', navLife:'Vie à BMS',
     navBlog:'Blog', navContact:'Contact', navInterest:'Plus d\'informations',
+    navEvents:'Événements', navTraining:'Formation',
+    admHow:'Comment postuler', admFees:'Frais et réductions', admVisit:'Réserver une visite du campus',
+    aboutWhy:'Pourquoi Barcelona Montessori', aboutMission:'Notre mission', aboutTeam:'Notre équipe', aboutAccred:'Accréditations et partenaires',
+    lifeCampuses:'Campus', lifeParents:'Parents',
+    showLabel:'Afficher', submenuLabel:'sous-menu',
     backLink:'← Retour à tous les articles',
     publishedLabel:'Publié', writtenByLabel:'Écrit par', categoryLabel:'Catégorie',
     articleLabel:'Article', allPostsLabel:'Tous les articles', shareLabel:'Partager l\'article', bookVisitLabel:'Réserver une visite',
@@ -77,6 +87,11 @@ const STRINGS={
     announce:'Admisiones abiertas para 2026-27 · Visite nuestros campus en Sarrià',
     navAbout:'Quiénes somos', navProgrammes:'Programas', navAdmissions:'Admisiones', navLife:'Vida en BMS',
     navBlog:'Blog', navContact:'Contacto', navInterest:'Más información',
+    navEvents:'Eventos', navTraining:'Formación',
+    admHow:'Cómo solicitar plaza', admFees:'Tarifas y descuentos', admVisit:'Reservar una visita al campus',
+    aboutWhy:'Por qué Barcelona Montessori', aboutMission:'Nuestra misión', aboutTeam:'Nuestro equipo', aboutAccred:'Acreditaciones y socios',
+    lifeCampuses:'Campus', lifeParents:'Padres',
+    showLabel:'Mostrar', submenuLabel:'submenú',
     backLink:'← Volver a todos los artículos',
     publishedLabel:'Publicado', writtenByLabel:'Escrito por', categoryLabel:'Categoría',
     articleLabel:'Artículo', allPostsLabel:'Todos los artículos', shareLabel:'Compartir artículo', bookVisitLabel:'Reservar una visita',
@@ -98,6 +113,11 @@ const STRINGS={
     announce:'Admissions obertes per al 2026-27 · Visiteu els nostres campus a Sarrià',
     navAbout:'Sobre nosaltres', navProgrammes:'Programes', navAdmissions:'Admissions', navLife:'Vida a BMS',
     navBlog:'Blog', navContact:'Contacte', navInterest:'Més informació',
+    navEvents:'Esdeveniments', navTraining:'Formació',
+    admHow:'Com sol·licitar plaça', admFees:'Tarifes i descomptes', admVisit:'Reservar una visita al campus',
+    aboutWhy:'Per què Barcelona Montessori', aboutMission:'La nostra missió', aboutTeam:'El nostre equip', aboutAccred:'Acreditacions i socis',
+    lifeCampuses:'Campus', lifeParents:'Pares',
+    showLabel:'Mostrar', submenuLabel:'submenú',
     backLink:'← Tornar a tots els articles',
     publishedLabel:'Publicat', writtenByLabel:'Escrit per', categoryLabel:'Categoria',
     articleLabel:'Article', allPostsLabel:'Tots els articles', shareLabel:'Compartir l\'article', bookVisitLabel:'Reservar una visita',
@@ -119,6 +139,7 @@ const STRINGS={
 
 const fmtDate=(iso,locale)=>{const d=new Date(iso+'T00:00:00');if(isNaN(d))return iso;const m=MONTHS[locale]||MONTHS.en;return `${d.getDate()} ${m[d.getMonth()]} ${d.getFullYear()}`;};
 const esc=s=>String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+const jsonEsc=s=>JSON.stringify(String(s==null?'':s));
 const firstPara=md=>{let t=md.trim().split(/\n\s*\n/)[0].replace(/[*_`]/g,'').replace(/^[#>\-\s]+/,'').trim();return t.length>190?t.slice(0,187).trim()+'…':t;};
 const DEFAULT_OG_IMAGE=`${SITE_URL}/images/mas-pomaret-building-at-carrer-pomaret-25-barcelon.webp`;
 const ogImage=p=>p?`${SITE_URL}/${String(p).replace(/^\//,'')}`:DEFAULT_OG_IMAGE;
@@ -189,6 +210,23 @@ function renderPost(slug, data, body, locale, depth, outDir){
     .split('{{NAV_BLOG}}').join(S.navBlog)
     .split('{{NAV_CONTACT}}').join(S.navContact)
     .split('{{NAV_INTEREST}}').join(S.navInterest)
+    .split('{{NAV_EVENTS}}').join(S.navEvents)
+    .split('{{NAV_TRAINING}}').join(S.navTraining)
+    .split('{{ADM_HOW}}').join(S.admHow)
+    .split('{{ADM_FEES}}').join(S.admFees)
+    .split('{{ADM_VISIT}}').join(S.admVisit)
+    .split('{{ABOUT_WHY}}').join(S.aboutWhy)
+    .split('{{ABOUT_MISSION}}').join(S.aboutMission)
+    .split('{{ABOUT_TEAM}}').join(S.aboutTeam)
+    .split('{{ABOUT_ACCRED}}').join(S.aboutAccred)
+    .split('{{LIFE_CAMPUSES}}').join(S.lifeCampuses)
+    .split('{{LIFE_PARENTS}}').join(S.lifeParents)
+    .split('{{ARIA_ADMISSIONS}}').join(`${S.showLabel} ${S.navAdmissions} ${S.submenuLabel}`)
+    .split('{{ARIA_ABOUT}}').join(`${S.showLabel} ${S.navAbout} ${S.submenuLabel}`)
+    .split('{{ARIA_LIFE}}').join(`${S.showLabel} ${S.navLife} ${S.submenuLabel}`)
+    .split('{{TITLE_JSON}}').join(jsonEsc(data.title))
+    .split('{{DESCRIPTION_JSON}}').join(jsonEsc(data.description||data.title))
+    .split('{{AUTHOR_JSON}}').join(jsonEsc(data.author||'Barcelona Montessori School'))
     .split('{{BACK_LINK}}').join(S.backLink)
     .split('{{PUBLISHED_LABEL}}').join(S.publishedLabel)
     .split('{{WRITTEN_BY_LABEL}}').join(S.writtenByLabel)
@@ -232,7 +270,12 @@ for(const p of enPosts){
   console.log('wrote blog/'+p.slug+'.html');
 }
 
-const cards=enPosts.map(p=>{const d=p.data;const excerpt=esc(firstPara(p.body));const thumb=d.hero?`<img alt="${esc(d.hero_alt||d.title)}" loading="lazy" src="${imgIndex(d.hero)}"/>`:'';
+// Homepage only ever shows the most recent HOMEPAGE_CARD_LIMIT posts; the full archive
+// lives at /blog/ (linked via the "All blog posts" / browse-all link on the homepage).
+const HOMEPAGE_CARD_LIMIT=6;
+const homeEnPosts=enPosts.slice(0,HOMEPAGE_CARD_LIMIT);
+
+const cards=homeEnPosts.map(p=>{const d=p.data;const excerpt=esc(firstPara(p.body));const thumb=d.hero?`<img alt="${esc(d.hero_alt||d.title)}" loading="lazy" src="${imgIndex(d.hero)}"/>`:'';
 return `<article class="blog-card reveal" id="${p.slug}">
 <div class="blog-thumb">${thumb}</div>
 <div class="blog-body">
@@ -247,11 +290,14 @@ return `<article class="blog-card reveal" id="${p.slug}">
 const INDEX=path.join(ROOT,'index.html');
 let idx=fs.readFileSync(INDEX,'utf8');
 const re=/<!-- BLOG:CARDS:START -->[\s\S]*?<!-- BLOG:CARDS:END -->/;
-if(re.test(idx)){idx=idx.replace(re,'<!-- BLOG:CARDS:START -->\n'+cards+'\n<!-- BLOG:CARDS:END -->');fs.writeFileSync(INDEX,idx);console.log('index.html: regenerated '+enPosts.length+' cards');}
+if(re.test(idx)){idx=idx.replace(re,'<!-- BLOG:CARDS:START -->\n'+cards+'\n<!-- BLOG:CARDS:END -->');fs.writeFileSync(INDEX,idx);console.log('index.html: regenerated '+homeEnPosts.length+' cards (of '+enPosts.length+' total posts)');}
 else console.warn('WARNING: BLOG:CARDS markers not found in index.html — cards not updated');
 
 // 2) Translated locales: content/blog/<locale>/<slug>.md supplies title/description/body only;
 //    everything else (date, author, category, hero, gallery) is reused from the English post.
+//    translatedSlugs tracks which locale/slug pages actually got built, so the sitemap below
+//    only links pages that exist.
+const translatedSlugs={fr:new Set(),es:new Set(),ca:new Set()};
 for(const locale of ['fr','es','ca']){
   const dir=path.join(CONTENT,locale);
   if(!fs.existsSync(dir)){console.warn('No content/blog/'+locale+' directory — skipping '+locale);continue;}
@@ -268,6 +314,7 @@ for(const locale of ['fr','es','ca']){
     });
     const body = g.content && g.content.trim() ? g.content : en.body;
     renderPost(slug, data, body, locale, 2, path.join(ROOT,locale,'blog'));
+    translatedSlugs[locale].add(slug);
     count++;
   }
   console.log('wrote '+count+' '+locale+'/blog/*.html pages');
@@ -278,7 +325,7 @@ for(const locale of ['fr','es','ca']){
     let lidx=fs.readFileSync(localeIndex,'utf8');
     if(re.test(lidx)){
       const S=STRINGS[locale];
-      const lcards=enPosts.filter(p=>enBySlug[p.slug]).map(p=>{
+      const lcards=homeEnPosts.filter(p=>enBySlug[p.slug]).map(p=>{
         const d=p.data;
         const tFile=path.join(dir,p.slug+'.md');
         let title=d.title, excerpt=esc(firstPara(p.body));
@@ -302,9 +349,55 @@ for(const locale of ['fr','es','ca']){
       }).join('\n');
       lidx=lidx.replace(re,'<!-- BLOG:CARDS:START -->\n'+lcards+'\n<!-- BLOG:CARDS:END -->');
       fs.writeFileSync(localeIndex,lidx);
-      console.log(locale+'/index.html: regenerated '+enPosts.length+' cards');
+      console.log(locale+'/index.html: regenerated '+homeEnPosts.length+' cards');
     } else {
       console.log(locale+'/index.html has no BLOG:CARDS markers — homepage blog section left untouched (posts are still reachable directly at /'+locale+'/blog/<slug>.html and via the language switcher from the English post).');
     }
   }
 }
+
+// 3) Regenerate sitemap.xml from scratch so every blog post — in every language it actually
+//    exists in — is listed, with proper hreflang alternates. This replaces the old static
+//    sitemap.xml, which only ever listed the original 6 English-only posts.
+function altLinks(paths){
+  // paths: {en,fr,es,ca} each either a full URL or undefined if that locale doesn't exist.
+  const out=[];
+  for(const loc of ['en','fr','es','ca']){
+    if(paths[loc]) out.push(`    <xhtml:link href="${paths[loc]}" hreflang="${loc}" rel="alternate"/>`);
+  }
+  if(paths.en) out.push(`    <xhtml:link href="${paths.en}" hreflang="x-default" rel="alternate"/>`);
+  return out.join('\n');
+}
+
+const today=new Date().toISOString().slice(0,10);
+const urls=[];
+
+// Homepages (all 4 locales, cross-linked)
+const homePaths={en:`${SITE_URL}/`,fr:`${SITE_URL}/fr/`,es:`${SITE_URL}/es/`,ca:`${SITE_URL}/ca/`};
+for(const loc of ['en','fr','es','ca']){
+  urls.push(`  <url>\n    <loc>${homePaths[loc]}</loc>\n    <changefreq>weekly</changefreq>\n    <priority>1.0</priority>\n${altLinks(homePaths)}\n  </url>`);
+}
+
+// Static English-only pages
+const STATIC_PAGES=['interest-form.html','programmes.html','fees.html','campuses.html','summer-camp.html','enrichment-activities.html','team.html','parents.html','privacy-policy.html','terms-of-use.html'];
+for(const page of STATIC_PAGES){
+  urls.push(`  <url>\n    <loc>${SITE_URL}/${page}</loc>\n    <changefreq>monthly</changefreq>\n    <priority>0.6</priority>\n  </url>`);
+}
+
+// Blog posts: one <url> per locale that actually exists for that slug, each cross-linking
+// to every other locale that exists for the same post.
+for(const p of enPosts){
+  const paths={en:`${SITE_URL}/blog/${p.slug}.html`};
+  if(translatedSlugs.fr.has(p.slug)) paths.fr=`${SITE_URL}/fr/blog/${p.slug}.html`;
+  if(translatedSlugs.es.has(p.slug)) paths.es=`${SITE_URL}/es/blog/${p.slug}.html`;
+  if(translatedSlugs.ca.has(p.slug)) paths.ca=`${SITE_URL}/ca/blog/${p.slug}.html`;
+  const lastmod=/^\d{4}-\d{2}-\d{2}$/.test(String(p.data.date))?p.data.date:today;
+  for(const loc of ['en','fr','es','ca']){
+    if(!paths[loc]) continue;
+    urls.push(`  <url>\n    <loc>${paths[loc]}</loc>\n    <lastmod>${lastmod}</lastmod>\n    <changefreq>monthly</changefreq>\n    <priority>0.7</priority>\n${altLinks(paths)}\n  </url>`);
+  }
+}
+
+const sitemapXml=`<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n${urls.join('\n')}\n</urlset>\n`;
+fs.writeFileSync(path.join(ROOT,'sitemap.xml'), sitemapXml);
+console.log('sitemap.xml: regenerated with '+urls.length+' URLs ('+enPosts.length+' posts × locales + homepages + static pages)');
