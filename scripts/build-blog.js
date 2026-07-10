@@ -6,6 +6,7 @@
 const fs=require('fs'), path=require('path');
 const matter=require('gray-matter');
 const {marked}=require('marked');
+const sizeOf=require('image-size');
 
 const ROOT=path.join(__dirname,'..');
 const CONTENT=path.join(ROOT,'content','blog');
@@ -187,6 +188,24 @@ const enBySlug={}; enPosts.forEach(p=>enBySlug[p.slug]=p);
 
 function imgPost(p, depth){ p=String(p||'').replace(/^\//,''); return p ? ('../'.repeat(depth)+p) : ''; }
 
+// Reads the actual pixel dimensions of a photo straight from the /images folder,
+// so vertical (portrait) photos can be shown at their own true aspect ratio instead
+// of being force-cropped into a landscape-shaped box (which was cutting faces off
+// tall/portrait photos). Returns null if the file is missing or unreadable — callers
+// just fall back to the normal cropped box in that case, so a bad/missing image can
+// never break the build.
+function imgDims(relPath){
+  if(!relPath) return null;
+  try{ return sizeOf(path.join(ROOT, String(relPath).replace(/^\//,''))); }
+  catch(e){ return null; }
+}
+// Only portrait (taller-than-wide) photos get an aspect-ratio override — landscape
+// and square photos keep the normal, uniform cropped box (unchanged behaviour).
+function portraitStyle(dims){
+  if(!dims || !dims.width || !dims.height || dims.height<=dims.width) return '';
+  return ` style="height:auto;aspect-ratio:${dims.width}/${dims.height}"`;
+}
+
 // Shared blog-card renderer used for both the homepage's capped list and the full
 // archive page. Looks up the translated title/excerpt for non-English locales,
 // falling back to the English source if no translation file exists.
@@ -205,7 +224,7 @@ function cardHTML(post, locale, opts){
   const catLabel=(CATEGORY_LABELS[locale]&&CATEGORY_LABELS[locale][d.category])||d.category||'News';
   const thumb=d.hero?`<img alt="${esc(d.hero_alt||title)}" loading="lazy" src="${imgPost(d.hero,opts.depth)}"/>`:'';
   return `<article class="blog-card reveal" id="${post.slug}">
-<div class="blog-thumb">${thumb}</div>
+<div class="blog-thumb"${portraitStyle(imgDims(d.hero))}>${thumb}</div>
 <div class="blog-body">
 <div class="blog-cat">${esc(catLabel)}</div>
 <h3 class="blog-title">${esc(title)}</h3>
@@ -246,7 +265,7 @@ function archiveFeaturedHTML(post, locale, opts){
   const img=d.hero?`<img alt="${esc(d.hero_alt||title)}" loading="lazy" src="${imgPost(d.hero,opts.depth)}"/>`:'';
   const flip = opts.index % 2 === 1 ? ' flip' : '';
   return `<a class="feat-block${flip} reveal" href="${opts.hrefPrefix}${post.slug}.html">
-<div class="feat-media">${img}</div>
+<div class="feat-media"${portraitStyle(imgDims(d.hero))}>${img}</div>
 <div class="feat-copy">
 <div class="pill">${esc(catLabel)}</div>
 <h2 class="feat-title">${esc(title)}</h2>
@@ -262,7 +281,7 @@ function archiveGridHTML(post, locale, opts){
   const catLabel=(CATEGORY_LABELS[locale]&&CATEGORY_LABELS[locale][d.category])||d.category||'News';
   const thumb=d.hero?`<img alt="${esc(d.hero_alt||title)}" loading="lazy" src="${imgPost(d.hero,opts.depth)}"/>`:'';
   return `<a class="grid-card reveal" href="${opts.hrefPrefix}${post.slug}.html">
-<div class="grid-thumb">${thumb}</div>
+<div class="grid-thumb"${portraitStyle(imgDims(d.hero))}>${thumb}</div>
 <div class="pill">${esc(catLabel)}</div>
 <h3 class="grid-title">${esc(title)}</h3>
 <div class="grid-date">${fmtDate(d.date,locale)}</div>
@@ -286,6 +305,9 @@ function renderPost(slug, data, body, locale, depth, outDir){
   const HERO_POSITIONS={Top:'center 15%', Center:'center 50%', Bottom:'center 85%'};
   const heroPos=HERO_POSITIONS[data.hero_position]||HERO_POSITIONS.Center;
   const hero=data.hero?`<img alt="${esc(data.hero_alt||data.title)}" loading="lazy" src="${imgPost(data.hero,depth)}" style="object-position:${heroPos}"/>`:'';
+  // Portrait hero photos show at their own true aspect ratio (masthead box grows
+  // to fit) instead of being cropped into the usual landscape-shaped frame.
+  const mastheadStyle=portraitStyle(imgDims(data.hero));
   // Gallery photos are contained, inline images (not full-bleed) with an
   // It's Nice That–style "Above / caption" credit line under each one.
   const gallery=(Array.isArray(data.gallery)&&data.gallery.length)?data.gallery.map(g=>`<figure class="gallery-figure"><img alt="${esc(g.alt||'')}" loading="lazy" src="${imgPost(g.image,depth)}"/>`+(g.caption?`<figcaption><span class="above-label">${S.aboveLabel}</span>${esc(g.caption)}</figcaption>`:'')+`</figure>`).join(''):'';
@@ -301,6 +323,7 @@ function renderPost(slug, data, body, locale, depth, outDir){
     .split('{{CATEGORY}}').join(esc(catLabel))
     .split('{{META}}').join(meta)
     .split('{{DEK}}').join(esc(data.description||''))
+    .split('{{MASTHEAD_STYLE}}').join(mastheadStyle)
     .split('{{HERO}}').join(hero)
     .split('{{GALLERY}}').join(gallery)
     .split('{{SHARE}}').join(shareButtons(data.title, canonicalUrl))
@@ -394,13 +417,6 @@ else console.warn('WARNING: BLOG:CARDS markers not found in index.html — cards
 const browseAllRe=/(<a class="btn btn-outline" href=")#blog(">)/;
 if(browseAllRe.test(idx)){idx=idx.replace(browseAllRe,'$1blog/index.html$2');console.log('index.html: "Browse all posts" now links to blog/index.html');}
 else console.warn('WARNING: "Browse all posts" button (class="btn btn-outline" href="#blog") not found in index.html — link not updated');
-// Stop the homepage's blog-card thumbnails from cropping portrait/vertical photos
-// (e.g. a headshot where the crop was cutting off the person's face) — switch the
-// thumbnail image from object-fit:cover (crops to fill the box) to object-fit:contain
-// (shows the whole photo, letterboxed on the card's cream background if needed).
-const thumbCropRe=/(\.blog-thumb img\{width:100%;height:100%;object-fit:)cover(\})/;
-if(thumbCropRe.test(idx)){idx=idx.replace(thumbCropRe,'$1contain$2');console.log('index.html: .blog-thumb img switched to object-fit:contain (no more cropping)');}
-else console.warn('WARNING: ".blog-thumb img{object-fit:cover}" rule not found in index.html — thumbnail crop not updated');
 fs.writeFileSync(INDEX,idx);
 
 // 2) Translated locales: content/blog/<locale>/<slug>.md supplies title/description/body only;
@@ -444,8 +460,6 @@ for(const locale of ['fr','es','ca']){
     }
     if(browseAllRe.test(lidx)){lidx=lidx.replace(browseAllRe,'$1blog/index.html$2');touched=true;console.log(locale+'/index.html: "Browse all posts" now links to blog/index.html');}
     else console.warn('WARNING: "Browse all posts" button not found in '+locale+'/index.html — link not updated');
-    if(thumbCropRe.test(lidx)){lidx=lidx.replace(thumbCropRe,'$1contain$2');touched=true;console.log(locale+'/index.html: .blog-thumb img switched to object-fit:contain (no more cropping)');}
-    else console.warn('WARNING: ".blog-thumb img{object-fit:cover}" rule not found in '+locale+'/index.html — thumbnail crop not updated');
     if(touched) fs.writeFileSync(localeIndex,lidx);
   }
 }
