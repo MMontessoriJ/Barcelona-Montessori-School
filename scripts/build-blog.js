@@ -222,7 +222,13 @@ function renderPost(slug, data, body, locale, depth, outDir){
   // behind the title, so it's a bare <img> (no figure/caption — that text was removed
   // per feedback). Gallery photos render as individual full-bleed "bleed-img" figures
   // that break out to full viewport width between sections of body text.
-  const hero=data.hero?`<img alt="${esc(data.hero_alt||data.title)}" loading="lazy" src="${imgPost(data.hero,depth)}"/>`:'';
+  //
+  // hero_position (set per-post in the CMS) controls which part of the photo stays
+  // visible when it's cropped into the wide, short banner — important for portrait/
+  // headshot photos where a face near the top would otherwise get cropped out.
+  const HERO_POSITIONS={Top:'center 15%', Center:'center 50%', Bottom:'center 85%'};
+  const heroPos=HERO_POSITIONS[data.hero_position]||HERO_POSITIONS.Center;
+  const hero=data.hero?`<img alt="${esc(data.hero_alt||data.title)}" loading="lazy" src="${imgPost(data.hero,depth)}" style="object-position:${heroPos}"/>`:'';
   const gallery=(Array.isArray(data.gallery)&&data.gallery.length)?data.gallery.map(g=>`<figure class="bleed-img"><img alt="${esc(g.alt||'')}" loading="lazy" src="${imgPost(g.image,depth)}"/>`+(g.caption?`<figcaption>${esc(g.caption)}</figcaption>`:'')+`</figure>`).join(''):'';
   const meta=`${fmtDate(data.date,locale)} · ${S.writtenByMeta} ${esc(data.author||'Barcelona Montessori School')}`;
   const canonicalUrl=`${SITE_URL}/${localePath}blog/${slug}.html`;
