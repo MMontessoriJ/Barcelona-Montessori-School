@@ -10,6 +10,7 @@ const {marked}=require('marked');
 const ROOT=path.join(__dirname,'..');
 const CONTENT=path.join(ROOT,'content','blog');
 const TEMPLATE=fs.readFileSync(path.join(__dirname,'post-template.html'),'utf8');
+const ARCHIVE_TEMPLATE=fs.readFileSync(path.join(__dirname,'blog-index-template.html'),'utf8');
 const SITE_URL='https://www.barcelonamontessorischool.com';
 
 const LOCALES=['en','fr','es','ca'];
@@ -56,6 +57,8 @@ const STRINGS={
     relAdmText:'Tell us what you are looking for and we will guide you through the next steps.',
     footerPrivacy:'Privacy', footerTerms:'Terms', footerContact:'Contact',
     writtenByMeta:'Written by',
+    readMoreLabel:'Read full article →',
+    archiveTitle:'All Blog Posts', archiveDesc:'Stories, updates and reflections from life at Barcelona Montessori School — browse the full archive.',
   },
   fr:{
     announce:'Admissions ouvertes pour 2026-27 · Visitez nos campus à Sarrià',
@@ -82,6 +85,8 @@ const STRINGS={
     relAdmText:'Dites-nous ce que vous recherchez et nous vous guiderons dans les prochaines étapes.',
     footerPrivacy:'Confidentialité', footerTerms:'Conditions', footerContact:'Contact',
     writtenByMeta:'Écrit par',
+    readMoreLabel:'Lire l\'article complet →',
+    archiveTitle:'Tous les articles du blog', archiveDesc:'Récits, actualités et réflexions sur la vie à Barcelona Montessori School — parcourez les archives complètes.',
   },
   es:{
     announce:'Admisiones abiertas para 2026-27 · Visite nuestros campus en Sarrià',
@@ -108,6 +113,8 @@ const STRINGS={
     relAdmText:'Cuéntanos qué buscas y te guiaremos en los próximos pasos.',
     footerPrivacy:'Privacidad', footerTerms:'Términos', footerContact:'Contacto',
     writtenByMeta:'Escrito por',
+    readMoreLabel:'Leer el artículo completo →',
+    archiveTitle:'Todos los artículos del blog', archiveDesc:'Historias, novedades y reflexiones sobre la vida en Barcelona Montessori School — explora el archivo completo.',
   },
   ca:{
     announce:'Admissions obertes per al 2026-27 · Visiteu els nostres campus a Sarrià',
@@ -134,6 +141,8 @@ const STRINGS={
     relAdmText:'Digues-nos què busques i et guiarem en els propers passos.',
     footerPrivacy:'Privacitat', footerTerms:'Termes', footerContact:'Contacte',
     writtenByMeta:'Escrit per',
+    readMoreLabel:'Llegir l\'article complet →',
+    archiveTitle:'Tots els articles del blog', archiveDesc:'Històries, novetats i reflexions sobre la vida a Barcelona Montessori School — explora l\'arxiu complet.',
   },
 };
 
@@ -173,7 +182,35 @@ const enPosts=fs.readdirSync(CONTENT).filter(f=>/\.md$/.test(f)).map(f=>{
 const enBySlug={}; enPosts.forEach(p=>enBySlug[p.slug]=p);
 
 function imgPost(p, depth){ p=String(p||'').replace(/^\//,''); return p ? ('../'.repeat(depth)+p) : ''; }
-function imgIndex(p){ return String(p||'').replace(/^\//,''); }
+
+// Shared blog-card renderer used for both the homepage's capped list and the full
+// archive page. Looks up the translated title/excerpt for non-English locales,
+// falling back to the English source if no translation file exists.
+function cardHTML(post, locale, opts){
+  const d=post.data;
+  const S=STRINGS[locale]||STRINGS.en;
+  let title=d.title, excerpt=esc(firstPara(post.body));
+  if(locale!=='en'){
+    const tFile=path.join(CONTENT,locale,post.slug+'.md');
+    if(fs.existsSync(tFile)){
+      const g=matter(fs.readFileSync(tFile,'utf8'));
+      title=g.data.title||d.title;
+      if(g.content && g.content.trim()) excerpt=esc(firstPara(g.content));
+    }
+  }
+  const catLabel=(CATEGORY_LABELS[locale]&&CATEGORY_LABELS[locale][d.category])||d.category||'News';
+  const thumb=d.hero?`<img alt="${esc(d.hero_alt||title)}" loading="lazy" src="${imgPost(d.hero,opts.depth)}"/>`:'';
+  return `<article class="blog-card reveal" id="${post.slug}">
+<div class="blog-thumb">${thumb}</div>
+<div class="blog-body">
+<div class="blog-cat">${esc(catLabel)}</div>
+<h3 class="blog-title">${esc(title)}</h3>
+<div class="blog-date">${fmtDate(d.date,locale)} · ${S.writtenByMeta} ${esc(d.author||'BMS')}</div>
+<p class="blog-excerpt">${excerpt}</p>
+<a class="btn btn-outline blog-read" href="${opts.hrefPrefix}${post.slug}.html" target="_self">${S.readMoreLabel}</a>
+</div>
+</article>`;
+}
 
 function renderPost(slug, data, body, locale, depth, outDir){
   const S=STRINGS[locale]||STRINGS.en;
@@ -275,23 +312,19 @@ for(const p of enPosts){
 const HOMEPAGE_CARD_LIMIT=6;
 const homeEnPosts=enPosts.slice(0,HOMEPAGE_CARD_LIMIT);
 
-const cards=homeEnPosts.map(p=>{const d=p.data;const excerpt=esc(firstPara(p.body));const thumb=d.hero?`<img alt="${esc(d.hero_alt||d.title)}" loading="lazy" src="${imgIndex(d.hero)}"/>`:'';
-return `<article class="blog-card reveal" id="${p.slug}">
-<div class="blog-thumb">${thumb}</div>
-<div class="blog-body">
-<div class="blog-cat">${esc(d.category||'News')}</div>
-<h3 class="blog-title">${esc(d.title)}</h3>
-<div class="blog-date">${fmtDate(d.date,'en')} · Written by ${esc(d.author||'BMS')}</div>
-<p class="blog-excerpt">${excerpt}</p>
-<a class="btn btn-outline blog-read" href="blog/${p.slug}.html" target="_self">Read full article →</a>
-</div>
-</article>`;}).join('\n');
+const cards=homeEnPosts.map(p=>cardHTML(p,'en',{hrefPrefix:'blog/',depth:0})).join('\n');
 
 const INDEX=path.join(ROOT,'index.html');
 let idx=fs.readFileSync(INDEX,'utf8');
 const re=/<!-- BLOG:CARDS:START -->[\s\S]*?<!-- BLOG:CARDS:END -->/;
-if(re.test(idx)){idx=idx.replace(re,'<!-- BLOG:CARDS:START -->\n'+cards+'\n<!-- BLOG:CARDS:END -->');fs.writeFileSync(INDEX,idx);console.log('index.html: regenerated '+homeEnPosts.length+' cards (of '+enPosts.length+' total posts)');}
+if(re.test(idx)){idx=idx.replace(re,'<!-- BLOG:CARDS:START -->\n'+cards+'\n<!-- BLOG:CARDS:END -->');console.log('index.html: regenerated '+homeEnPosts.length+' cards (of '+enPosts.length+' total posts)');}
 else console.warn('WARNING: BLOG:CARDS markers not found in index.html — cards not updated');
+// Fix the "Browse all posts ↑" button so it links to the real archive page
+// (previously href="#blog", which just scrolled back up to this same capped list).
+const browseAllRe=/(<a class="btn btn-outline" href=")#blog(">)/;
+if(browseAllRe.test(idx)){idx=idx.replace(browseAllRe,'$1blog/index.html$2');console.log('index.html: "Browse all posts" now links to blog/index.html');}
+else console.warn('WARNING: "Browse all posts" button (class="btn btn-outline" href="#blog") not found in index.html — link not updated');
+fs.writeFileSync(INDEX,idx);
 
 // 2) Translated locales: content/blog/<locale>/<slug>.md supplies title/description/body only;
 //    everything else (date, author, category, hero, gallery) is reused from the English post.
@@ -323,37 +356,87 @@ for(const locale of ['fr','es','ca']){
   const localeIndex=path.join(ROOT,locale,'index.html');
   if(fs.existsSync(localeIndex)){
     let lidx=fs.readFileSync(localeIndex,'utf8');
+    let touched=false;
     if(re.test(lidx)){
-      const S=STRINGS[locale];
-      const lcards=homeEnPosts.filter(p=>enBySlug[p.slug]).map(p=>{
-        const d=p.data;
-        const tFile=path.join(dir,p.slug+'.md');
-        let title=d.title, excerpt=esc(firstPara(p.body));
-        if(fs.existsSync(tFile)){
-          const g=matter(fs.readFileSync(tFile,'utf8'));
-          title=g.data.title||d.title;
-          if(g.content && g.content.trim()) excerpt=esc(firstPara(g.content));
-        }
-        const thumb=d.hero?`<img alt="${esc(d.hero_alt||title)}" loading="lazy" src="${imgIndex(d.hero)}"/>`:'';
-        const catLabel=(CATEGORY_LABELS[locale]&&CATEGORY_LABELS[locale][d.category])||d.category||'News';
-        return `<article class="blog-card reveal" id="${p.slug}">
-<div class="blog-thumb">${thumb}</div>
-<div class="blog-body">
-<div class="blog-cat">${esc(catLabel)}</div>
-<h3 class="blog-title">${esc(title)}</h3>
-<div class="blog-date">${fmtDate(d.date,locale)} · ${S.writtenByMeta} ${esc(d.author||'BMS')}</div>
-<p class="blog-excerpt">${excerpt}</p>
-<a class="btn btn-outline blog-read" href="blog/${p.slug}.html" target="_self">${S.allPostsLabel}: ${esc(title)} →</a>
-</div>
-</article>`;
-      }).join('\n');
+      const lcards=homeEnPosts.filter(p=>enBySlug[p.slug]).map(p=>cardHTML(p,locale,{hrefPrefix:'blog/',depth:0})).join('\n');
       lidx=lidx.replace(re,'<!-- BLOG:CARDS:START -->\n'+lcards+'\n<!-- BLOG:CARDS:END -->');
-      fs.writeFileSync(localeIndex,lidx);
+      touched=true;
       console.log(locale+'/index.html: regenerated '+homeEnPosts.length+' cards');
     } else {
       console.log(locale+'/index.html has no BLOG:CARDS markers — homepage blog section left untouched (posts are still reachable directly at /'+locale+'/blog/<slug>.html and via the language switcher from the English post).');
     }
+    if(browseAllRe.test(lidx)){lidx=lidx.replace(browseAllRe,'$1blog/index.html$2');touched=true;console.log(locale+'/index.html: "Browse all posts" now links to blog/index.html');}
+    else console.warn('WARNING: "Browse all posts" button not found in '+locale+'/index.html — link not updated');
+    if(touched) fs.writeFileSync(localeIndex,lidx);
   }
+}
+
+// 2b) Full blog archive page (blog/index.html + fr/es/ca variants), listing every post —
+// this is what the homepage's "Browse all posts" button now links to, instead of just
+// scrolling back up to the capped 6-post section.
+function renderArchiveIndex(locale, depth, outDir){
+  const S=STRINGS[locale]||STRINGS.en;
+  const root='../'.repeat(depth);
+  const localePath = locale==='en' ? '' : (locale+'/');
+  const cardsHtml = enPosts.map(p=>cardHTML(p, locale, {hrefPrefix:'', depth})).join('\n');
+  const archivePaths={
+    en:`${SITE_URL}/blog/index.html`,
+    fr:`${SITE_URL}/fr/blog/index.html`,
+    es:`${SITE_URL}/es/blog/index.html`,
+    ca:`${SITE_URL}/ca/blog/index.html`,
+  };
+  const hreflangTags=['en','fr','es','ca'].map(loc=>`  <link rel="alternate" hreflang="${loc}" href="${archivePaths[loc]}" />`).join('\n')
+    +`\n  <link rel="alternate" hreflang="x-default" href="${archivePaths.en}" />`;
+
+  const html=ARCHIVE_TEMPLATE
+    .split('{{HTML_LANG}}').join(locale)
+    .split('{{LOCALE_PATH}}').join(localePath)
+    .split('{{ROOT}}').join(root)
+    .split('{{CANONICAL_URL}}').join(archivePaths[locale])
+    .split('{{HREFLANG_TAGS}}').join(hreflangTags)
+    .split('{{ARCHIVE_TITLE}}').join(esc(S.archiveTitle))
+    .split('{{ARCHIVE_DESC}}').join(esc(S.archiveDesc))
+    .split('{{CARDS}}').join(cardsHtml)
+    .split('{{ANNOUNCE}}').join(S.announce)
+    .split('{{BACK_LINK}}').join(S.backLink)
+    .split('{{NAV_ABOUT}}').join(S.navAbout)
+    .split('{{NAV_PROGRAMMES}}').join(S.navProgrammes)
+    .split('{{NAV_ADMISSIONS}}').join(S.navAdmissions)
+    .split('{{NAV_LIFE}}').join(S.navLife)
+    .split('{{NAV_BLOG}}').join(S.navBlog)
+    .split('{{NAV_CONTACT}}').join(S.navContact)
+    .split('{{NAV_INTEREST}}').join(S.navInterest)
+    .split('{{NAV_EVENTS}}').join(S.navEvents)
+    .split('{{NAV_TRAINING}}').join(S.navTraining)
+    .split('{{ADM_HOW}}').join(S.admHow)
+    .split('{{ADM_FEES}}').join(S.admFees)
+    .split('{{ADM_VISIT}}').join(S.admVisit)
+    .split('{{ABOUT_WHY}}').join(S.aboutWhy)
+    .split('{{ABOUT_MISSION}}').join(S.aboutMission)
+    .split('{{ABOUT_TEAM}}').join(S.aboutTeam)
+    .split('{{ABOUT_ACCRED}}').join(S.aboutAccred)
+    .split('{{LIFE_CAMPUSES}}').join(S.lifeCampuses)
+    .split('{{LIFE_PARENTS}}').join(S.lifeParents)
+    .split('{{ARIA_ADMISSIONS}}').join(`${S.showLabel} ${S.navAdmissions} ${S.submenuLabel}`)
+    .split('{{ARIA_ABOUT}}').join(`${S.showLabel} ${S.navAbout} ${S.submenuLabel}`)
+    .split('{{ARIA_LIFE}}').join(`${S.showLabel} ${S.navLife} ${S.submenuLabel}`)
+    .split('{{FOOTER_PRIVACY}}').join(S.footerPrivacy)
+    .split('{{FOOTER_TERMS}}').join(S.footerTerms)
+    .split('{{FOOTER_CONTACT}}').join(S.footerContact)
+    .split('{{LANG_CURRENT}}').join(locale.toUpperCase())
+    .split('{{SEL_EN}}').join(locale==='en'?'true':'false')
+    .split('{{SEL_FR}}').join(locale==='fr'?'true':'false')
+    .split('{{SEL_ES}}').join(locale==='es'?'true':'false')
+    .split('{{SEL_CA}}').join(locale==='ca'?'true':'false');
+
+  fs.mkdirSync(outDir,{recursive:true});
+  fs.writeFileSync(path.join(outDir,'index.html'), html);
+  console.log('wrote '+(locale==='en'?'blog':locale+'/blog')+'/index.html (archive, '+enPosts.length+' posts)');
+}
+
+renderArchiveIndex('en', 1, path.join(ROOT,'blog'));
+for(const locale of ['fr','es','ca']){
+  renderArchiveIndex(locale, 2, path.join(ROOT,locale,'blog'));
 }
 
 // 3) Regenerate sitemap.xml from scratch so every blog post — in every language it actually
@@ -382,6 +465,12 @@ for(const loc of ['en','fr','es','ca']){
 const STATIC_PAGES=['interest-form.html','programmes.html','fees.html','campuses.html','summer-camp.html','enrichment-activities.html','team.html','parents.html','privacy-policy.html','terms-of-use.html'];
 for(const page of STATIC_PAGES){
   urls.push(`  <url>\n    <loc>${SITE_URL}/${page}</loc>\n    <changefreq>monthly</changefreq>\n    <priority>0.6</priority>\n  </url>`);
+}
+
+// Blog archive pages (all 4 locales, cross-linked) — lists every post
+const archivePaths={en:`${SITE_URL}/blog/index.html`,fr:`${SITE_URL}/fr/blog/index.html`,es:`${SITE_URL}/es/blog/index.html`,ca:`${SITE_URL}/ca/blog/index.html`};
+for(const loc of ['en','fr','es','ca']){
+  urls.push(`  <url>\n    <loc>${archivePaths[loc]}</loc>\n    <changefreq>weekly</changefreq>\n    <priority>0.8</priority>\n${altLinks(archivePaths)}\n  </url>`);
 }
 
 // Blog posts: one <url> per locale that actually exists for that slug, each cross-linking
