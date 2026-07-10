@@ -218,7 +218,9 @@ function renderPost(slug, data, body, locale, depth, outDir){
   const catLabel=(CATEGORY_LABELS[locale]&&CATEGORY_LABELS[locale][catKey])||catKey;
   const root='../'.repeat(depth);
   const localePath = locale==='en' ? '' : (locale+'/');
-  const hero=data.hero?`<figure class="blog-article-hero"><img alt="${esc(data.hero_alt||data.title)}" loading="lazy" src="${imgPost(data.hero,depth)}"/>`+(data.hero_caption?`<figcaption>${esc(data.hero_caption)}</figcaption>`:'')+`</figure>`:'';
+  // Note: the hero image intentionally has no caption/figcaption — the descriptive
+  // text under the main image was removed per feedback (it wasn't adding value).
+  const hero=data.hero?`<figure class="blog-article-hero"><img alt="${esc(data.hero_alt||data.title)}" loading="lazy" src="${imgPost(data.hero,depth)}"/></figure>`:'';
   const gallery=(Array.isArray(data.gallery)&&data.gallery.length)?'<div class="blog-article-gallery">'+data.gallery.map(g=>`<figure><img alt="${esc(g.alt||'')}" loading="lazy" src="${imgPost(g.image,depth)}"/>`+(g.caption?`<figcaption>${esc(g.caption)}</figcaption>`:'')+`</figure>`).join('')+'</div>':'';
   const meta=`${fmtDate(data.date,locale)} · ${S.writtenByMeta} ${esc(data.author||'Barcelona Montessori School')}`;
   const canonicalUrl=`${SITE_URL}/${localePath}blog/${slug}.html`;
