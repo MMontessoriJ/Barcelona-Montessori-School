@@ -394,6 +394,13 @@ else console.warn('WARNING: BLOG:CARDS markers not found in index.html — cards
 const browseAllRe=/(<a class="btn btn-outline" href=")#blog(">)/;
 if(browseAllRe.test(idx)){idx=idx.replace(browseAllRe,'$1blog/index.html$2');console.log('index.html: "Browse all posts" now links to blog/index.html');}
 else console.warn('WARNING: "Browse all posts" button (class="btn btn-outline" href="#blog") not found in index.html — link not updated');
+// Stop the homepage's blog-card thumbnails from cropping portrait/vertical photos
+// (e.g. a headshot where the crop was cutting off the person's face) — switch the
+// thumbnail image from object-fit:cover (crops to fill the box) to object-fit:contain
+// (shows the whole photo, letterboxed on the card's cream background if needed).
+const thumbCropRe=/(\.blog-thumb img\{width:100%;height:100%;object-fit:)cover(\})/;
+if(thumbCropRe.test(idx)){idx=idx.replace(thumbCropRe,'$1contain$2');console.log('index.html: .blog-thumb img switched to object-fit:contain (no more cropping)');}
+else console.warn('WARNING: ".blog-thumb img{object-fit:cover}" rule not found in index.html — thumbnail crop not updated');
 fs.writeFileSync(INDEX,idx);
 
 // 2) Translated locales: content/blog/<locale>/<slug>.md supplies title/description/body only;
@@ -437,6 +444,8 @@ for(const locale of ['fr','es','ca']){
     }
     if(browseAllRe.test(lidx)){lidx=lidx.replace(browseAllRe,'$1blog/index.html$2');touched=true;console.log(locale+'/index.html: "Browse all posts" now links to blog/index.html');}
     else console.warn('WARNING: "Browse all posts" button not found in '+locale+'/index.html — link not updated');
+    if(thumbCropRe.test(lidx)){lidx=lidx.replace(thumbCropRe,'$1contain$2');touched=true;console.log(locale+'/index.html: .blog-thumb img switched to object-fit:contain (no more cropping)');}
+    else console.warn('WARNING: ".blog-thumb img{object-fit:cover}" rule not found in '+locale+'/index.html — thumbnail crop not updated');
     if(touched) fs.writeFileSync(localeIndex,lidx);
   }
 }

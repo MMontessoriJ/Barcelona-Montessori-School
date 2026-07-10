@@ -212,7 +212,7 @@
       color:var(--muted);
     }
     .masthead-media{border-radius:var(--r-l);overflow:hidden;aspect-ratio:4/3;background:var(--cream-d)}
-    .masthead-media img{width:100%;height:100%;object-fit:cover;display:block}
+    .masthead-media img{width:100%;height:100%;object-fit:contain;display:block}
 
     /* ─── NARROW EDITORIAL COLUMN (no sidebars — replaces the old boxed 3-column grid) ─── */
     .article-shell{position:relative;padding:0 0 20px}
@@ -284,9 +284,8 @@
     .gallery-figure{margin:40px 0}
     .gallery-figure img{
       width:100%;
+      height:auto;
       border-radius:var(--r-l);
-      max-height:560px;
-      object-fit:cover;
       display:block;
     }
     .gallery-figure figcaption{
