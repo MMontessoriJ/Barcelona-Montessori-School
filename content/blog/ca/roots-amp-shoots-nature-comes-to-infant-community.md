@@ -1,0 +1,11 @@
+---
+title: "Arrels i brots: la natura arriba a la comunitat infantil"
+description: "Estem encantats de compartir amb vosaltres un projecte que Nido ha iniciat i al qual s'hi uneix Infant Community: estem creant el nostre propi hort! No és un hort qualsevol, sinó un espai especial on no només cultivarem plantes i verdures, sinó també un fort sentit de comunitat i una connexió significativa amb..."
+---
+Estem encantats de compartir amb vosaltres un projecte que Nido ha iniciat i al qual s'hi uneix Infant Community: estem creant el nostre propi hort! No és un hort qualsevol, sinó un espai especial on cultivarem no només plantes i verdures, sinó també un fort sentit de comunitat i una connexió significativa amb la natura. Treballar la terra i tenir el nostre propi hort dins de la Comunitat Infantil és essencial, ja que fomenta el treball en equip, el respecte per l'entorn natural i el sentit de la responsabilitat, principis clau de l'enfocament Montessori.
+
+A la Comunitat Infantil, ja hem començat a plantar llavors i estem molt contents de veure com algunes comencen a germinar. Aviat les trasplantarem al jardí, on els nens podran observar el seu creixement i cuidar-les cada dia. Aquesta experiència pràctica permet als nens construir una connexió profunda amb la natura i comprendre millor els cicles de la vida, el creixement i la cura.
+
+A l'aula, també integrem la natura a través d'activitats pràctiques de la vida com ara regar plantes, netejar-ne les fulles i arreglar flors. Aquestes activitats no només ajuden els nens a desenvolupar el respecte pel medi ambient —ensenyant la responsabilitat i la paciència a l'hora de cuidar els éssers vius— sinó que també afavoreixen el desenvolupament de la coordinació, la motricitat fina i la concentració. A través d'aquesta connexió amb la natura, els nens aprenen lliçons valuoses sobre la importància de cuidar i protegir el seu entorn, alhora que enforteixen les habilitats físiques i cognitives essencials.
+
+Aquesta primavera, esperem compartir amb vosaltres el progrés del nostre hort i mostrar-vos com creixen les nostres plantes. Els nens estan molt emocionats de continuar aquest viatge i esperem compartir els resultats amb vosaltres aviat!

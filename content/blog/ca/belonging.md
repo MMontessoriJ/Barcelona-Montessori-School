@@ -1,0 +1,21 @@
+---
+title: "Pertinença"
+description: "A BMS, els vostres fills no només van a l'escola, sinó que pertanyen a alguna cosa. Creiem que quan els nens se senten realment com a casa a la seva comunitat, es converteixen en estudiants més segurs i curiosos que s'impliquen profundament amb la seva feina i entre ells. Aquest sentit de connexió comença amb les relacions"
+---
+A BMS, els vostres fills no només van a l'escola, sinó que pertanyen a alguna cosa. Creiem que quan els nens se senten realment com a casa a la seva comunitat, es converteixen en estudiants més segurs i curiosos que s'impliquen profundament en la seva feina i entre ells.
+
+Aquest sentit de connexió comença amb les relacions. Des de Nido i la Comunitat Infantil fins a la Comunitat Adolescent, construïm entorns on cada nen és conegut, respectat i valorat com a individu. Les aules d'edats mixtes, una pedra angular de l'enfocament Montessori, fan que això passi de manera natural. Ho veureu en l'alumne més gran que ajuda pacientment un nen més petit amb una tasca que va dominar fa mesos, i en el nen més petit que se sent segur perquè està envoltat de cares familiars que admira. La mentoria, l'empatia i la responsabilitat no s'ensenyen com a valors abstractes aquí; es practiquen cada dia.
+
+La comunitat també es construeix a través de l'experiència compartida. A la Comunitat Infantil i a la Casa dels Infants, una cosa tan senzilla com coure pa es converteix en un petit acte d'unió: els infants el preparen, l'esperen i el comparteixen, aprenent paciència i generositat els uns als altres. En cuidar els nostres animals, el vostre fill assumeix una responsabilitat real per un altre ésser viu. Això no és una lliçó en un quadern d'exercicis; és un compromís diari que fomenta la responsabilitat i un sentit genuí d'importància per al grup.
+
+*Fer perles a la comunitat infantil*
+
+A la Comunitat Adolescent, parlem de valorització, un terme de la pràctica Montessori que descriu alguna cosa que potser ja reconeixeu en el vostre propi adolescent: la profunda necessitat de sentir que la seva feina compta més enllà de les parets de l'escola. Quan els nostres estudiants adolescents planegen, preparen i venen roses a la comunitat en general, experimenten exactament això. El seu esforç és visible, valorat i real. Aquest sentit de propòsit és essencial en aquesta etapa del desenvolupament, donant suport al seu creixent impuls per a la independència i la contribució social.
+
+Aquest esperit de connexió s'estén també a la vostra família. Veiem BMS com una comunitat de nens, educadors i pares que treballen junts. Ho experimentareu a les nostres sessions regulars de Cafè amb Administració, on podreu compartir pensaments i escoltar directament l'equip, en projectes de col·laboració que traspassen les fronteres entre la llar i l'escola, com ara les recents celebracions de Pot Luck a Primària, i en els intercanvis quotidians que ens recorden que compartim un propòsit comú.
+
+També creiem que la veritable inclusió significa que cada nen se senti segur de ser ell mateix. Veureu això reflectit a les reunions comunitàries de Primària, on els nens practiquen tenir veu i resoldre diferències junts, així com a les lliçons de cortesia i gràcia, el temps de cercle i l'ús de la taula de la pau, tot ajudant els estudiants a desenvolupar la intel·ligència emocional per construir comunitats on ningú no estigui a l'exterior.
+
+Per descomptat, la comunitat no sempre és fàcil. Hi ha dies en què les amistats es posen a prova, quan un nen té dificultats per trobar el seu lloc o quan les coses no van com esperava. No evitem aquests moments; de fet, els veiem com algunes de les oportunitats d'aprenentatge més valuoses que tenim. El que importa a BMS no és la perfecció; és el que passa després. Com reparem, com reflexionem i com creixem junts és el centre del que estem construint aquí.
+
+Estem orgullosos del que els vostres fills estan construint aquí i ens entusiasma saber on els porta. Les habilitats que desenvolupen (empatia, responsabilitat, confiança i connexió genuïna) són les que donaran forma a la seva manera de moure's pel món molt després de deixar-nos. A BMS, el vostre fill no només s'està preparant per a la vida més enllà de l'escola. En molts dels aspectes que més importen, ja ho està vivint. Com és la pertinença a casa vostra?

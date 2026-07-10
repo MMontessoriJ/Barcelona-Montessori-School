@@ -1,0 +1,15 @@
+---
+title: "Maneres de mantenir-se al dia amb Montessori durant l'estiu de 0 a 3 anys"
+description: "A mesura que ens acostem a la recta final del curs escolar, volíem compartir algunes idees per continuar les pràctiques Montessori durant l'estiu. No es tracta de recrear els materials de l'aula, sinó de fomentar la independència i les habilitats d'autoregulació del vostre fill. Fins i tot els nens molt petits són capaços..."
+---
+A mesura que ens acostem a la recta final del curs escolar, volíem compartir algunes idees per continuar les pràctiques Montessori durant l'estiu. No es tracta de recrear els materials de l'aula, sinó de fomentar la independència i les habilitats d'autoregulació del vostre fill. Fins i tot els nens molt petits són capaços de ser més autosuficients de maneres petites però significatives.
+
+Les rutines saludables són una part important d'això. Els nostres cossos prosperen amb el ritme, i establir hàbits com ara àpats equilibrats, descans adequat i una rutina diària constant ajuda els nens a sentir-se segurs i regulats. Tot i que l'estiu aporta naturalment més flexibilitat, intenteu mantenir horaris regulars per als àpats, les migdiades (si encara les fan) i els horaris de son tant com sigui possible. El descans i la nutrició són essencials perquè els nens creixin, aprenguin i processin noves experiències.
+
+Una altra manera important de donar suport al vostre fill és permetent-li fer més coses pel seu compte. Doneu-li oportunitats per jugar, explorar i resoldre petits problemes de manera independent, sense la intervenció constant dels adults. Les activitats senzilles solen ser les més significatives: jugar amb aigua, explorar textures o interactuar amb objectes quotidians pot fomentar la concentració, la creativitat i la confiança. Les activitats massa complicades i dirigides per adults de vegades poden fer que els nens depenguin més de l'assistència dels adults.
+
+També recomanem fermament limitar el temps davant de les pantalles, especialment per als nens menors de tres anys. Les pantalles poden interferir amb la creativitat, la concentració i el desenvolupament social. Quan els nens necessiten temps tranquil i independent, alternatives com ara llibres, jocs sensorials o activitats exploratòries senzilles són molt més beneficioses.
+
+L'objectiu general és ajudar els infants a desenvolupar confiança en les seves pròpies capacitats. Intenta fer un pas enrere sempre que sigui possible i permet-los aprendre mitjançant l'assaig i l'error, fins i tot durant petits conflictes o frustracions. Aquests moments són oportunitats valuoses per al creixement i la resolució de problemes.
+
+Per als nens molt petits, la independència pot significar simplement involucrar-los en les rutines diàries. Per exemple, oferir-los dues peces de roba i permetre'ls triar els ajuda a sentir-se inclosos i capaços. També és per això que canviem bolquers drets a l'escola sempre que sigui possible, perquè el nen participi activament en lloc de romandre passiu. Les petites oportunitats de participació augmenten la confiança amb el temps. Sigues creatiu i confia en totes les coses que el teu fill és capaç de fer.
